@@ -6,3 +6,4 @@
 | Jesse Zhang  | zhang568 | 1000125170 | jesse.zhang@mail.utoronto.ca  | discord, email, 647-231-8777 | That Tasted Purple#1209 |
 | SuTong Kong  | kongsu   | 1004304790 | su.kong@mail.utoronto.ca      | discord and email            | frankskyblue#6868       |
 | Ivan Shao    | shaoivan | 1005183016 | synx.shao@mail.utoronto.ca    | discord, email, messenger    | Strawberry Cake#3999    |
+| Tyler Reichert| reicher8| 999974639  | tyler.reichert@mail.utoronto.ca| discord, 905-399-6656       | RadiantCowbells#0970    |
