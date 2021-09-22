@@ -8,7 +8,7 @@ CSCC01 Project developed by *The Night Owl Developers*.
 ## Installation
 
 ## Contribution 
-This project is currently not accepting pull requests. Updates will be provided when collaboration becomes available. 
+Thank you for your interest. Unfortunately, this project is currently not open to collaborations. Updates will be provided in the future if collaboration becomes available.
 
 ## Project Status
 Currently under development.
