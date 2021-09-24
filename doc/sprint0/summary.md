@@ -14,4 +14,5 @@ Chelsea received a call from her boss requesting her to immediately fly to San F
 
 **Key Principles**:<br />
 Platform should be convenient to use for pet owners: The platform should be designed so that pet owners should not have to spend a lot of time to figure out how everything works. The process of finding a pet service provider, contacting them, and booking their service should be intuitive and have a high degree of convenience.
+
 Platform should be customizable for pet service providers: The platform should allow pet service providers to customize their services. For example, they should be able to change their pricing, pet types allowed, services provided, etc.
