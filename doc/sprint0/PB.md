@@ -32,7 +32,7 @@ The user stories are ordered by priority below (i.e. 1 is highest priority, 22 i
 
 - **User Story #4: Header Menu**
 
-  - As **Tyler (customer) and Caitlyn (service provider))**, we want to browse around the header menu so that I can understand what kind of features this site offers.
+  - As **Tyler (customer) and Caitlyn (service provider)**, we want to browse around the header menu so that I can understand what kind of features this site offers.
 
   - <u>Acceptance Criteria:</u> The Header cell should have a logo that is clickable to the home page. A home page button, a Service Button, a Product Button, a Social Media button, an account button, and a setting button.
   - <u>Priority:</u> 4
