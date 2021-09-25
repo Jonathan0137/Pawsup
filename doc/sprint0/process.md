@@ -19,5 +19,4 @@ Our team’s decision-making process is primarily debating, as we have no centra
 
 During our weekly meeting, we used planning poker to decide the point values of each user story. For each user story, we briefly discussed the things we need to do for it and everybody rated it's workload/difficulty using our rating system. The lowest and highest values explained their reasoning for their scores, and then we usually settled on a score in between by debating about the scores and repeating this process. Discrepancies in our ratings were usually due to a lack of understanding as to knowing exactly what to do for some user stories. In this case, we usually rate the story slightly higher to compensate for uncertainty.
 
-Our point values is based off of the Fibonacci sequence for lower points (1 to 13) and then powers of 2 for higher points (20 to 100).
-
+Our point values is based off of the Modified Fibonacci Sequence point system. 
