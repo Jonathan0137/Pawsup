@@ -1,0 +1,11 @@
+.navbar_logo_img{
+    border-radius: 8px;
+    width: 60px;
+    height: 60px;
+}
+.accountLogo{
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10%;
+}
