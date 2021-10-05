@@ -17,9 +17,9 @@ CSCC01 Project developed by _The Night Owl Developers_.
 
 - See [server/Setup.md](server/Setup.md) for server local setup instructions
 
-## Production Deployment
+## Demo Deployment
 
-The production build is deployed on Heroku at https://cscc01-pawsup.herokuapp.com, using [ElephantSQL](https://www.elephantsql.com/) to host the PostgreSQL DB
+The demo production build is deployed on Heroku at https://cscc01-pawsup.herokuapp.com, using [ElephantSQL](https://www.elephantsql.com/) to host the PostgreSQL DB
 
 ## Contribution
 
