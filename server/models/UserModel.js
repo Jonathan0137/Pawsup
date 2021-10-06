@@ -23,7 +23,7 @@ class UserModel extends DBModel {
     
     static async getUserByID(uid) {
         const data = await db.query("SELECT * FROM users WHERE uid = $1", [uid]);
-        return data.length > 0 ? new ServiceModel(data[0]) : null;
+        return data.length > 0 ? new UserModel(data[0]) : null;
     }
 
     static async loginUser(username, password) {
