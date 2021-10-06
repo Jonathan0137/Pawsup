@@ -16,33 +16,6 @@ UserController.get("/", async (req, res) => {
     }
 });
 
-//POST /api/user/login
-UserController.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-
-    if (!username || !password ) {
-        return res.status(400).json({
-            message: "[username, password] cannot be empty in response body",
-          });
-    }
-    try {
-        const user = await UserModel.loginUser(username, password);
-        if (!user) {
-            return res.status(404).json({
-              message: `No matching user found.`,
-            });
-          }
-          res.status(200).json(user.cleanCopy());
-
-    } catch (err) {
-        console.error(err);
-        res
-        .status(500)
-        .json({ message: "Encountered an error while fetching user" });
-    }
-    
-});
-
 // PUT /api/user/:uid
 // Able to change user's password, email, or location fields. Username cannot be changed.
 // At least one of these fields must be in request body. 

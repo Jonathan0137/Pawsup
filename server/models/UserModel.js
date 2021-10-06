@@ -26,8 +26,8 @@ class UserModel extends DBModel {
         return data.length > 0 ? new UserModel(data[0]) : null;
     }
 
-    static async loginUser(username, password) {
-        const data = await db.query("SELECT * FROM users WHERE username=$1 AND password=$2", [username, password]);
+    static async getUserByUsername(username) {
+        const data = await db.query("SELECT * FROM users WHERE username = $1", [username]);
         return data.length > 0 ? new UserModel(data[0]) : null;
     }
 }

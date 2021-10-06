@@ -1,12 +1,23 @@
 require("dotenv-safe").config();
-const express = require("express");
 const path = require("path");
+const express = require("express");
+const session = require("express-session");
+const { passport } = require("./config/passport-config");
 const { router } = require("./router/router");
+
 const app = express();
-
 app.use(express.json());
-app.use("/api", router);
+app.use(
+  session({
+    secret: "pawsup-secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use("/api", router);
 app.use(express.static(path.join(__dirname, "./build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./build"));
