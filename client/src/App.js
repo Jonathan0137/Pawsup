@@ -6,6 +6,7 @@ import SignupPage from './pages/SignupPage';
 import ServicePage from './pages/ServicePage';
 import ProductPage from './pages/ProductPage';
 import MediaPage from './pages/MediaPage';
+import AccountPage from './pages/AccountpageComponent/AccountPage';
 
 function App() {
   return(
@@ -17,6 +18,7 @@ function App() {
         <Route exact path='/service' component={ServicePage}/>
         <Route exact path='/product' component={ProductPage}/>
         <Route exact path='/media' component={MediaPage}/>
+        <Route exact path='/realaccountpage' component={AccountPage}/>
       </div>
     </Router>
   );

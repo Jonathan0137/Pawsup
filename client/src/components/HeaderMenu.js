@@ -19,6 +19,7 @@ const HeaderMenu = () => {
                         <Nav.Link as={Link} to="/service">Service</Nav.Link>
                         <Nav.Link as={Link} to="/product">Product</Nav.Link>
                         <Nav.Link as={Link} to="/media">Social</Nav.Link>
+                        <Nav.Link as={Link} to="/realaccountpage">realaccountpage</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
