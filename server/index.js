@@ -1,12 +1,30 @@
 require("dotenv-safe").config();
-const express = require("express");
 const path = require("path");
+const express = require("express");
+const session = require("express-session");
+const PGSession = require("connect-pg-simple");
+const { passport } = require("./config/passport-config");
 const { router } = require("./router/router");
+const { db } = require("./db/db");
+
 const app = express();
-
 app.use(express.json());
-app.use("/api", router);
+app.use(
+  session({
+    store: new (PGSession(session))({
+      pool: db.pool,
+      createTableIfMissing: true,
+    }),
+    secret: "pawsup-secret",
+    resave: true,
+    saveUninitialized: true,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use("/api", router);
 app.use(express.static(path.join(__dirname, "./build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./build"));
