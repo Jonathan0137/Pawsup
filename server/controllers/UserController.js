@@ -16,6 +16,33 @@ UserController.get("/", async (req, res) => {
     }
 });
 
+//CREATE /api/user
+UserController.post("/", async (req, res) => {
+  const { username, password, email, location } = req.body;
+
+  if (!username || !password || !email || !location) {
+    return res.status(400).json({
+      message: "[username, password, email, location] cannot be empty in response body",
+    });
+  }
+
+  const user = new UserModel({
+    username: username,
+    password: password,
+    email: email,
+    location: location,
+  });
+
+  try {
+    await user.insert();
+    res.status(201).json(user.cleanCopy());
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Encountered an error while creating account" });
+  }
+});
 // PUT /api/user/:uid
 // Able to change user's password, email, or location fields. Username cannot be changed.
 // At least one of these fields must be in request body. 
