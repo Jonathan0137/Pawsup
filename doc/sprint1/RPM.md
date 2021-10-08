@@ -1,3 +1,8 @@
+# Release Planning Meeting
+The release planning meeting was held using discord and all team members attended. In our meeting we discussed and planned the features we hope to have ready by the end of each sprint as well as our goal for the final release. By the end of all our sprints, we hope to release a web application that is usable, visually appealing, and satisfies our client. 
+
+Below are our release goals for each sprint. In the earlier sprints we are focusing on the core functionality such as user accounts, and in subsequent sprints we will add more features.
+
 # Participants:
 - Chongmin Bai
 - Gary Xie
