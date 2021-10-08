@@ -9,7 +9,8 @@ import guaranteed from '../media/feature_guaranteed.png'
 import arranged from '../media/feature_arranged.png'
 import { Container, Row, Col } from 'react-bootstrap'
 import React from 'react'
-
+import FeaturedServices from '../components/FeaturedServices.js'
+import FeaturedProducts from '../components/FeaturedProducts.js'
 const search = (e) =>{
     
 }
