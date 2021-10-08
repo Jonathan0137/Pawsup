@@ -57,6 +57,8 @@ const HomePage = () => {
                     </Col>
                 </Row>
             </Container>
+            <FeaturedServices/>
+            <FeaturedProducts/>
             <Footer/>
         </>
         
