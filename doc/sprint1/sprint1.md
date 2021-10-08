@@ -43,3 +43,9 @@
 - Set up section where users can search for providers by location and date - Jonathan
 - Set up feature list - Ivan
 - Set up featured services/products - Frank
+
+# Spike 
+Both the front-end and back-end teams encountered spikes throughout this sprint. Members of the frontend team had to learn React as well as Bootstrap. Members of the backend team had to familiarize themselves with the MVC structure and Node modules such as Express and Passport.
+
+# Unfinished Work
+NODE-34 is unfinished because the assignee has assignments due in other courses and took a long time to learn the necessities to get started. Thus, having finished NODE-32 and NODE-33 there was no extra time left for the assignee. 
