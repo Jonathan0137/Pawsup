@@ -1,13 +1,14 @@
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
 import './HomePageSearchService.css';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'
 
 const HomePageSearchService = ({search}) => {
     
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(50);
+    const [serviceArea, setServiceArea] = useState("Markham");
+    const [pet, setPet] = useState("Dog");
+    const [numberOfPet, setNumberOfPet] = useState(1);
 
     return (
         <div>
@@ -15,8 +16,8 @@ const HomePageSearchService = ({search}) => {
                 <Row className="mb-3 searchRow aligh-item-center">
                     <Form.Group as={Col} md={3} controlId="serviceArea">
                         <Form.Label>Service Area</Form.Label>
-                        <Form.Control as="select" defaultValue="Choose Service ...">
-                            <option>...</option>
+                        <Form.Control as="select" placeholder={serviceArea} 
+                        onChange={e => setServiceArea(e.target.value)}>
                             <option>Markham</option>
                             <option>Toronto</option>
                             <option>Kirkland</option>
@@ -27,31 +28,36 @@ const HomePageSearchService = ({search}) => {
                         </Form.Control>
                     </Form.Group>
 
-                    <Form.Group as={Col} md={2} controlId="serviceDate">
-                        <Form.Label>ChooseStart Date</Form.Label>
-                        <DatePicker 
-                            selected={startDate} 
-                            onChange={date => setStartDate(date)}
-                            dateFormat='yyyy/MM/dd'
-                            minDate = {new Date()}
+                    <Form.Group as={Col} md={2} controlId="minPrice">
+                        <Form.Label>Choose Min Price</Form.Label>
+                        <Form.Control 
+                            type='number'
+                            placeholder={minPrice}
+                            onChange={e => setMinPrice(e.target.value)}
+                            isInvalid={minPrice>maxPrice}
                         />
+                        <Form.Control.Feedback type="invalid">
+                            Please select a valid range
+                        </Form.Control.Feedback>
 
                     </Form.Group>
-                    <Form.Group as={Col} md={2} controlId="serviceDate">
-                        <Form.Label>ChooseEnd Date</Form.Label>
-                        <DatePicker 
-                            selected={endDate} 
-                            onChange={date => setEndDate(date)}
-                            dateFormat='yyyy/MM/dd'
-                            minDate = {new Date(startDate)}
+                    <Form.Group as={Col} md={2} controlId="maxPrice">
+                        <Form.Label>Choose Max Price</Form.Label>
+                        <Form.Control 
+                            type='number'
+                            placeholder={maxPrice}
+                            onChange={e => setMaxPrice(e.target.value)}
+                            isInvalid={minPrice>maxPrice}
                         />
-
+                        <Form.Control.Feedback type="invalid">
+                            Please select a valid range
+                        </Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group as={Col} md={2} controlId="Pet">
                         <Form.Label>Pet</Form.Label>
-                        <Form.Control as="select" defaultValue="...">
-                            <option>...</option>
+                        <Form.Control as="select" placeholder={pet} 
+                        onChange={e => setPet(e.target.value)}>
                             <option>Dog</option>
                             <option>Cat</option> 
                         </Form.Control>
@@ -59,7 +65,8 @@ const HomePageSearchService = ({search}) => {
 
                     <Form.Group as={Col} md={2} controlId="Num">
                         <Form.Label>Number</Form.Label>
-                        <Form.Control as="select" defaultValue="1">
+                        <Form.Control as="select" placeholder={numberOfPet} 
+                        onChange={e => setNumberOfPet(e.target.value)}>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
