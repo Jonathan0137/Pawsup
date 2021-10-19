@@ -15,7 +15,8 @@ const SigninPage = () => {
         username: details.email,
         password: details.password,
       })
-      .then(() => setLog({ pass: true }));
+      .then(() => setLog({ pass: true }))
+      .catch(() => `<h4>Wrong Login Info<h4>`);
   };
 
   const submitHandler = (e) => {
