@@ -8,14 +8,17 @@ const SigninPage = () => {
   const [details, setDetails] = useState({ email: "", password: "" });
   const [user, setUser] = useState({ email: "", password: "" });
   const [log, setLog] = useState({ pass: false });
+  const [hasError, setHasError] = useState(false);
 
   const checkLogin = async () => {
+    setHasError(false);
     await axios
       .post("/api/auth/login", {
         username: details.email,
         password: details.password,
       })
-      .then(() => setLog({ pass: true }));
+      .then(() => setLog({ pass: true }))
+      .catch(() => setHasError(true));
   };
 
   const submitHandler = (e) => {
@@ -91,6 +94,9 @@ const SigninPage = () => {
                 </Form.Group>
               </Row>
               <Row>
+                {hasError && <div className="alert alert-warning" role="alert">
+                  Wrong Login info. Please try again.
+                </div>}
                 <Button
                   className="mb-2"
                   variant="primary"

@@ -1,3 +1,6 @@
+# Sprint 1 Planning Meeting:
+The sprint 1 planning meeting was held using discord and all team members attended. In our meeting we discussed our plan for sprint 1 including what features we are prioritizing as well as the responsibilities of each group member. We selected user stories to complete and broke them down into tasks which were assigned to group members. We decided that for sprint 1 we want to focus on the core elements of our web application such as user accounts, services, and backend APIs. 
+
 # Participants:
 - Chongmin Bai
 - Gary Xie
