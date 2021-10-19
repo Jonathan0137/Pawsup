@@ -16,8 +16,16 @@ const SigninPage = () => {
         password: details.password,
       })
       .then(() => setLog({ pass: true }))
-      .catch(() => `<h4>Wrong Login Info<h4>`);
+      .catch(() => errorButton());
   };
+
+  const errorButton = () => {
+    return (
+      <div className="alert alert-warning" role="alert">
+        Wrong Login info. Please try again.
+      </div>
+    );
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
