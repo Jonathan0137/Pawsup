@@ -15,7 +15,7 @@
 - Jonathan: Communicate between Team members.
 - Gary: Organized planning of tasks to work on for the sprint
 - Tyler: Well organized standups
-- Ivan: Organized standups, team work
+- Ivan: Organized standups, efficient team work
 - Jonathan: Branch Name and Commit Messages need to be consistent and follow the rules.
 - Jonathan: Everyone needs to update CRC cards, Software Architecture Diagram, and Documentation google driver files before the end of our sprint. 
 
