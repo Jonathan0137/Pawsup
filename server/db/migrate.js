@@ -3,6 +3,7 @@ const { db } = require("./db");
 
 async function migrate() {
   try {
+    // Create services table
     await db.query(`
       CREATE TABLE IF NOT EXISTS services (
         serviceid serial PRIMARY KEY,
@@ -15,6 +16,7 @@ async function migrate() {
       );
   `);
 
+  // Populate services table
   await db.query(`
     INSERT INTO services(servicepicurl, servicetitle, servicedetail, servicefacility, location, priceperday)
       VALUES 
@@ -26,6 +28,31 @@ async function migrate() {
     );
   `);
 
+  // Create products table
+  await db.query(`
+      CREATE TABLE IF NOT EXISTS products (
+        product_id serial PRIMARY KEY,
+        product_detail VARCHAR(200) NOT NULL,
+        product_name VARCHAR(200) NOT NULL,
+        product_origin VARCHAR(200) NOT NULL,
+        product_price VARCHAR(200)[] NOT NULL,
+        product_type VARCHAR(200)[] NOT NULL,
+        product_pic_url VARCHAR(200)[] NOT NULL,
+        product_rating VARCHAR(200) NOT NULL
+      );
+  `);
+
+  // Populate products table
+  await db.query(`
+    INSERT INTO products(product_detail, product_name, product_origin, product_price, product_type, product_pic_url, product_rating)
+      VALUES 
+      ('Delicious and healthy cat food', 'Green Farms Cat Food', 'USA', '{"5","15","25"}', '{"Small", "Medium", "Large"}', '{"www.url21.com","www.url22.com"}', '4.5'),
+      ('Fun and interactive cat toy', 'Mouse Toy', 'China', '{"10","15","20"}', '{"Small", "Medium", "Large"}', '{"www.url91.com","www.url27.com"}', '4.9'),
+      ('Delicious and healthy dog food', 'Green Farms Dog Food', 'USA', '{"5","15","25"}', '{"Small", "Medium", "Large"}', '{"www.url25.com","www.url11.com"}', '4.5'
+    );
+  `);
+
+  // Create users table
   await db.query(`
       CREATE TABLE IF NOT EXISTS users (
           uid serial PRIMARY KEY,
