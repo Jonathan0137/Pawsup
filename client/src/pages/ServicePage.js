@@ -1,18 +1,18 @@
-
-import HeaderMenu from '../components/HeaderMenu';
-
+import HeaderMenu from "../components/HeaderMenu";
+import ServiceFilter from "../components/ServiceFilter";
+import ServiceSort from "../components/ServiceSort";
 
 const ServicePage = () => {
-   
-    
-    return (
-        <>
-            <HeaderMenu />
-            <div>
-                <h1>This is ServicePage</h1>
-            </div>
-        </>
-    );
-}
+  return (
+    <>
+      <HeaderMenu />
+
+      <div>
+        <ServiceFilter />
+        <ServiceSort />
+      </div>
+    </>
+  );
+};
 
 export default ServicePage;

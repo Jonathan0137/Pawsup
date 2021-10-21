@@ -20,7 +20,14 @@ const SignupPage = () => {
   // Called when the "sign up" button is clicked.
   const SignUp = async () => {
     await axios
-      .post("/api/user", {}) // Need object specification
+      .post("/api/user", {
+        username: { username },
+        email: { email },
+        password: { password },
+        fname: { fname },
+        lname: { lname },
+        city: { city },
+      }) // Need object specification
       .then(
         () => setUsername({ pass: true }),
         setEmail(initialState),

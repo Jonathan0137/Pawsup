@@ -1,0 +1,16 @@
+.filter {
+  border-radius: 20px;
+  background-color: lightgoldenrodyellow;
+}
+
+.filter_options {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.ml-3 {
+  margin-left: 25px;
+}
