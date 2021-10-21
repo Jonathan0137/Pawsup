@@ -40,7 +40,7 @@ Filter based on Type [adult cat, adult dog …]
 Filter based on price range
 Product Should Include 
 
-## Frontend (Meng)
+## Frontend (Meng) 
 - Display Each Element in a responsive way
 ## Backend (Jesse)
 - Element Should contain[index, title, picture, profilepicture, userid, username, likes etc]
