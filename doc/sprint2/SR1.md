@@ -28,7 +28,7 @@
 - Jesse: Having a list of things to go over during sprint meetings might be helpful.
 
 # Harmful Practices to Stop Using Next Sprint
-- Gary: Start working on tasks earlier, so that there is less pressure at the end of the sprint
+- Gary: Stop procrastinating on tasks and start them earlier, so that there is less pressure at the end of the sprint.
 
 # Best/Worst Experiences During Sprint 1
 - Ivan: A lot of learning(React, Bootstrap, Axios, JS...) was necessary before I can start working on creating web pages
