@@ -40,30 +40,30 @@ Filter based on Type [adult cat, adult dog …]
 Filter based on price range
 Product Should Include 
 
-## Frontend (Meng) 
+## Frontend (Meng) 13 
 - Display Each Element in a responsive way
-## Backend (Jesse)
+## Backend (Jesse) 20
 - Element Should contain[index, title, picture, profilepicture, userid, username, likes etc]
 - Detailed Page
 - 3 different type of Detailed Page
-## Frontend (Jonathan)
+## Frontend (Jonathan) 20
 - Display information based on backend Information
 - See webpage as reference.
-## Backend (Jesse)
+## Backend (Jesse) 20
 - Response needs like Title Description, comment etc…..
 
-## Header Page (Frontend) (Jonathan)
+## Header Page (Frontend) (Jonathan) 20
 - Create A Post Product Page selection on header Only if you are a service Provider
 - Only Display RealAccountPage When you login
 - Create Service Page
-## Frontend (Frank/Ivan)
+## Frontend (Frank/Ivan) 13
 - Sending Post Request to backend with provided information
-## Backend (Tyler)
+## Backend (Tyler) 13
 - Receive these information and added them to the db?
 - Create Media Page
-## Frontend (Meng)
+## Frontend (Meng) 20
 - Sending Post Request to backend with provided information
-## Backend (Tyler)
+## Backend (Tyler) 13
 - Receive these information and added them to the db?
 
 # The goal for sprint 2:
@@ -73,4 +73,5 @@ Set up as much of the frontend and backend for all the pages, tasks that couldn�
 # Spike
 
 # Unfinished Work
-
+- The Account page for the admins (low priority, will consider in sprint 3)
+- Connecting front-end to back-end for Sign-up Page (will do so in sprint 3)
