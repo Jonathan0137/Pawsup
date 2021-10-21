@@ -2,15 +2,18 @@ const { db } = require("../db/db");
 const { DBModel } = require("./model");
 
 class ServiceModel extends DBModel {
-  id;
-  title;
-  content;
-  image;
+  serviceid;
+  servicepicurl;
+  servicetitle;
+  servicedetail;
+  servicefacility;
+  location;
+  priceperday;
 
   constructor(data) {
     super({
       table: "services",
-      primaryKey: "id",
+      primaryKey: "serviceid",
     });
     Object.assign(this, data);
   }
@@ -20,8 +23,8 @@ class ServiceModel extends DBModel {
     return data.map((row) => new ServiceModel(row));
   }
 
-  static async getServiceByID(id) {
-    const data = await db.query("SELECT * FROM services WHERE id = $1", [id]);
+  static async getServiceByID(serviceid) {
+    const data = await db.query("SELECT * FROM services WHERE serviceid = $1", [serviceid]);
     return data.length > 0 ? new ServiceModel(data[0]) : null;
   }
 }
