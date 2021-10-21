@@ -75,3 +75,4 @@ Set up as much of the frontend and backend for all the pages, tasks that couldnâ
 # Unfinished Work
 - The Account page for the admins (low priority, will consider in sprint 3)
 - Connecting front-end to back-end for Sign-up Page (will do so in sprint 3)
+- CreateService page front end (will be done in sprint 3)
