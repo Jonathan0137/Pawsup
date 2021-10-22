@@ -76,7 +76,7 @@ async function migrate() {
         ('product', 2, 'My cat loved it! Wow!', 'chris221', 'www.hostedpic1.com', '2021-10-20 4:00PM', '{{"john10", "www.url2.com", "I will try buying it too!", "2021-10-21 2:21PM"}, {"catwoman490", "www.url5.com", "I bought some too!", "2021-10-21 2:41PM"}}'),
         ('product', 3, 'It was delicious. Wait... What do you mean its for dogs?', 'tommy55', 'www.hostedpic5.com', '2021-10-21 1:10PM', '{{"john10", "www.url2.com", "Whao man", "2021-10-21 2:21PM"}, {"steven21", "www.url8.com", "Are you ok?", "2021-10-21 2:55PM"}}'
       );
-    `)
+    `);
 
     // Create users table
     await db.query(`
@@ -88,15 +88,15 @@ async function migrate() {
         location VARCHAR(30) NOT NULL
       );
   `);
+  // Create mediapages table
   await db.query(`
-      CREATE TABLE IF NOT EXISTS servicePages (
+      CREATE TABLE IF NOT EXISTS mediaPages (
         id serial PRIMARY KEY,
-        serviceTitle VARCHAR(50) NOT NULL,
-        listOfServicePic VARCHAR(50) NOT NULL,
-        serviceDetail VARCHAR(50) NOT NULL,
-        serviceFacility VARCHAR(50) NOT NULL,
-        location VARCHAR(50) NOT NULL,
-        pricePerDay REAL NOT NULL
+        author_id integer NOT NULL,
+        media_picture_url VARCHAR(50) NOT NULL,
+        media_title VARCHAR(50) NOT NULL,
+        media_detail VARCHAR(50) NOT NULL,
+        published_time VARCHAR(50) NOT NULL
       );
   `);
     
