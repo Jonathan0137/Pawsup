@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Navbar, Nav, Dropdown } from "react-bootstrap";
+import { Container, Navbar, Nav } from "react-bootstrap";
 import "./Filter.css";
 
 const ServiceFilter = () => {
@@ -15,9 +15,7 @@ const ServiceFilter = () => {
                   Location:{" "}
                 </Nav.Link>
               </div>
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
+              <Nav.Link href="#toronto">Toronto</Nav.Link>
             </Nav>
           </Navbar>
           <Navbar>
@@ -25,9 +23,8 @@ const ServiceFilter = () => {
               <Nav.Link className="bold" style={{ cursor: "default" }}>
                 Pet:
               </Nav.Link>
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
+              <Nav.Link href="#cat">Cat</Nav.Link>
+              <Nav.Link href="#dog">Dog</Nav.Link>
             </Nav>
           </Navbar>
         </Container>

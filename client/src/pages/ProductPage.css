@@ -1,9 +1,10 @@
 .page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 40px;
-    padding-bottom: 50px;
-    background-color: rgb(231, 233, 236);
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(234, 238, 243);
+}
+
+.bold {
+  font-weight: bold;
+}
