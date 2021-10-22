@@ -52,6 +52,29 @@ async function migrate() {
     );
   `);
 
+  // Create comments table
+  await db.query(`
+      CREATE TABLE IF NOT EXISTS comments (
+        comment_id serial PRIMARY KEY,
+        comment_type VARCHAR(200) NOT NULL,
+        foreign_id integer NOT NULL,
+        comment_detail VARCHAR(200) NOT NULL,
+        author_name VARCHAR(200) NOT NULL,
+        author_profile_pic_url VARCHAR(200) NOT NULL,
+        comment_time VARCHAR(200) NOT NULL,
+        comment_replies VARCHAR(200)[]
+      );
+  `);
+
+  // Populate comments table
+  await db.query(`
+    INSERT INTO comments(comment_type, foreign_id, comment_detail, author_name, author_profile_pic_url, comment_time, comment_replies)
+      VALUES
+      ('product', 2, 'My cat loved it! Wow!', 'chris221', 'www.hostedpic1.com', '2021-10-20 4:00PM', '{{"john10", "www.url2.com", "I will try buying it too!", "2021-10-21 2:21PM"}, {"catwoman490", "www.url5.com", "I bought some too!", "2021-10-21 2:41PM"}}'),
+      ('product', 3, 'It was delicious. Wait... What do you mean its for dogs?', 'tommy55', 'www.hostedpic5.com', '2021-10-21 1:10PM', '{{"john10", "www.url2.com", "Whao man", "2021-10-21 2:21PM"}, {"steven21", "www.url8.com", "Are you ok?", "2021-10-21 2:55PM"}}'
+    );
+  `)
+
   // Create users table
   await db.query(`
       CREATE TABLE IF NOT EXISTS users (
