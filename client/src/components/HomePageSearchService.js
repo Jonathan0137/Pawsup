@@ -34,7 +34,7 @@ const HomePageSearchService = ({search}) => {
                             type='number'
                             placeholder={minPrice}
                             onChange={e => setMinPrice(e.target.value)}
-                            isInvalid={minPrice>maxPrice}
+                            isInvalid={Number(minPrice)>Number(maxPrice)}
                         />
                         <Form.Control.Feedback type="invalid">
                             Please select a valid range
@@ -47,7 +47,7 @@ const HomePageSearchService = ({search}) => {
                             type='number'
                             placeholder={maxPrice}
                             onChange={e => setMaxPrice(e.target.value)}
-                            isInvalid={minPrice>maxPrice}
+                            isInvalid={Number(minPrice)>Number(maxPrice)}
                         />
                         <Form.Control.Feedback type="invalid">
                             Please select a valid range
