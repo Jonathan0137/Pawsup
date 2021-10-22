@@ -6,7 +6,7 @@ import SignupPage from './pages/SignupPage';
 import ServicePage from './pages/ServicePage';
 import ProductPage from './pages/ProductPage';
 import MediaPage from './pages/MediaPage';
-import AccountPage from './pages/AccountpageComponent/AccountPage';
+import AccountPage from './pages/AccountPage';
 import ProductDetailPage from './pages/ProductDetailPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
 import {AllProductDetailedPage, AllServiceDetailedPage} from './temp/TempAPIResponse'
