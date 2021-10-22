@@ -42,17 +42,14 @@ Product Should Include
 ## Frontend (Meng) 13 
 - Display Each Element in a responsive way
 
-## Backend (Jesse) 20
-- Element Should contain[index, title, picture, profilepicture, userid, username, likes etc]
-- Detailed Page
-- 3 different type of Detailed Page
+## Backend (Jesse) 20 + 20 + 13
+- Update backend API for Service endpoint
+- Create backend API for Product endpoint
+- Create backend API for Comment endpoint
 
 ## Frontend (Jonathan) 20
 - Display information based on backend Information
 - See webpage as reference.
-
-## Backend (Jesse) 20
-- Response needs like Title Description, comment etc…..
 
 ## Header Page (Frontend) (Jonathan) 20
 - Create A Post Product Page selection on header Only if you are a service Provider
