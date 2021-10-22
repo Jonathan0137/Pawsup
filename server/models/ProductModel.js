@@ -65,7 +65,7 @@ class ProductModel extends DBModel {
 
     // Apply the sorting direction if specified
     const validSortColumns = ["product_price", "product_rating"];
-    if (validSortColumns.includes(sortBy.toLowerCase())) {
+    if (validSortColumns.includes(sortBy?.toLowerCase())) {
       if (sortDirection !== "ASC") {
         sortDirection = "DESC";
       }

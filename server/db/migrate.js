@@ -12,19 +12,21 @@ async function migrate() {
         servicedetail VARCHAR(200) NOT NULL,
         servicefacility VARCHAR(200) NOT NULL,
         location VARCHAR(200) NOT NULL,
-        priceperday VARCHAR(200) NOT NULL
+        priceperday DECIMAL DEFAULT 0.00,
+        service_rating DECIMAL DEFAULT 0,
+        service_pet_breed VARCHAR(200) NOT NULL
       );
     `);
 
     // Populate services table
     await db.query(`
-      INSERT INTO services(servicepicurl, servicetitle, servicedetail, servicefacility, location, priceperday)
+      INSERT INTO services(servicepicurl, servicetitle, servicedetail, servicefacility, location, priceperday, service_rating, service_pet_breed)
         VALUES 
-        ('{"www.url1.com","www.url2.com"}', 'Cat grooming', 'Cat grooming service', 'Facility A', '111 Test Dr', '60'),
-        ('{"www.url3.com","www.url4.com"}', 'Dog walking', 'Dog grooming service', 'Facility B', '222 Test Dr', '55'),
-        ('{"www.url5.com","www.url6.com"}', 'Parrot training', 'Parrow training service', 'Facility C', '222 Test Dr', '100'),
-        ('{"www.url7.com","www.url8.com"}', 'Pet emergency care', 'Emergency care service', 'Facility D', '222 Test Dr', '200'),
-        ('{"www.url9.com","www.url0.com"}', 'Pet sitting', 'Pet sitting service', 'Facility E', '222 Test Dr', '20');
+        ('{"www.url1.com","www.url2.com"}', 'Cat grooming', 'Cat grooming service', 'Facility A', 'Markham', 60, 3, 'Cat'),
+        ('{"www.url3.com","www.url4.com"}', 'Dog walking', 'Dog grooming service', 'Facility B', 'Markham', 55, 2.7, 'Dog'),
+        ('{"www.url5.com","www.url6.com"}', 'Parrot training', 'Parrow training service', 'Facility C', 'Scarborough', 100, 4.9, 'Parrot'),
+        ('{"www.url7.com","www.url8.com"}', 'Pet emergency care', 'Emergency care service', 'Facility D', 'Toronto', 200, 3.6, 'Hamster'),
+        ('{"www.url9.com","www.url0.com"}', 'Pet sitting', 'Pet sitting service', 'Facility E', 'Toronto', 20, 1.2, 'Dog');
     `);
 
     // Create products table

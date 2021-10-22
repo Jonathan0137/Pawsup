@@ -6,7 +6,12 @@ const ServicesController = express.Router();
 // GET /api/services
 ServicesController.get("/", async (req, res) => {
   try {
-    const services = await ServiceModel.getServices();
+    // Optional filtering and sorting parameters for getting services
+    let { locations = "", pet_breeds = "", minPrice, maxPrice, sortBy, sortDirection } = req.query;
+    locations = locations.split(",").filter(item => item);
+    pet_breeds = pet_breeds.split(",").filter(item => item);
+
+    const services = await ServiceModel.getServices(locations, pet_breeds, minPrice, maxPrice, sortBy, sortDirection);
     res.json(services.map((service) => service.cleanCopy()));
   } catch (err) {
     console.error(err);
