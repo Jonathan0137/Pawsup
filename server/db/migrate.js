@@ -80,14 +80,16 @@ async function migrate() {
 
     // Create users table
     await db.query(`
-      CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS users (
         uid serial PRIMARY KEY,
         username VARCHAR(30) NOT NULL,
-        password VARCHAR(30) NOT NULL,
         email VARCHAR(30) NOT NULL,
-        location VARCHAR(30) NOT NULL
-      );
-  `);
+        password VARCHAR(30) NOT NULL,
+        fname VARCHAR(30) NOT NULL,
+        lname VARCHAR(30) NOT NULL,
+        city VARCHAR(30) NOT NULL
+    );
+`);
   // Create mediapages table
   await db.query(`
       CREATE TABLE IF NOT EXISTS mediaPages (
