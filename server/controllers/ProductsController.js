@@ -1,12 +1,17 @@
 const express = require("express");
 const { ProductModel } = require("../models/ProductModel");
-// Base route: /api/product
+// Base route: /api/products
 const ProductsController = express.Router();
 
 // GET /api/products
 ProductsController.get("/", async (req, res) => {
   try {
-    const products = await ProductModel.getProducts();
+    // Optional filtering and sorting parameters for getting products
+    let { categories = "", pet_breeds = "", minPrice, maxPrice, sortBy, sortDirection } = req.query;
+    categories = categories.split(",").filter(item => item);
+    pet_breeds = pet_breeds.split(",").filter(item => item);
+
+    const products = await ProductModel.getProducts(categories, pet_breeds, minPrice, maxPrice, sortBy, sortDirection);
     res.json(products.map((product) => product.cleanCopy()));
   } catch (err) {
     console.error(err);
