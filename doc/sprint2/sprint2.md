@@ -76,8 +76,9 @@ Product Should Include
 Set up as much of the frontend and backend for all the pages, tasks that couldn’t finish in sprint2 will be pushed to sprint3. By sprint 3 all frontend and backend should be done. Sprint4 will be working on connecting these together.
 
 # Spike
+There were some difficulties in creating a sort and filter bar in terms of aligning the visuals and implementing the functionalities, also some spikes were present in attempting to get and display items from the backend.
 
 # Unfinished Work
 - The Account page for the admins (low priority, will consider in sprint 3)
-- Connecting front-end to back-end for Sign-up Page (will do so in sprint 3)
+- Connecting front-end to back-end for Sign-up page, Service page, and Product page (will do so in sprint 3)
 - CreateService page front end (will be done in sprint 3)
