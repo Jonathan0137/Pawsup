@@ -87,8 +87,19 @@ async function migrate() {
         email VARCHAR(30) NOT NULL,
         location VARCHAR(30) NOT NULL
       );
-    `);
-
+  `);
+  await db.query(`
+      CREATE TABLE IF NOT EXISTS servicePages (
+        id serial PRIMARY KEY,
+        serviceTitle VARCHAR(50) NOT NULL,
+        listOfServicePic VARCHAR(50) NOT NULL,
+        serviceDetail VARCHAR(50) NOT NULL,
+        serviceFacility VARCHAR(50) NOT NULL,
+        location VARCHAR(50) NOT NULL,
+        pricePerDay REAL NOT NULL
+      );
+  `);
+    
     console.log("Successfully finished DB migrations");
   } catch (err) {
     console.error("An error occurred while running DB migrations:");
