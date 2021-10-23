@@ -21,6 +21,10 @@ const SigninPage = () => {
       .catch(() => setHasError(true));
   };
 
+  // const checkLogin = () => {
+  //   setLog({pass:true})
+  // };
+
   const submitHandler = (e) => {
     e.preventDefault();
     Login(details);
@@ -44,83 +48,86 @@ const SigninPage = () => {
   };
 
   return (
-    <div className="page">
-      {log.pass ? (
-        <Container>
-          <HeaderMenu />
-          <h3 className="mb-4">Welcome {user.email} </h3>
-          <Button
-            className="mb-2"
-            variant="primary"
-            type="submit"
-            size="lg"
-            onClick={Logout}>
-            Logout
-          </Button>
-        </Container>
-      ) : (
-        <div>
-          <HeaderMenu />
-          <Container fluid>
-            <Form onSubmit={submitHandler}>
-              <Row md>
-                <Col>
+    <>
+      <HeaderMenu />
+      <div className="page">
+        {log.pass ? (
+          <Container>
+            <h3 className="mb-4">Welcome {user.email} </h3>
+            <Button
+              className="mb-2"
+              variant="primary"
+              type="submit"
+              size="lg"
+              onClick={Logout}>
+              Logout
+            </Button>
+          </Container>
+        ) : (
+          <div>
+            <Container fluid>
+              <Form onSubmit={submitHandler}>
+                <Row md>
+                  <Col>
+                    <Form.Group
+                      className="mb-3 form-signin"
+                      controlId="formEmail">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        type="email"
+                        placeholder="Enter Email"
+                        onChange={(e) =>
+                          setDetails({ ...details, email: e.target.value },
+                          setHasError(false))
+                        }
+                        value={details.email}
+                      />
+                    </Form.Group>
+                  </Col>
                   <Form.Group
                     className="mb-3 form-signin"
-                    controlId="formEmail">
-                    <Form.Label>Email</Form.Label>
+                    controlId="formPassword">
+                    <Form.Label>Password</Form.Label>
                     <Form.Control
-                      type="email"
-                      placeholder="Enter Email"
+                      type="password"
+                      placeholder="Enter Password"
                       onChange={(e) =>
-                        setDetails({ ...details, email: e.target.value })
+                        setDetails({ ...details, password: e.target.value },
+                        setHasError(false))
                       }
-                      value={details.email}
+                      value={details.password}
                     />
                   </Form.Group>
-                </Col>
-                <Form.Group
-                  className="mb-3 form-signin"
-                  controlId="formPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter Password"
-                    onChange={(e) =>
-                      setDetails({ ...details, password: e.target.value })
-                    }
-                    value={details.password}
-                  />
-                </Form.Group>
-              </Row>
-              <Row>
-                {hasError && <div className="alert alert-warning" role="alert">
-                  Wrong Login info. Please try again.
-                </div>}
-                <Button
-                  className="mb-2"
-                  variant="primary"
-                  type="submit"
-                  size="lg"
-                  onClick={checkLogin}>
-                  Login
-                </Button>
-              </Row>
-              <Row>
-                <Form.Text className="text-black form-control-sm">
-                  Don't have an account yet? Sign up!
-                </Form.Text>
-              </Row>
-              <Row>
-                <a href="/signup" className="btn btn-dark" role="button">
-                  Sign up
-                </a>
-              </Row>
-            </Form>
-          </Container>
-        </div>
-      )}
-    </div>
+                </Row>
+                <Row>
+                  {hasError && <div className="alert alert-warning" role="alert">
+                    Wrong Login info. Please try again.
+                  </div>}
+                  <Button
+                    className="mb-2"
+                    variant="primary"
+                    type="submit"
+                    size="lg"
+                    onClick={checkLogin}>
+                    Login
+                  </Button>
+                </Row>
+                <Row>
+                  <Form.Text className="text-black form-control-sm">
+                    Don't have an account yet? Sign up!
+                  </Form.Text>
+                </Row>
+                <Row>
+                  <a href="/signup" className="btn btn-dark" role="button">
+                    Sign up
+                  </a>
+                </Row>
+              </Form>
+            </Container>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

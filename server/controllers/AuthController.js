@@ -15,4 +15,19 @@ AuthController.post("/logout", (req, res) => {
   res.json({ message: "Successfully logged out" });
 });
 
+// GET /api/auth/user
+AuthController.get("/user", (req, res) => {
+  if (req.user) {
+    res.json({
+      isLoggedIn: true,
+      user: req.user,
+    })
+  } else {
+    res.json({ 
+      isLoggedIn: false,
+      user: null,
+    });
+  }
+});
+
 exports.AuthController = AuthController;
