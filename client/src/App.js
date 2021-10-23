@@ -10,6 +10,7 @@ import AccountPage from './pages/AccountPage';
 import ProductDetailPage from './pages/ProductDetailPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
 import MediaDetailPage from './pages/MediaDetailPage'
+import CreateMedia from './pages/CreateMedia'
 import {AllProductDetailedPage, AllServiceDetailedPage, AllMediaDetailedPage} from './temp/TempAPIResponse'
 
 
@@ -24,6 +25,7 @@ function App() {
         <Route exact path='/product' component={ProductPage}/>
         <Route exact path='/media' component={MediaPage}/>
         <Route exact path='/realaccountpage' component={AccountPage}/>
+        <Route exact path='/CreateMedia' component={CreateMedia}/>
         
         {AllProductDetailedPage && AllProductDetailedPage.map((productDetailed) => 
           <Route exact path={`/product/${productDetailed.productId}`}>
