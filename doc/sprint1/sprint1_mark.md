@@ -196,30 +196,38 @@ Tracking on Jira Total Mark: _18_ / 20
 ---
 ## Sprint Demo (Max 14 marks) 
   - Attendance (max 2 marks)
-    - 2 marks = full team is present
+    **- 2 marks = full team is present**
     - 1 mark = one member is not present
     - 0 marks = more than one member is not present
   
   - Working software (max 2 marks)
-    - 8 marks = features presented work flawlessly
+    **- 8 marks = features presented work flawlessly**
     - 1 mark removed for each bug/error identified or for missing records on Jira
+    - 
 
   - Presentation (max 2 marks)
     - 2 marks = UI demonstrated is visually appealing and intuitive for users
-    - 1 mark = one or more errors identified by the demo TA
+    **- 1 mark = one or more errors identified by the demo TA**
     - 0 marks = UI is visually unappealing
 
   - Documentation (max 2 marks)
 
-  - 2 marks = documentation has been created for frontend and backend systems with great detail
+  **- 2 marks = documentation has been created for frontend and backend systems with great detail**
   - 1 mark = documentation has been created for frontend and backend systems with some errors
   - 0 marks = documentation has not been created
 
-  Your Mark: _TBD_ / 14
+- shouldn't show error until the find button is clicked
+- mobile css isn't centered on main page for items
+- edit account page looks a bit too wide for the screen and not enough margins on the side on mobile, not centered on desktop
+- buttons to switch pictures on the product page would be nice, it's unclear that you can switch the pictures
+- on the login page, the navbar is shrunk
+
+Your Mark: 13 / 14
+
 
 ---
 
 
 ## Total Mark
 
-_TBD_ / 90
+84 / 89
