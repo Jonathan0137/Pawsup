@@ -9,7 +9,8 @@ import MediaPage from './pages/MediaPage';
 import AccountPage from './pages/AccountPage';
 import ProductDetailPage from './pages/ProductDetailPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
-import {AllProductDetailedPage, AllServiceDetailedPage} from './temp/TempAPIResponse'
+import MediaDetailPage from './pages/MediaDetailPage'
+import {AllProductDetailedPage, AllServiceDetailedPage, AllMediaDetailedPage} from './temp/TempAPIResponse'
 
 
 function App() {
@@ -32,6 +33,11 @@ function App() {
         {AllServiceDetailedPage && AllServiceDetailedPage.map((serviceDetailed) => 
           <Route exact path={`/service/${serviceDetailed.serviceId}`}>
             <ServiceDetailPage data={serviceDetailed}/>
+          </Route>
+        )}
+        {AllMediaDetailedPage && AllMediaDetailedPage.map((mediaDetailed) => 
+          <Route exact path={`/media/${mediaDetailed.mediaId}`}>
+            <MediaDetailPage data={mediaDetailed}/>
           </Route>
         )}
       </div>

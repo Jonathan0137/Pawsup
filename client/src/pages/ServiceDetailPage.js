@@ -1,7 +1,7 @@
 import Footer from "../components/Footer";
 import HeaderMenu from "../components/HeaderMenu";
 import React from 'react';
-import {Image, Carousel, Button}from 'react-bootstrap';
+import {Image, Carousel}from 'react-bootstrap';
 import CommentSection from './../components/CommentSection'
 import ReactStars from "react-rating-stars-component";
 import './ServiceDetailPage.css'

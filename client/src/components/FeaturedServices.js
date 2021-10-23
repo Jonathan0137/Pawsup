@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Card, Button, CardGroup, Row, Col } from "react-bootstrap";
+import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import FeaturedPic1 from "../media/FeaturedServices1.png";
 import FeaturedPic2 from "../media/FeaturedServices2.jpg";
 
