@@ -16,21 +16,25 @@ UserController.get("/", async (req, res) => {
     }
 });
 
+
+
 //CREATE /api/user
 UserController.post("/", async (req, res) => {
-  const { username, password, email, location } = req.body;
+  const { username, email, password, fname, lname, city } = req.body;
 
-  if (!username || !password || !email || !location) {
+  if (!username || !email || !password || !fname || !lname || !city) {
     return res.status(400).json({
-      message: "[username, password, email, location] cannot be empty in response body",
+      message: "[username, email, password, fname, lname, city] cannot be empty in response body",
     });
   }
 
   const user = new UserModel({
     username: username,
-    password: password,
     email: email,
-    location: location,
+    password: password,
+    fname: fname,
+    lname: lname,
+    city: city,
   });
 
   try {
@@ -48,11 +52,11 @@ UserController.post("/", async (req, res) => {
 // At least one of these fields must be in request body. 
 UserController.put("/:uid", async(req, res) => {
   const { uid } = req.params;
-  const { password, email, location } = req.body;
+  const { password, email, city } = req.body;
 
-  if (!password && !email && !location) {
+  if (!password && !email && !city) {
     return res.status(400).json({
-      message: "[password, email, location] cannot all be empty in response body. Nothing to edit!",
+      message: "[password, email, city] cannot all be empty in response body. Nothing to edit!",
     });
   }
 
@@ -72,8 +76,8 @@ UserController.put("/:uid", async(req, res) => {
       user.email = email;
     }
 
-    if (location) {
-      user.location = location;
+    if (city) {
+      user.city = city;
     }
 
     await user.save();

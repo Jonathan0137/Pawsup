@@ -1,7 +1,7 @@
-import HeaderMenu from '../../components/HeaderMenu';
-import Footer from '../../components/Footer';
+import HeaderMenu from '../components/HeaderMenu';
+import Footer from '../components/Footer';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Form,Col,Row} from 'react-bootstrap';
+import { Container, Button, Form,Col,Row} from 'react-bootstrap';
 import './AccountPage.css';
 import React from 'react';
 import { useState } from 'react';
@@ -16,18 +16,15 @@ const AccountPage = () => {
     return (
         <>
             <HeaderMenu />
-            <div className='accountpagetitle'>
-                <h1>This is Account Page</h1>
-            </div>
-            <div className=''>
-                {/* <p>Username</p> */}
+            <div>
+                <Container className='containercenter'>
                 <Form>
                     <Form.Group as={Row} className="mb-3 form" controlId="formPlaintextEmail">
 
                         <Form.Label column sm="2">
                         Email
                         </Form.Label>
-                        <Col sm="5" className='editbutton'>
+                        <Col className='editbutton'>
                         <Form.Control plaintext readOnly defaultValue="email@example.com"/>
                         <input/>
                         
@@ -40,7 +37,7 @@ const AccountPage = () => {
                         <Form.Label column sm="2">
                         Password
                         </Form.Label>
-                        <Col sm="5" className='editbutton'>
+                        <Col className='editbutton'>
                         <Form.Control plaintext readOnly defaultValue="example-password" />
                         <input/>
                         <Button variant='primary' type='submit' onClick={handleEdit}>Edit</Button>
@@ -50,10 +47,8 @@ const AccountPage = () => {
                     
                     <Form.Group as={Row} className="mb-3 form" controlId="formPlaintextPassword">
                         
-                        <Form.Label column sm="2">
-                        User type
-                        </Form.Label>
-                        <Col sm="5" className='editbutton'>
+                        <Form.Label column>User type</Form.Label>
+                        <Col className='editbutton'>
                         <Form.Control plaintext readOnly defaultValue="example-usertype" />
                         <Form.Control as="select" defaultValue="Choose Service ...">
                             <option>...</option>
@@ -70,7 +65,7 @@ const AccountPage = () => {
                         <Form.Label column sm="2">
                         Uid
                         </Form.Label>
-                        <Col sm="5" className='editbutton'>
+                        <Col className='editbutton'>
                         <Form.Control plaintext readOnly defaultValue="example-uid" />
                         <input/>
                         <Button variant='primary' type='submit' >Edit</Button>
@@ -82,7 +77,7 @@ const AccountPage = () => {
                         <Form.Label column sm="2">
                         Location
                         </Form.Label>
-                        <Col sm="5" className='editbutton'>
+                        <Col className='editbutton'>
                             <Form.Control plaintext readOnly defaultValue="example-Location" />
                             <input/>
                             <Button variant='primary' type='submit' >Edit</Button>
@@ -91,6 +86,7 @@ const AccountPage = () => {
 
 
                 </Form>
+                </Container>
             </div>
             <Footer />
         </>

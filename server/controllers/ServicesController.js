@@ -6,8 +6,33 @@ const ServicesController = express.Router();
 // GET /api/services
 ServicesController.get("/", async (req, res) => {
   try {
-    const services = await ServiceModel.getServices();
+    // Optional filtering and sorting parameters for getting services
+    let { locations = "", pet_breeds = "", minPrice, maxPrice, sortBy, sortDirection } = req.query;
+    locations = locations.split(",").filter(item => item);
+    pet_breeds = pet_breeds.split(",").filter(item => item);
+
+    const services = await ServiceModel.getServices(locations, pet_breeds, minPrice, maxPrice, sortBy, sortDirection);
     res.json(services.map((service) => service.cleanCopy()));
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Encountered an error while fetching services" });
+  }
+});
+
+//GET /api/services/:serviceid
+ServicesController.get("/:serviceid", async (req, res) => {
+  const { serviceid } = req.params;
+
+  try {
+    const service = await ServiceModel.getServiceByID(serviceid);
+    if (!service) {
+      return res.status(404).json({
+        message: `Service with ID '${serviceid}' not found`,
+      });
+    }
+    res.status(200).json(service.cleanCopy());
   } catch (err) {
     console.error(err);
     res
@@ -18,18 +43,21 @@ ServicesController.get("/", async (req, res) => {
 
 // POST /api/services
 ServicesController.post("/", async (req, res) => {
-  const { title, content } = req.body;
+  const { servicepicurl, servicetitle, servicedetail, servicefacility, location, priceperday } = req.body;
 
-  if (!title || !content) {
+  if (!servicepicurl || !servicetitle || !servicedetail || !servicefacility || !location || !priceperday) {
     return res.status(400).json({
-      message: "[title, content] cannot be empty in response body",
+      message: "Fields are missing from request body",
     });
   }
 
   const service = new ServiceModel({
-    title: title,
-    content: content,
-    image: "placeholder.svg",
+    servicepicurl: servicepicurl,
+    servicetitle: servicetitle,
+    servicedetail: servicedetail,
+    servicefacility: servicefacility,
+    location: location,
+    priceperday: priceperday,
   });
 
   try {
@@ -43,27 +71,32 @@ ServicesController.post("/", async (req, res) => {
   }
 });
 
-// PUT /api/services/:id
-ServicesController.put("/:id", async (req, res) => {
-  const { id } = req.params;
-  const { title, content } = req.body;
+// PUT /api/services/:serviceid
+ServicesController.put("/:serviceid", async (req, res) => {
+  const { serviceid } = req.params;
+  const { servicepicurl, servicetitle, servicedetail, servicefacility, location, priceperday } = req.body;
 
-  if (!title || !content) {
+  if (!servicepicurl || !servicetitle || !servicedetail || !servicefacility || !location || !priceperday) {
     return res.status(400).json({
-      message: "[title, content] cannot be empty in response body",
+      message: "Fields are missing from request body",
     });
   }
 
   try {
-    const service = await ServiceModel.getServiceByID(id);
+    const service = await ServiceModel.getServiceByID(serviceid);
     if (!service) {
       return res.status(404).json({
-        message: `Service with ID '${id}' not found`,
+        message: `Service with ID '${serviceid}' not found`,
       });
     }
 
-    service.title = title;
-    service.content = content;
+    service.servicepicurl = servicepicurl;
+    service.servicetitle = servicetitle;
+    service.servicedetail = servicedetail;
+    service.servicefacility = servicefacility;
+    service.location = location;
+    service.priceperday = priceperday;
+
     await service.save();
     res.status(200).json(service.cleanCopy());
   } catch (err) {
@@ -74,15 +107,15 @@ ServicesController.put("/:id", async (req, res) => {
   }
 });
 
-// DELETE /api/services/:id
-ServicesController.delete("/:id", async (req, res) => {
-  const { id } = req.params;
+// DELETE /api/services/:serviceid
+ServicesController.delete("/:serviceid", async (req, res) => {
+  const { serviceid } = req.params;
 
   try {
-    const service = await ServiceModel.getServiceByID(id);
+    const service = await ServiceModel.getServiceByID(serviceid);
     if (!service) {
       return res.status(404).json({
-        message: `Service with ID '${id}' not found`,
+        message: `Service with ID '${serviceid}' not found`,
       });
     }
 
