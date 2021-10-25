@@ -116,6 +116,25 @@ async function migrate() {
         );
     `);
     
+    // Create cart_items table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS cart_items (
+        id serial PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        cart_item_type VARCHAR(200) NOT NULL,
+        foreign_id INTEGER NOT NULL
+      );
+    `);
+
+    // Populate cart_items table
+    await db.query(`
+      INSERT INTO cart_items(user_id, cart_item_type, foreign_id)
+        VALUES
+        (1, 'service', 1),
+        (1, 'service', 2),
+        (1, 'product', 1);
+    `);
+
     console.log("Successfully finished DB migrations");
   } catch (err) {
     console.error("An error occurred while running DB migrations:");
