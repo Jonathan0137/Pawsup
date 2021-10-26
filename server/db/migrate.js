@@ -64,9 +64,9 @@ async function migrate() {
           product_origin VARCHAR(200) NOT NULL,
           product_category VARCHAR(200) NOT NULL,
           product_pet_breed VARCHAR(200) NOT NULL,
-          product_type VARCHAR(200) NOT NULL,
+          product_type VARCHAR(200)[] NOT NULL,
           product_pic_url VARCHAR(200)[] NOT NULL,
-          product_price DECIMAL DEFAULT 0.00,
+          product_price DECIMAL[] NOT NULL,
           product_rating DECIMAL DEFAULT 0
         );
     `);
@@ -75,10 +75,10 @@ async function migrate() {
     await db.query(`
       INSERT INTO products(product_name, product_detail, product_origin, product_category, product_pet_breed, product_type, product_pic_url, product_price, product_rating)
         VALUES
-        ('Green Farms Dog Food', 'Delicious and healthy dog food', 'Pawsup', 'Food', 'Dog', 'Small', '{"www.url21.com","www.url22.com"}', 2.99, 3.5), 
-        ('Red Farms Cat Food', 'Delicious and healthy cat food', 'Pawsup', 'Food', 'Cat', 'Medium', '{"www.url25.com","www.url11.com"}', 5.99, 4.5), 
-        ('Mouse Toy', 'Fun and interactive cat toy', 'Pawsup', 'Toy', 'Cat', 'Large', '{"www.url91.com","www.url27.com"}', 10.99, 2.3), 
-        ('Hamster Wheel', 'Fun hamster wheel', 'Pawsup', 'Toy', 'Hamster', 'Small', '{"www.url92.com","www.url28.com"}', 1.50, 0.2);
+        ('Green Farms Dog Food', 'Delicious and healthy dog food', 'Pawsup', 'Food', 'Dog', '{"Small", "Medium", "Large"}', '{"www.url21.com","www.url22.com"}', '{2.99, 3.99, 5.99}', 3.5), 
+        ('Red Farms Cat Food', 'Delicious and healthy cat food', 'Pawsup', 'Food', 'Cat', '{"Small", "Medium", "Large"}', '{"www.url25.com","www.url11.com"}', '{2.99, 3.99, 5.99}', 4.5), 
+        ('Mouse Toy', 'Fun and interactive cat toy', 'Pawsup', 'Toy', 'Cat', '{"Small", "Medium", "Large"}', '{"www.url91.com","www.url27.com"}', '{2.99, 3.99, 5.99}', 2.3), 
+        ('Hamster Wheel', 'Fun hamster wheel', 'Pawsup', 'Toy', 'Hamster', '{"Small", "Medium", "Large"}', '{"www.url92.com","www.url28.com"}', '{2.99, 3.99, 5.99}', 0.2);
     `);
 
     // Create comments table

@@ -43,7 +43,7 @@ ProductsController.get("/:product_id", async (req, res) => {
 
 // POST /api/products
 ProductsController.post("/", async (req, res) => {
-  const { product_detail, product_name, product_origin, product_price, product_type, product_pic_url, product_rating } = req.body;
+  const { product_detail, product_name, product_origin, product_category, product_pet_breed, product_price, product_type, product_pic_url, product_rating } = req.body;
 
   if (!product_detail || !product_name || !product_origin || !product_price || !product_type || !product_pic_url || !product_rating) {
     return res.status(400).json({
@@ -59,6 +59,8 @@ ProductsController.post("/", async (req, res) => {
     product_type: product_type,
     product_pic_url: product_pic_url,
     product_rating: product_rating,
+    product_category: product_category,
+    product_pet_breed: product_pet_breed,
   });
 
   try {
@@ -75,11 +77,11 @@ ProductsController.post("/", async (req, res) => {
 // PUT /api/products/:product_id
 ProductsController.put("/:product_id", async (req, res) => {
   const { product_id } = req.params;
-  const { product_detail, product_name, product_origin, product_price, product_type, product_pic_url, product_rating } = req.body;
+  const { product_detail, product_name, product_origin, product_category, product_pet_breed, product_price, product_type, product_pic_url, product_rating } = req.body;
 
-  if (!product_detail || !product_name || !product_origin || !product_price || !product_type || !product_pic_url || !product_rating) {
+  if (!product_detail && !product_name && !product_origin && !product_category && !product_pet_breed && !product_price && !product_type && !product_pic_url && !product_rating) {
     return res.status(400).json({
-      message: "Fields are missing from request body",
+      message: "Fields are missing from request body. Nothing to change!",
     });
   }
 
@@ -91,14 +93,42 @@ ProductsController.put("/:product_id", async (req, res) => {
       });
     }
 
-    product.product_detail = product_detail;
-    product.product_name = product_name;
-    product.product_origin = product_origin;
-    product.product_price = product_price;
-    product.product_type = product_type;
-    product.product_pic_url = product_pic_url;
-    product.product_rating = product_rating;
+    if (product_detail) {
+      product.product_detail = product_detail;
+    }
+    
+    if (product_name) {
+      product.product_name = product_name;
+    }
 
+    if (product_origin) {
+      product.product_origin = product_origin;
+    }
+
+    if (product_price) {
+      product.product_price = product_price;
+    }
+    
+    if (product_type) {
+      product.product_type = product_type;
+    }
+    
+    if (product_pic_url) {
+      product.product_pic_url = product_pic_url;
+    }
+    
+    if (product_rating) {
+      product.product_rating = product_rating;
+    }
+    
+    if (product_category) {
+      product.product_category = product_category;
+    }
+    
+    if (product_pet_breed) {
+      product.product_pet_breed = product_pet_breed;
+    }
+    
     await product.save();
     res.status(200).json(product.cleanCopy());
   } catch (err) {
