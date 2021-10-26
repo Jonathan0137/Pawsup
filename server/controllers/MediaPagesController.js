@@ -18,11 +18,11 @@ MediaPagesController.get("/", async (req, res) => {
 
 // POST /api/mediapages
 MediaPagesController.post("/", async (req, res) => {
-  const { author_id, media_picture_url, media_title, media_detail, published_time } = req.body;
+  const { author_id, media_picture_url, media_title, media_detail, published_time, number_of_likes} = req.body;
 
-  if (!author_id || !media_picture_url || !media_title || !media_detail || !published_time) {
+  if (!author_id || !media_picture_url || !media_title || !media_detail || !published_time || !number_of_likes) {
     return res.status(400).json({
-      message: "[authorId, mediaPictureURL, mediaTitle, mediaDetail, publishedTime] cannot be empty in response body",
+      message: "[authorId, mediaPictureURL, mediaTitle, mediaDetail, publishedTime, numberOfLikes] cannot be empty in response body",
     });
   }
 
@@ -39,6 +39,7 @@ MediaPagesController.post("/", async (req, res) => {
     media_title: media_title,
     media_detail: media_detail,
     published_time: published_time,
+    number_of_likes: number_of_likes,
   });
 
   try {

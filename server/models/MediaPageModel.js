@@ -8,6 +8,7 @@ class MediaPageModel extends DBModel {
   media_title;
   media_detail;
   published_time;
+  number_of_likes;
 
   constructor(data) {
     super({

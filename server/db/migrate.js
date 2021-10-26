@@ -106,15 +106,40 @@ async function migrate() {
 
     // Create mediapages table
     await db.query(`
-        CREATE TABLE IF NOT EXISTS mediaPages (
-          id serial PRIMARY KEY,
-          author_id integer NOT NULL,
-          media_picture_url VARCHAR(50) NOT NULL,
-          media_title VARCHAR(50) NOT NULL,
-          media_detail VARCHAR(50) NOT NULL,
-          published_time VARCHAR(50) NOT NULL
-        );
-    `);
+    CREATE TABLE IF NOT EXISTS users (
+        uid serial PRIMARY KEY,
+        username VARCHAR(30) NOT NULL,
+        email VARCHAR(30) NOT NULL,
+        password VARCHAR(30) NOT NULL,
+        fname VARCHAR(30) NOT NULL,
+        lname VARCHAR(30) NOT NULL,
+        city VARCHAR(30) NOT NULL
+    );
+`);
+
+  // Create mediapages table
+  await db.query(`
+      CREATE TABLE IF NOT EXISTS mediaPages (
+        id serial PRIMARY KEY,
+        author_id integer NOT NULL,
+        media_picture_url VARCHAR(200)[] NOT NULL,
+        media_title VARCHAR(50) NOT NULL,
+        media_detail VARCHAR(200) NOT NULL,
+        published_time VARCHAR(50) NOT NULL,
+        number_of_likes integer NOT NULL
+      );
+  `);
+
+  // Populate mediapages table
+  await db.query(`
+  INSERT INTO mediaPages(author_id, media_picture_url, media_title, media_detail, published_time, number_of_likes)
+    VALUES
+    (1, '{"https://upload.wikimedia.org/wikipedia/commons/8/8c/Cow_%28Fleckvieh_breed%29_Oeschinensee_Slaunger_2009-07-07.jpg","www.google.com"}', 'Cute Cow', 'This is a picture of a cow!', '2021-09-11 3:12 PM', 10),
+    (3, '{"https://images.unsplash.com/photo-1529778873920-4da4926a72c2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80","www.google.com"}', 'Adorable Cat', 'This is a picture of a cat!', '2021-10-11 7:15 AM', 7),
+    (5, '{"https://thehappypuppysite.com/wp-content/uploads/2017/10/Cute-Dog-Names-HP-long-1024x555.jpg","www.google.com"}', 'Beautiful Pupper', 'This is a picture of a dog!', '2021-11-15 09:55 AM', 11
+
+  );
+`);
     
     // Create cart_items table
     await db.query(`
