@@ -83,7 +83,8 @@ const ServicePage = () => {
                     onClick={() => (
                       setCondition({ ...condition, locations: "Toronto" }),
                       setSelectedL({ toronto: !selectedL.toronto })
-                    )}>
+                    )}
+                  >
                     {selectedL.toronto ? (
                       <span className="selected">Toronto</span>
                     ) : (
@@ -95,7 +96,8 @@ const ServicePage = () => {
                     onClick={() => (
                       setCondition({ ...condition, locations: "Markham" }),
                       setSelectedL({ markham: !selectedL.markham })
-                    )}>
+                    )}
+                  >
                     {selectedL.markham ? (
                       <span className="selected">Markham</span>
                     ) : (
@@ -114,7 +116,8 @@ const ServicePage = () => {
                     onClick={() => (
                       setCondition({ ...condition, pet_breeds: "Cat" }),
                       setSelectedP({ cat: !selectedP.cat })
-                    )}>
+                    )}
+                  >
                     {selectedP.cat ? (
                       <span className="selected">Cat</span>
                     ) : (
@@ -126,7 +129,8 @@ const ServicePage = () => {
                     onClick={() => (
                       setCondition({ ...condition, pet_breeds: "Dog" }),
                       setSelectedP({ dog: !selectedP.dog })
-                    )}>
+                    )}
+                  >
                     {selectedP.dog ? (
                       <span className="selected">Dog</span>
                     ) : (
@@ -137,7 +141,8 @@ const ServicePage = () => {
                     onClick={() => (
                       setCondition({ ...condition, pet_breeds: "Hamster" }),
                       setSelectedP({ hamster: !selectedP.hamster })
-                    )}>
+                    )}
+                  >
                     {selectedP.hamster ? (
                       <span className="selected">Hamster</span>
                     ) : (
@@ -148,7 +153,8 @@ const ServicePage = () => {
                     onClick={() => (
                       setCondition({ ...condition, pet_breeds: "Rabbit" }),
                       setSelectedP({ rabbit: !selectedP.rabbit })
-                    )}>
+                    )}
+                  >
                     {selectedP.rabbit ? (
                       <span className="selected">Rabbit</span>
                     ) : (
@@ -178,7 +184,8 @@ const ServicePage = () => {
                             sortBy: "service_rating",
                             sortDirection: "ASC",
                           })
-                        }>
+                        }
+                      >
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -189,7 +196,8 @@ const ServicePage = () => {
                             sortBy: "service_rating",
                             sortDirection: "DESC",
                           })
-                        }>
+                        }
+                      >
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -212,7 +220,8 @@ const ServicePage = () => {
                             sortBy: "priceperday",
                             sortDirection: "ASC",
                           })
-                        )}>
+                        )}
+                      >
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -224,7 +233,8 @@ const ServicePage = () => {
                             sortBy: "priceperday",
                             sortDirection: "DESC",
                           })
-                        )}>
+                        )}
+                      >
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -250,7 +260,8 @@ const ServicePage = () => {
                     <Form.Group
                       className="mt-1 mb-1"
                       md={1}
-                      controlId="maxPrice">
+                      controlId="maxPrice"
+                    >
                       <Form.Control
                         type="number"
                         placeholder="Max Price"
@@ -273,7 +284,8 @@ const ServicePage = () => {
                   <Button
                     className="findButton"
                     variant="primary"
-                    onClick={conditions}>
+                    onClick={conditions}
+                  >
                     Find
                   </Button>
                 </Col>

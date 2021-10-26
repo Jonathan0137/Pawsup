@@ -41,6 +41,28 @@ const ProductPage = () => {
 
   let content = null;
 
+  // For categories
+  useEffect(() => {
+    selectedC.toy
+      ? setCondition({ ...condition, category: "Toy" })
+      : selectedC.food
+      ? setCondition({ ...condition, category: "Food" })
+      : setCondition({ ...condition, category: "" });
+  }, [selectedC]);
+
+  // For pet breeds
+  useEffect(() => {
+    selectedP.cat
+      ? setCondition({ ...condition, pet_breeds: "Cat" })
+      : selectedP.dog
+      ? setCondition({ ...condition, pet_breeds: "Dog" })
+      : selectedP.hamster
+      ? setCondition({ ...condition, pet_breeds: "Hamster" })
+      : selectedP.rabbit
+      ? setCondition({ ...condition, pet_breeds: "Rabbit" })
+      : setCondition({ ...condition, pet_breeds: "" });
+  }, [selectedP]);
+
   // useEffect(() => {
   //   setProducts({
   //     data: null,
@@ -64,47 +86,47 @@ const ProductPage = () => {
   //     .catch(() => setProducts({ error: true }));
   // }, ["/api/products"]);
 
-  const conditions = async () => {
-    setProducts({
-      data: null,
-      error: false,
-    });
-    await axios
-      .get("/api/products", {
-        categories: condition.category,
-        pet_breeds: condition.pet_breeds,
-        minPrice: condition.minPrice,
-        maxPrice: condition.maxPrice,
-        sortBy: condition.sortBy,
-        sortDirection: condition.sortDirection,
-      })
-      .then((res) => {
-        setProducts({
-          data: res.data,
-          error: false,
-        });
-      })
-      .catch(() => setProducts({ error: true }));
-  };
+  // const conditions = async () => {
+  //   setProducts({
+  //     data: null,
+  //     error: false,
+  //   });
+  //   await axios
+  //     .get("/api/products", {
+  //       categories: condition.category,
+  //       pet_breeds: condition.pet_breeds,
+  //       minPrice: condition.minPrice,
+  //       maxPrice: condition.maxPrice,
+  //       sortBy: condition.sortBy,
+  //       sortDirection: condition.sortDirection,
+  //     })
+  //     .then((res) => {
+  //       setProducts({
+  //         data: res.data,
+  //         error: false,
+  //       });
+  //     })
+  //     .catch(() => setProducts({ error: true }));
+  // };
 
-  // if (products.data) {
-  //   content = products.data.map((product) => (
-  //     <div className="mb-3 rounded" key={product.product_id}>
-  //       {/* Link here */}
-  //       {/* <Link to={`the link`}> */}
-  //       <div
-  //         style={{ backgroundImage: `url('${product.product_pic_url[0]} ')` }}
-  //       ></div>
-  //       {/* </Link> */}
-  //       <Container>
-  //         <h5 className="bold mb-2">{product.data.product_name}</h5>
-  //         <h5 className="mb-2">{product.data.product_detail}</h5>
-  //         <h5 className="mb-2">{product.data.product_price}</h5>
-  //         <h5 className="mb-2">{product.data.product_rating}</h5>
-  //       </Container>
-  //     </div>
-  //   ));
-  // }
+  if (products.data) {
+    content = products.data.map((product) => (
+      <div className="mb-3 rounded font-bold" key={product.product_id}>
+        {/* Link here */}
+        {/* <Link to={`the link`}> */}
+        <div
+          style={{ backgroundImage: `url('${product.product_pic_url[0]} ')` }}
+        ></div>
+        {/* </Link> */}
+        <Container>
+          <h3 className="bold mb-2">{product.data.product_name}</h3>
+          <h5 className="mb-2">{product.data.product_detail}</h5>
+          <h5 className="mb-2">{product.data.product_price}</h5>
+          <h5 className="mb-2">{product.data.product_rating}</h5>
+        </Container>
+      </div>
+    ));
+  }
 
   return (
     <>
@@ -120,15 +142,14 @@ const ProductPage = () => {
                   <div>
                     <Nav.Link
                       className="nav_default bold"
-                      style={{ cursor: "default" }}>
+                      style={{ cursor: "default" }}
+                    >
                       Category:
                     </Nav.Link>
                   </div>
                   <Nav.Link
-                    onClick={() => (
-                      setCondition({ ...condition, category: "Toy" }),
-                      setSelectedC({ toy: !selectedC.toy })
-                    )}>
+                    onClick={() => setSelectedC({ toy: !selectedC.toy })}
+                  >
                     {selectedC.toy ? (
                       <span className="selected">Toy</span>
                     ) : (
@@ -136,10 +157,8 @@ const ProductPage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => (
-                      setCondition({ ...condition, category: "Food" }),
-                      setSelectedC({ food: !selectedC.food })
-                    )}>
+                    onClick={() => setSelectedC({ food: !selectedC.food })}
+                  >
                     {selectedC.food ? (
                       <span className="selected">Food</span>
                     ) : (
@@ -154,10 +173,8 @@ const ProductPage = () => {
                     Pet:
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => (
-                      setCondition({ ...condition, pet_breeds: "Cat" }),
-                      setSelectedP({ cat: !selectedP.cat })
-                    )}>
+                    onClick={() => setSelectedP({ cat: !selectedP.cat })}
+                  >
                     {selectedP.cat ? (
                       <span className="selected">Cat</span>
                     ) : (
@@ -165,10 +182,8 @@ const ProductPage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => (
-                      setCondition({ ...condition, pet_breeds: "Dog" }),
-                      setSelectedP({ dog: !selectedP.dog })
-                    )}>
+                    onClick={() => setSelectedP({ dog: !selectedP.dog })}
+                  >
                     {selectedP.dog ? (
                       <span className="selected">Dog</span>
                     ) : (
@@ -176,10 +191,10 @@ const ProductPage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => (
-                      setCondition({ ...condition, pet_breeds: "Hamster" }),
+                    onClick={() =>
                       setSelectedP({ hamster: !selectedP.hamster })
-                    )}>
+                    }
+                  >
                     {selectedP.hamster ? (
                       <span className="selected">Hamster</span>
                     ) : (
@@ -187,10 +202,8 @@ const ProductPage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => (
-                      setCondition({ ...condition, pet_breeds: "Rabbit" }),
-                      setSelectedP({ rabbit: !selectedP.rabbit })
-                    )}>
+                    onClick={() => setSelectedP({ rabbit: !selectedP.rabbit })}
+                  >
                     {selectedP.rabbit ? (
                       <span className="selected">Rabbit</span>
                     ) : (
@@ -219,7 +232,8 @@ const ProductPage = () => {
                             sortBy: "product_rating",
                             sortDirection: "ASC",
                           })
-                        }>
+                        }
+                      >
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -229,7 +243,8 @@ const ProductPage = () => {
                             sortBy: "product_rating",
                             sortDirection: "DESC",
                           })
-                        }>
+                        }
+                      >
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -243,25 +258,25 @@ const ProductPage = () => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item
-                        onClick={(e) => (
-                          e.preventDefault(),
+                        onClick={() =>
                           setCondition({
                             ...condition,
                             sortBy: "product_price",
                             sortDirection: "ASC",
                           })
-                        )}>
+                        }
+                      >
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
-                        onClick={(e) => (
-                          e.preventDefault(),
+                        onClick={() =>
                           setCondition({
                             ...condition,
                             sortBy: "product_price",
                             sortDirection: "DESC",
                           })
-                        )}>
+                        }
+                      >
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -274,29 +289,30 @@ const ProductPage = () => {
                       <Form.Control
                         type="number"
                         placeholder="Min Price"
-                        onChange={(e) => (
-                          setMinPrice(Number(e.target.value)),
+                        onChange={(e) => {
+                          setMinPrice(Number(e.target.value));
                           setCondition({
                             ...condition,
                             minPrice: Number(e.target.value),
-                          })
-                        )}
+                          });
+                        }}
                       />
                     </Form.Group>
                     <Form.Group
                       className="mt-1 mb-1"
                       md={1}
-                      controlId="maxPrice">
+                      controlId="maxPrice"
+                    >
                       <Form.Control
                         type="number"
                         placeholder="Max Price"
-                        onChange={(e) => (
-                          setMaxPrice(Number(e.target.value)),
+                        onChange={(e) => {
+                          setMaxPrice(Number(e.target.value));
                           setCondition({
                             ...condition,
                             maxPrice: Number(e.target.value),
-                          })
-                        )}
+                          });
+                        }}
                         isInvalid={minPrice > maxPrice}
                       />
                       <Form.Control.Feedback type="invalid">
@@ -309,7 +325,8 @@ const ProductPage = () => {
                   <Button
                     className="findButton"
                     variant="primary"
-                    onClick={conditions}>
+                    // onClick={}
+                  >
                     Find
                   </Button>
                 </Col>
