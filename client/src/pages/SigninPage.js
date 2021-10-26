@@ -50,7 +50,7 @@ const SigninPage = () => {
   return (
     <>
       <HeaderMenu />
-      <div className="page">
+      <div className="page bg-white">
         {log.pass ? (
           <Container>
             <h3 className="mb-4">Welcome {user.email} </h3>
@@ -59,7 +59,8 @@ const SigninPage = () => {
               variant="primary"
               type="submit"
               size="lg"
-              onClick={Logout}>
+              onClick={Logout}
+            >
               Logout
             </Button>
           </Container>
@@ -71,14 +72,17 @@ const SigninPage = () => {
                   <Col>
                     <Form.Group
                       className="mb-3 form-signin"
-                      controlId="formEmail">
+                      controlId="formEmail"
+                    >
                       <Form.Label>Email</Form.Label>
                       <Form.Control
                         type="email"
                         placeholder="Enter Email"
                         onChange={(e) =>
-                          setDetails({ ...details, email: e.target.value },
-                          setHasError(false))
+                          setDetails(
+                            { ...details, email: e.target.value },
+                            setHasError(false)
+                          )
                         }
                         value={details.email}
                       />
@@ -86,34 +90,40 @@ const SigninPage = () => {
                   </Col>
                   <Form.Group
                     className="mb-3 form-signin"
-                    controlId="formPassword">
+                    controlId="formPassword"
+                  >
                     <Form.Label>Password</Form.Label>
                     <Form.Control
                       type="password"
                       placeholder="Enter Password"
                       onChange={(e) =>
-                        setDetails({ ...details, password: e.target.value },
-                        setHasError(false))
+                        setDetails(
+                          { ...details, password: e.target.value },
+                          setHasError(false)
+                        )
                       }
                       value={details.password}
                     />
                   </Form.Group>
                 </Row>
                 <Row>
-                  {hasError && <div className="alert alert-warning" role="alert">
-                    Wrong Login info. Please try again.
-                  </div>}
+                  {hasError && (
+                    <div className="alert alert-warning" role="alert">
+                      Wrong Login info. Please try again.
+                    </div>
+                  )}
                   <Button
                     className="mb-2"
                     variant="primary"
                     type="submit"
                     size="lg"
-                    onClick={checkLogin}>
+                    onClick={checkLogin}
+                  >
                     Login
                   </Button>
                 </Row>
                 <Row>
-                  <Form.Text className="text-black form-control-sm">
+                  <Form.Text className="text-black form-control-md-8">
                     Don't have an account yet? Sign up!
                   </Form.Text>
                 </Row>
