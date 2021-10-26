@@ -11,7 +11,7 @@ import {
   Dropdown,
   Button,
 } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProductPage.css";
 
@@ -39,6 +39,28 @@ const ServicePage = () => {
   const [maxPrice, setMaxPrice] = useState(10000);
 
   let content = null;
+
+  // For categories
+  useEffect(() => {
+    selectedL.markham
+      ? setCondition({ ...condition, locations: "Markham" })
+      : selectedL.toronto
+      ? setCondition({ ...condition, locations: "Toronto" })
+      : setCondition({ ...condition, locations: "" });
+  }, [selectedL]);
+
+  // For pet breeds
+  useEffect(() => {
+    selectedP.cat
+      ? setCondition({ ...condition, pet_breeds: "Cat" })
+      : selectedP.dog
+      ? setCondition({ ...condition, pet_breeds: "Dog" })
+      : selectedP.hamster
+      ? setCondition({ ...condition, pet_breeds: "Hamster" })
+      : selectedP.rabbit
+      ? setCondition({ ...condition, pet_breeds: "Rabbit" })
+      : setCondition({ ...condition, pet_breeds: "" });
+  }, [selectedP]);
 
   const conditions = async () => {
     setServices({
@@ -79,12 +101,9 @@ const ServicePage = () => {
                     </Nav.Link>
                   </div>
                   <Nav.Link
-                    href="#toronto"
-                    onClick={() => (
-                      setCondition({ ...condition, locations: "Toronto" }),
+                    onClick={() =>
                       setSelectedL({ toronto: !selectedL.toronto })
-                    )}
-                  >
+                    }>
                     {selectedL.toronto ? (
                       <span className="selected">Toronto</span>
                     ) : (
@@ -92,12 +111,9 @@ const ServicePage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    href="#toronto"
-                    onClick={() => (
-                      setCondition({ ...condition, locations: "Markham" }),
+                    onClick={() =>
                       setSelectedL({ markham: !selectedL.markham })
-                    )}
-                  >
+                    }>
                     {selectedL.markham ? (
                       <span className="selected">Markham</span>
                     ) : (
@@ -112,12 +128,7 @@ const ServicePage = () => {
                     Pet:
                   </Nav.Link>
                   <Nav.Link
-                    href="#cat"
-                    onClick={() => (
-                      setCondition({ ...condition, pet_breeds: "Cat" }),
-                      setSelectedP({ cat: !selectedP.cat })
-                    )}
-                  >
+                    onClick={() => setSelectedP({ cat: !selectedP.cat })}>
                     {selectedP.cat ? (
                       <span className="selected">Cat</span>
                     ) : (
@@ -125,12 +136,7 @@ const ServicePage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    href="#dog"
-                    onClick={() => (
-                      setCondition({ ...condition, pet_breeds: "Dog" }),
-                      setSelectedP({ dog: !selectedP.dog })
-                    )}
-                  >
+                    onClick={() => setSelectedP({ dog: !selectedP.dog })}>
                     {selectedP.dog ? (
                       <span className="selected">Dog</span>
                     ) : (
@@ -138,11 +144,9 @@ const ServicePage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => (
-                      setCondition({ ...condition, pet_breeds: "Hamster" }),
+                    onClick={() =>
                       setSelectedP({ hamster: !selectedP.hamster })
-                    )}
-                  >
+                    }>
                     {selectedP.hamster ? (
                       <span className="selected">Hamster</span>
                     ) : (
@@ -150,11 +154,7 @@ const ServicePage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => (
-                      setCondition({ ...condition, pet_breeds: "Rabbit" }),
-                      setSelectedP({ rabbit: !selectedP.rabbit })
-                    )}
-                  >
+                    onClick={() => setSelectedP({ rabbit: !selectedP.rabbit })}>
                     {selectedP.rabbit ? (
                       <span className="selected">Rabbit</span>
                     ) : (
@@ -177,27 +177,23 @@ const ServicePage = () => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item
-                        href="#/action-1"
                         onClick={() =>
                           setCondition({
                             ...condition,
                             sortBy: "service_rating",
                             sortDirection: "ASC",
                           })
-                        }
-                      >
+                        }>
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
-                        href="#/action-2"
                         onClick={() =>
                           setCondition({
                             ...condition,
                             sortBy: "service_rating",
                             sortDirection: "DESC",
                           })
-                        }
-                      >
+                        }>
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -212,29 +208,23 @@ const ServicePage = () => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item
-                        href="#/action-1"
-                        onClick={(e) => (
-                          e.preventDefault(),
+                        onClick={(e) =>
                           setCondition({
                             ...condition,
                             sortBy: "priceperday",
                             sortDirection: "ASC",
                           })
-                        )}
-                      >
+                        }>
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
-                        href="#/action-2"
-                        onClick={(e) => (
-                          e.preventDefault(),
+                        onClick={(e) =>
                           setCondition({
                             ...condition,
                             sortBy: "priceperday",
                             sortDirection: "DESC",
                           })
-                        )}
-                      >
+                        }>
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -248,30 +238,29 @@ const ServicePage = () => {
                       <Form.Control
                         type="number"
                         placeholder="Min Price"
-                        onChange={(e) => (
-                          setMinPrice(Number(e.target.value)),
+                        onChange={(e) => {
+                          setMinPrice(Number(e.target.value));
                           setCondition({
                             ...condition,
                             minPrice: Number(e.target.value),
-                          })
-                        )}
+                          });
+                        }}
                       />
                     </Form.Group>
                     <Form.Group
                       className="mt-1 mb-1"
                       md={1}
-                      controlId="maxPrice"
-                    >
+                      controlId="maxPrice">
                       <Form.Control
                         type="number"
                         placeholder="Max Price"
-                        onChange={(e) => (
-                          setMaxPrice(Number(e.target.value)),
+                        onChange={(e) => {
+                          setMaxPrice(Number(e.target.value));
                           setCondition({
                             ...condition,
                             maxPrice: Number(e.target.value),
-                          })
-                        )}
+                          });
+                        }}
                         isInvalid={minPrice > maxPrice}
                       />
                       <Form.Control.Feedback type="invalid">
@@ -284,8 +273,7 @@ const ServicePage = () => {
                   <Button
                     className="findButton"
                     variant="primary"
-                    onClick={conditions}
-                  >
+                    onClick={conditions}>
                     Find
                   </Button>
                 </Col>
