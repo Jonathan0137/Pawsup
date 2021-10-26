@@ -2,13 +2,13 @@ const { db } = require("../db/db");
 const { DBModel } = require("./model");
 
 class ServiceModel extends DBModel {
-  serviceid;
-  servicepicurl;
-  servicetitle;
-  servicedetail;
-  servicefacility;
+  service_id;
+  service_pic_url;
+  service_title;
+  service_detail;
+  service_facility;
   location;
-  priceperday;
+  price_per_day;
   service_rating;
   service_pet_breed;
   provider_id;
@@ -20,7 +20,7 @@ class ServiceModel extends DBModel {
   constructor(data) {
     super({
       table: "services",
-      primaryKey: "serviceid",
+      primaryKey: "service_id",
     });
     Object.assign(this, data);
   }
@@ -55,12 +55,12 @@ class ServiceModel extends DBModel {
 
       if (minPrice != null) {
         params.push(minPrice);
-        query += ` priceperday >= $${params.length} AND`;
+        query += ` price_per_day >= $${params.length} AND`;
       }
 
       if (maxPrice != null) {
         params.push(maxPrice);
-        query += ` priceperday <= $${params.length} AND`;
+        query += ` price_per_day <= $${params.length} AND`;
       }
 
       // Remove the trailing " AND";
@@ -68,7 +68,7 @@ class ServiceModel extends DBModel {
     }
 
     // Apply the sorting direction if specified
-    const validSortColumns = ["priceperday", "service_rating"];
+    const validSortColumns = ["price_per_day", "service_rating"];
     if (validSortColumns.includes(sortBy?.toLowerCase())) {
       if (sortDirection !== "ASC") {
         sortDirection = "DESC";
@@ -81,8 +81,8 @@ class ServiceModel extends DBModel {
     return data.map((row) => new ServiceModel(row));
   }
 
-  static async getServiceByID(serviceid) {
-    const data = await db.query("SELECT * FROM services WHERE serviceid = $1", [serviceid]);
+  static async getServiceByID(service_id) {
+    const data = await db.query("SELECT * FROM services WHERE service_id = $1", [service_id]);
     return data.length > 0 ? new ServiceModel(data[0]) : null;
   }
 }

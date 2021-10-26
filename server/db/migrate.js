@@ -27,13 +27,13 @@ async function migrate() {
     // Create services table
     await db.query(`
       CREATE TABLE IF NOT EXISTS services (
-        serviceid serial PRIMARY KEY,
-        servicepicurl VARCHAR(200)[] NOT NULL,
-        servicetitle VARCHAR(200) NOT NULL,
-        servicedetail VARCHAR(200) NOT NULL,
-        servicefacility VARCHAR(200)[] NOT NULL,
+        service_id serial PRIMARY KEY,
+        service_pic_url VARCHAR(200)[] NOT NULL,
+        service_title VARCHAR(200) NOT NULL,
+        service_detail VARCHAR(200) NOT NULL,
+        service_facility VARCHAR(200)[] NOT NULL,
         location VARCHAR(200) NOT NULL,
-        priceperday DECIMAL DEFAULT 0.00,
+        price_per_day DECIMAL DEFAULT 0.00,
         service_rating DECIMAL DEFAULT 0,
         service_pet_breed VARCHAR(200) NOT NULL,
         provider_id INTEGER NOT NULL,
@@ -46,7 +46,7 @@ async function migrate() {
 
     // Populate services table
     await db.query(`
-      INSERT INTO services(servicepicurl, servicetitle, servicedetail, servicefacility, location, priceperday, service_rating, service_pet_breed, provider_id, provider_name, provider_phone, provider_email, provider_avatar)
+      INSERT INTO services(service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, provider_id, provider_name, provider_phone, provider_email, provider_avatar)
         VALUES 
         ('{"www.url1.com","www.url2.com"}', 'Cat grooming', 'Cat grooming service', '{"Bath","Toys"}', 'Markham', 60, 3, 'Cat', 1, 'FirstName LastName', '123-456-7890', 'testuser@email.com', 'www.exampleurl.com'),
         ('{"www.url3.com","www.url4.com"}', 'Dog walking', 'Dog grooming service', '{"Bath","Toys"}', 'Markham', 55, 2.7, 'Dog', 1, 'FirstName LastName', '123-456-7890', 'testuser@email.com', 'www.exampleurl.com'),
