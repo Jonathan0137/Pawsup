@@ -24,6 +24,25 @@ async function migrate() {
         ('testuser2', 'testuser2@email.com', 'testpassword2', 'FirstName2', 'LastName2', 'Toronto');
     `);
 
+    // Create providers table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS providers (
+        provider_id serial PRIMARY KEY,
+        provider_name VARCHAR(200) NOT NULL,
+        provider_phone VARCHAR(200) NOT NULL,
+        provider_email VARCHAR(200) NOT NULL,
+        provider_avatar VARCHAR(200) NOT NULL
+      );
+    `);
+
+    // Populate providers table
+    await db.query(`
+      INSERT INTO providers(provider_name, provider_phone, provider_email, provider_avatar)
+        VALUES
+        ('FirstName LastName', '123-456-7890', 'testuser@email.com', 'www.exampleurl.com'),
+        ('FirstName2 LastName2', '123-456-7890', 'testuser2@email.com', 'www.exampleurl2.com');
+    `);
+
     // Create services table
     await db.query(`
       CREATE TABLE IF NOT EXISTS services (
@@ -36,23 +55,19 @@ async function migrate() {
         price_per_day DECIMAL DEFAULT 0.00,
         service_rating DECIMAL DEFAULT 0,
         service_pet_breed VARCHAR(200) NOT NULL,
-        provider_id INTEGER NOT NULL,
-        provider_name VARCHAR(200) NOT NULL,
-        provider_phone VARCHAR(200) NOT NULL,
-        provider_email VARCHAR(200) NOT NULL,
-        provider_avatar VARCHAR(200) NOT NULL
+        pid INTEGER REFERENCES providers (provider_id)
       );
     `);
 
     // Populate services table
     await db.query(`
-      INSERT INTO services(service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, provider_id, provider_name, provider_phone, provider_email, provider_avatar)
+      INSERT INTO services(service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, pid)
         VALUES 
-        ('{"www.url1.com","www.url2.com"}', 'Cat grooming', 'Cat grooming service', '{"Bath","Toys"}', 'Markham', 60, 3, 'Cat', 1, 'FirstName LastName', '123-456-7890', 'testuser@email.com', 'www.exampleurl.com'),
-        ('{"www.url3.com","www.url4.com"}', 'Dog walking', 'Dog grooming service', '{"Bath","Toys"}', 'Markham', 55, 2.7, 'Dog', 1, 'FirstName LastName', '123-456-7890', 'testuser@email.com', 'www.exampleurl.com'),
-        ('{"www.url5.com","www.url6.com"}', 'Parrot training', 'Parrow training service', '{"Bath","Toys"}', 'Scarborough', 100, 4.9, 'Parrot', 2, 'FirstName2 LastName2', '123-456-7890', 'testuser2@email.com', 'www.exampleurl.com'),
-        ('{"www.url7.com","www.url8.com"}', 'Pet emergency care', 'Emergency care service', '{"Bath","Toys"}', 'Toronto', 200, 3.6, 'Hamster', 2, 'FirstName2 LastName2', '123-456-7890', 'testuser2@email.com', 'www.exampleurl.com'),
-        ('{"www.url9.com","www.url0.com"}', 'Pet sitting', 'Pet sitting service', '{"Bath","Toys"}', 'Toronto', 20, 1.2, 'Dog', 1, 'FirstName LastName', '123-456-7890', 'testuser@email.com', 'www.exampleurl.com');
+        ('{"www.url1.com","www.url2.com"}', 'Cat grooming', 'Cat grooming service', '{"Bath","Toys"}', 'Markham', 60, 3, 'Cat', 1),
+        ('{"www.url3.com","www.url4.com"}', 'Dog walking', 'Dog grooming service', '{"Bath","Toys"}', 'Markham', 55, 2.7, 'Dog', 1),
+        ('{"www.url5.com","www.url6.com"}', 'Parrot training', 'Parrow training service', '{"Bath","Toys"}', 'Scarborough', 100, 4.9, 'Parrot', 2),
+        ('{"www.url7.com","www.url8.com"}', 'Pet emergency care', 'Emergency care service', '{"Bath","Toys"}', 'Toronto', 200, 3.6, 'Hamster', 2),
+        ('{"www.url9.com","www.url0.com"}', 'Pet sitting', 'Pet sitting service', '{"Bath","Toys"}', 'Toronto', 20, 1.2, 'Dog', 2);
     `);
 
     // Create products table
