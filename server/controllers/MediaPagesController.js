@@ -16,6 +16,26 @@ MediaPagesController.get("/", async (req, res) => {
   }
 });
 
+//GET /api/mediapages/:id
+MediaPagesController.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const mediaPage = await MediaPageModel.getMediaPagesByID(id);
+    if (!mediaPage) {
+      return res.status(404).json({
+        message: `mediaPage with ID '${id}' not found`,
+      });
+    }
+    res.status(200).json(mediaPage.cleanCopy());
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Encountered an error while fetching mediaPage with ID '${id}'" });
+  }
+});
+
 // POST /api/mediapages
 MediaPagesController.post("/", async (req, res) => {
   const { author_id, media_picture_url, media_title, media_detail, published_time, number_of_likes} = req.body;
