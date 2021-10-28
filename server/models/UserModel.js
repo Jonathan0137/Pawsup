@@ -9,6 +9,8 @@ class UserModel extends DBModel {
     fname;
     lname;
     city;
+    phone_number;
+    avatar;
 
     constructor(data) {
         super({

@@ -12,16 +12,18 @@ async function migrate() {
           password VARCHAR(30) NOT NULL,
           fname VARCHAR(30) NOT NULL,
           lname VARCHAR(30) NOT NULL,
-          city VARCHAR(30) NOT NULL
+          city VARCHAR(30) NOT NULL,
+          phone_number bigint NOT NULL,
+          avatar VARCHAR(200) NOT NULL
       );
     `);
 
     // Populate users table
     await db.query(`
-      INSERT INTO users(username, email, password, fname, lname, city)
+      INSERT INTO users(username, email, password, fname, lname, city, phone_number, avatar)
         VALUES
-        ('testuser', 'testuser@email.com', 'testpassword', 'FirstName', 'LastName', 'Scarborough'),
-        ('testuser2', 'testuser2@email.com', 'testpassword2', 'FirstName2', 'LastName2', 'Toronto');
+        ('testuser', 'testuser@email.com', 'testpassword', 'FirstName', 'LastName', 'Scarborough', '9053728193', 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg'),
+        ('testuser2', 'testuser2@email.com', 'testpassword2', 'FirstName2', 'LastName2', 'Toronto', '4163921742', 'https://www.planetware.com/wpimages/2019/11/canada-in-pictures-beautiful-places-to-photograph-morraine-lake.jpg');
     `);
 
     // Create providers table
