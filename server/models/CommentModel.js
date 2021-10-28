@@ -9,7 +9,6 @@ class CommentModel extends DBModel {
   author_name;
   author_profile_pic_url;
   comment_time;
-  comment_replies;
 
   constructor(data) {
     super({

@@ -105,17 +105,40 @@ async function migrate() {
         comment_detail VARCHAR(200) NOT NULL,
         author_name VARCHAR(200) NOT NULL,
         author_profile_pic_url VARCHAR(200) NOT NULL,
-        comment_time VARCHAR(200) NOT NULL,
-        comment_replies VARCHAR(200)[]
+        comment_time VARCHAR(200) NOT NULL
       );
     `);
 
     // Populate comments table
     await db.query(`
-      INSERT INTO comments(comment_type, foreign_id, comment_detail, author_name, author_profile_pic_url, comment_time, comment_replies)
+      INSERT INTO comments(comment_type, foreign_id, comment_detail, author_name, author_profile_pic_url, comment_time)
         VALUES
-        ('product', 2, 'My cat loved it! Wow!', 'chris221', 'www.hostedpic1.com', '2021-10-20 4:00PM', '{{"john10", "www.url2.com", "I will try buying it too!", "2021-10-21 2:21PM"}, {"catwoman490", "www.url5.com", "I bought some too!", "2021-10-21 2:41PM"}}'),
-        ('product', 3, 'It was delicious. Wait... What do you mean its for dogs?', 'tommy55', 'www.hostedpic5.com', '2021-10-21 1:10PM', '{{"john10", "www.url2.com", "Whao man", "2021-10-21 2:21PM"}, {"steven21", "www.url8.com", "Are you ok?", "2021-10-21 2:55PM"}}'
+        ('product', 2, 'My cat loved it! Wow!', 'chris221', 'www.hostedpic1.com', '2021-10-20 4:00PM'),
+        ('product', 3, 'It was delicious. Wait... What do you mean its for dogs?', 'tommy55', 'www.hostedpic5.com', '2021-10-21 1:10PM'
+      );
+    `);
+
+    // Create replies table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS replies (
+        reply_id serial PRIMARY KEY,
+        cid INTEGER REFERENCES comments (comment_id),
+        reply_username VARCHAR(200) NOT NULL,
+        reply_avatar_url VARCHAR(200) NOT NULL,
+        reply_detail VARCHAR(200) NOT NULL,
+        reply_time VARCHAR(200) NOT NULL
+      );
+    `);
+
+    // Populate replies table
+    await db.query(`
+      INSERT INTO replies(cid, reply_username, reply_avatar_url, reply_detail, reply_time)
+        VALUES
+        (1, 'chris22', 'www.hostedpic32.com', 'I will try buying it too then', '2021-10-20 5:30PM'),
+        (1, 'catwoman55', 'www.hostedpic32.com', 'My cat liked it as well!', '2021-10-20 5:55PM'),
+        (1, 'tammy9', 'www.hostedpic32.com', 'I think my cat will like it too', '2021-10-20 7:19PM'),
+        (2, 'nancy92', 'www.hostedpic32.com', 'Hahaha', '2021-10-21 4:19PM'),
+        (2, 'matt445', 'www.hostedpic32.com', 'I hope you are feeling okay', '2021-10-21 5:22PM'
       );
     `);
 

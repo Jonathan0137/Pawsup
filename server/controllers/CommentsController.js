@@ -26,9 +26,9 @@ CommentsController.get("/", async (req, res) => {
 
 // POST /api/comments
 CommentsController.post("/", async (req, res) => {
-  const { comment_type, foreign_id, comment_detail, author_name, author_profile_pic_url, comment_time, comment_replies } = req.body;
+  const { comment_type, foreign_id, comment_detail, author_name, author_profile_pic_url, comment_time } = req.body;
 
-  if (!comment_type || !foreign_id || !comment_detail || !author_name || !author_profile_pic_url || !comment_time || !comment_replies) {
+  if (!comment_type || !foreign_id || !comment_detail || !author_name || !author_profile_pic_url || !comment_time) {
     return res.status(400).json({
       message: "Fields are missing from request body",
     });
@@ -41,7 +41,6 @@ CommentsController.post("/", async (req, res) => {
     author_name: author_name,
     author_profile_pic_url: author_profile_pic_url,
     comment_time: comment_time,
-    comment_replies: comment_replies,
   });
 
   try {
@@ -58,9 +57,9 @@ CommentsController.post("/", async (req, res) => {
 // PUT /api/comments/:comment_id
 CommentsController.put("/:comment_id", async (req, res) => {
   const { comment_id } = req.params;
-  const { comment_type, foreign_id, comment_detail, author_name, author_profile_pic_url, comment_time, comment_replies } = req.body;
+  const { comment_type, foreign_id, comment_detail, author_name, author_profile_pic_url, comment_time } = req.body;
 
-  if (!comment_type || !foreign_id || !comment_detail || !author_name || !author_profile_pic_url || !comment_time || !comment_replies) {
+  if (!comment_type || !foreign_id || !comment_detail || !author_name || !author_profile_pic_url || !comment_time) {
     return res.status(400).json({
       message: "Fields are missing from request body",
     });
@@ -80,7 +79,6 @@ CommentsController.put("/:comment_id", async (req, res) => {
     comment.author_name = author_name;
     comment.author_profile_pic_url = author_profile_pic_url;
     comment.comment_time = comment_time;
-    comment.comment_replies = comment_replies;
 
     await comment.save();
     res.status(200).json(comment.cleanCopy());
