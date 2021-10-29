@@ -3,6 +3,7 @@
 }
 .serviceImg{
     object-fit: fill;
+    max-height: 30rem;
 }
 
 .serviceFacility p{
@@ -41,4 +42,8 @@
 }
 .serviceComment{
     justify-content: center;
+}
+.detail h1{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }

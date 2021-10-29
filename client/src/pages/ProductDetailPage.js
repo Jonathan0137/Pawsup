@@ -7,7 +7,7 @@ import './ProductDetailPage.css';
 import { QuantityPicker } from 'react-qty-picker';
 import CommentSection from './../components/CommentSection'
 const ProductDetailPage = ({data}) => {
-    const [currentPrice, setCurrentPrice] = useState(data.productPrice[0]);
+    const [currentPrice, setCurrentPrice] = useState(data.product_price[0]);
     const [quant, setQuant] = useState(1);
     return (
         <>
@@ -16,7 +16,7 @@ const ProductDetailPage = ({data}) => {
                 <div className="row info">
                     <div className="col-12 col-sm-4 productPicConatiner" >
                         <Carousel className="CarouselContainer "variant="dark" prevLabel="" nextLabel="" prevIcon="" nextIcon="">
-                            {data.productPicURL && data.productPicURL.map((pic, i) =>
+                            {data.product_pic_url && data.product_pic_url.map((pic, i) =>
                                 <Carousel.Item>
                                     <Image className="productImag" src={pic} alt={i} width="70%" height="auto"/>
                                 </Carousel.Item>
@@ -25,8 +25,8 @@ const ProductDetailPage = ({data}) => {
                     </div>
                     <div className="col-12 col-sm-6">
                         <div className="productTitleContainter">
-                            <h2>{data.productName}</h2>
-                            <p>by <strong>{data.productOrigin}</strong></p>
+                            <h2>{data.product_name}</h2>
+                            <p>by <strong>{data.product_origin}</strong></p>
                         </div>
                         <div className="productForm">
                             <div>
@@ -38,7 +38,7 @@ const ProductDetailPage = ({data}) => {
                                     count={5}
                                     size={24}
                                     activeColor="#ffd700"
-                                    value={data.productRating}
+                                    value={data.product_rating}
                                     isHalf={true}
                                     edit={false}
                                     emptyIcon={<i className="far fa-star"></i>}
@@ -47,18 +47,18 @@ const ProductDetailPage = ({data}) => {
                                 />
                             </div>
                             <div className="productType">
-                                {data.productType && data.productType.map((size, i) =>
+                                {data.product_type && data.product_type.map((size, i) =>
                                     <Button 
                                         variant="outline-dark" 
                                         size="lg" 
                                         style={{margin: "1rem"}}
-                                        onClick={() => setCurrentPrice(data.productPrice[i])}
+                                        onClick={() => setCurrentPrice(data.product_price[i])}
                                     >{size}</Button> 
                                 )}
                             </div>
                             <div className="productQuant col-12">
                                 <QuantityPicker className="quant-picker" value={quant} 
-                                    min={0} max={10} 
+                                    min={1} max={10} 
                                     width='15rem'
                                     onChange={(value)=>{setQuant(value)}}/>
                             </div>
@@ -73,10 +73,9 @@ const ProductDetailPage = ({data}) => {
                 </div>
                 <div className="row detail">
                         <h1><strong>Description</strong></h1>
-                        <p>{data.productDetail}</p>
+                        <p>{data.product_detail}</p>
                 </div>
                 <div className="col-12 comment">
-
                     <CommentSection comments={data.productComment}/>
                 </div>
             </div>

@@ -65,11 +65,11 @@ async function migrate() {
     await db.query(`
       INSERT INTO services(service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, pid)
         VALUES 
-        ('{"www.url1.com","www.url2.com"}', 'Cat grooming', 'Cat grooming service', '{"Bath","Toys"}', 'Markham', 60, 3, 'Cat', 1),
-        ('{"www.url3.com","www.url4.com"}', 'Dog walking', 'Dog grooming service', '{"Bath","Toys"}', 'Markham', 55, 2.7, 'Dog', 1),
-        ('{"www.url5.com","www.url6.com"}', 'Parrot training', 'Parrow training service', '{"Bath","Toys"}', 'Scarborough', 100, 4.9, 'Parrot', 2),
-        ('{"www.url7.com","www.url8.com"}', 'Pet emergency care', 'Emergency care service', '{"Bath","Toys"}', 'Toronto', 200, 3.6, 'Hamster', 2),
-        ('{"www.url9.com","www.url0.com"}', 'Pet sitting', 'Pet sitting service', '{"Bath","Toys"}', 'Toronto', 20, 1.2, 'Dog', 2);
+        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Cat grooming', 'Cat grooming service', '{"Bath","Toys"}', 'Markham', 60, 3, 'Cat', 1),
+        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Dog walking', 'Dog grooming service', '{"Bath","Toys"}', 'Markham', 55, 2.7, 'Dog', 1),
+        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Parrot training', 'Parrow training service', '{"Bath","Toys"}', 'Scarborough', 100, 4.9, 'Parrot', 2),
+        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Pet emergency care', 'Emergency care service', '{"Bath","Toys"}', 'Toronto', 200, 3.6, 'Hamster', 2),
+        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Pet sitting', 'Pet sitting service', '{"Bath","Toys"}', 'Toronto', 20, 1.2, 'Dog', 2);
     `);
 
     // Create products table
@@ -92,10 +92,10 @@ async function migrate() {
     await db.query(`
       INSERT INTO products(product_name, product_detail, product_origin, product_category, product_pet_breed, product_type, product_pic_url, product_price, product_rating)
         VALUES
-        ('Green Farms Dog Food', 'Delicious and healthy dog food', 'Pawsup', 'Food', 'Dog', '{"Small", "Medium", "Large"}', '{"www.url21.com","www.url22.com"}', '{2.99, 3.99, 5.99}', 3.5), 
-        ('Red Farms Cat Food', 'Delicious and healthy cat food', 'Pawsup', 'Food', 'Cat', '{"Small", "Medium", "Large"}', '{"www.url25.com","www.url11.com"}', '{2.99, 3.99, 5.99}', 4.5), 
-        ('Mouse Toy', 'Fun and interactive cat toy', 'Pawsup', 'Toy', 'Cat', '{"Small", "Medium", "Large"}', '{"www.url91.com","www.url27.com"}', '{2.99, 3.99, 5.99}', 2.3), 
-        ('Hamster Wheel', 'Fun hamster wheel', 'Pawsup', 'Toy', 'Hamster', '{"Small", "Medium", "Large"}', '{"www.url92.com","www.url28.com"}', '{2.99, 3.99, 5.99}', 0.2);
+        ('Green Farms Dog Food', 'Delicious and healthy dog food', 'Pawsup', 'Food', 'Dog', '{"Small", "Medium", "Large"}', '{"https://cdn.shopify.com/s/files/1/1074/9060/products/PuppyLargeDogFrontRight6kg_2000x.png?v=1600605800", "https://cdn.shopify.com/s/files/1/1074/9060/products/sizfishtreats_e7b8446f-fd19-4223-a0a8-0e282fe014ee_1600x.jpg?v=1626106610"}', '{2.99, 3.99, 5.99}', 3.5), 
+        ('Red Farms Cat Food', 'Delicious and healthy cat food', 'Pawsup', 'Food', 'Cat', '{"Small", "Medium", "Large"}', '{"https://cdn.shopify.com/s/files/1/1074/9060/products/PuppyLargeDogFrontRight6kg_2000x.png?v=1600605800", "https://cdn.shopify.com/s/files/1/1074/9060/products/sizfishtreats_e7b8446f-fd19-4223-a0a8-0e282fe014ee_1600x.jpg?v=1626106610"}', '{2.99, 3.99, 5.99}', 4.5), 
+        ('Mouse Toy', 'Fun and interactive cat toy', 'Pawsup', 'Toy', 'Cat', '{"Small", "Medium", "Large"}', '{"https://cdn.shopify.com/s/files/1/1074/9060/products/PuppyLargeDogFrontRight6kg_2000x.png?v=1600605800", "https://cdn.shopify.com/s/files/1/1074/9060/products/sizfishtreats_e7b8446f-fd19-4223-a0a8-0e282fe014ee_1600x.jpg?v=1626106610"}', '{2.99, 3.99, 5.99}', 2.3), 
+        ('Hamster Wheel', 'Fun hamster wheel', 'Pawsup', 'Toy', 'Hamster', '{"Small", "Medium", "Large"}', '{"https://cdn.shopify.com/s/files/1/1074/9060/products/PuppyLargeDogFrontRight6kg_2000x.png?v=1600605800", "https://cdn.shopify.com/s/files/1/1074/9060/products/sizfishtreats_e7b8446f-fd19-4223-a0a8-0e282fe014ee_1600x.jpg?v=1626106610"}', '{2.99, 3.99, 5.99}', 0.2);
     `);
 
     // Create comments table
