@@ -65,9 +65,8 @@
 - Set up tables for storing cart items in the DB (NODE-116) 5
 - Set up CRUD backend API to view/add/remove items from the user’s cart (NODE-117) 13
 
-# Payment System Frontend
-
-# Payment System Backend (Tyler)
+# Payment System (Tyler)
+- A user needs to be able to pay for a good or service over the internet before the exchange of goods or services. (NODE-128)
 
 # Spike
  
