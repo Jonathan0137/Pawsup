@@ -5,16 +5,15 @@ const CommentsController = express.Router();
 
 // GET /api/comments
 CommentsController.get("/", async (req, res) => {
-  const { comment_type, foreign_id } = req.body;
 
-  if (!comment_type || !foreign_id) {
+  if (!req.query.comment_type || !req.query.foreign_id) {
     return res.status(400).json({
-        message: "Fields are missing from request body",
+        message: "Fields are missing from request parameters. Must contain [comment_type, foreign_id]",
       });
   }
 
   try {
-    const comments = await CommentModel.getComments(comment_type, foreign_id);
+    const comments = await CommentModel.getComments(req.query.comment_type, req.query.foreign_id);
     res.json(comments.map((comment) => comment.cleanCopy()));
   } catch (err) {
     console.error(err);
