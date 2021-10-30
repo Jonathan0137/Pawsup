@@ -52,6 +52,13 @@ MediaPagesController.post("/", async (req, res) => {
       message: "[pricePerDay] is not of numerical form]",
     });
   }*/
+  const user_check = await UserModel.getUserByID(author_id);
+
+  if (!user_check) {
+    return res.status(401).json({
+      message: `No user with that user ID exists.`,
+    });
+  }
 
   const mediapage = new MediaPageModel({
     author_id: author_id,

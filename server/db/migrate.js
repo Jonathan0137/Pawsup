@@ -174,9 +174,9 @@ async function migrate() {
   await db.query(`
   INSERT INTO mediaPages(author_id, media_picture_url, media_title, media_detail, published_time, number_of_likes)
     VALUES
-    (1, '{"https://upload.wikimedia.org/wikipedia/commons/8/8c/Cow_%28Fleckvieh_breed%29_Oeschinensee_Slaunger_2009-07-07.jpg","www.google.com"}', 'Cute Cow', 'This is a picture of a cow!', '2021-09-11 3:12 PM', 10),
-    (3, '{"https://images.unsplash.com/photo-1529778873920-4da4926a72c2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80","www.google.com"}', 'Adorable Cat', 'This is a picture of a cat!', '2021-10-11 7:15 AM', 7),
-    (5, '{"https://thehappypuppysite.com/wp-content/uploads/2017/10/Cute-Dog-Names-HP-long-1024x555.jpg","www.google.com"}', 'Beautiful Pupper', 'This is a picture of a dog!', '2021-11-15 09:55 AM', 11
+    (1, '{"https://upload.wikimedia.org/wikipedia/commons/8/8c/Cow_%28Fleckvieh_breed%29_Oeschinensee_Slaunger_2009-07-07.jpg","http://leosigh.com/wp-content/uploads/2016/12/rick-astley-never-gonna-give-you-up.jpg"}', 'Cute Cow', 'This is a picture of a cow!', '2021-09-11 3:12 PM', 7),
+    (2, '{"https://images.unsplash.com/photo-1529778873920-4da4926a72c2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80","http://leosigh.com/wp-content/uploads/2016/12/rick-astley-never-gonna-give-you-up.jpg"}', 'Adorable Cat', 'This is a picture of a cat!', '2021-10-11 7:15 AM', 2),
+    (1, '{"https://thehappypuppysite.com/wp-content/uploads/2017/10/Cute-Dog-Names-HP-long-1024x555.jpg","http://leosigh.com/wp-content/uploads/2016/12/rick-astley-never-gonna-give-you-up.jpg"}', 'Beautiful Pupper', 'This is a picture of a dog!', '2021-11-15 09:55 AM', 11
 
   );
 `);
