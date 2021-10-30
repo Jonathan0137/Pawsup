@@ -43,9 +43,9 @@ ServicesController.get("/:service_id", async (req, res) => {
 
 // POST /api/services
 ServicesController.post("/", async (req, res) => {
-  const { service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, provider_id, provider_name, provider_phone, provider_email, provider_avatar } = req.body;
+  const { service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, pid } = req.body;
 
-  if (!service_pic_url || !service_title || !service_detail || !service_facility || !location || !price_per_day || !service_rating || !service_pet_breed || !provider_id || !provider_name || !provider_phone || !provider_email || !provider_avatar) {
+  if (!service_pic_url || !service_title || !service_detail || !service_facility || !location || !price_per_day || !service_rating || !service_pet_breed || !pid) {
     return res.status(400).json({
       message: "Fields are missing from request body",
     });
@@ -60,11 +60,7 @@ ServicesController.post("/", async (req, res) => {
     price_per_day: price_per_day,
     service_rating: service_rating,
     service_pet_breed: service_pet_breed,
-    provider_id: provider_id,
-    provider_name: provider_name,
-    provider_phone: provider_phone,
-    provider_email: provider_email,
-    provider_avatar: provider_avatar,
+    pid: pid,
   });
 
   try {
@@ -81,9 +77,9 @@ ServicesController.post("/", async (req, res) => {
 // PUT /api/services/:service_id
 ServicesController.put("/:service_id", async (req, res) => {
   const { service_id } = req.params;
-  const { service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, provider_id, provider_name, provider_phone, provider_email, provider_avatar } = req.body;
+  const { service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, pid} = req.body;
 
-  if (!service_pic_url && !service_title && !service_detail && !service_facility && !location && !price_per_day && !service_rating && !service_pet_breed && !provider_id && !provider_name && !provider_phone && !provider_email && !provider_avatar) {
+  if (!service_pic_url && !service_title && !service_detail && !service_facility && !location && !price_per_day && !service_rating && !service_pet_breed && !pid) {
     return res.status(400).json({
       message: "Fields are missing from request body. Nothing to edit!",
     });
@@ -129,24 +125,8 @@ ServicesController.put("/:service_id", async (req, res) => {
       service.service_pet_breed = service_pet_breed;
     }
 
-    if (provider_id) {
-      service.provider_id = provider_id;
-    }
-
-    if (provider_name) {
-      service.provider_name = provider_name;
-    }
-
-    if (provider_phone) {
-      service.provider_phone = provider_phone;
-    }
-
-    if (provider_email) {
-      service.provider_email = provider_email;
-    }
-
-    if (provider_avatar) {
-      service.provider_avatar = provider_avatar;
+    if (pid) {
+      service.pid = pid;
     }
     
     await service.save();

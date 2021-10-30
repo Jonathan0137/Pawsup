@@ -11,11 +11,7 @@ class ServiceModel extends DBModel {
   price_per_day;
   service_rating;
   service_pet_breed;
-  provider_id;
-  provider_name;
-  provider_phone;
-  provider_email;
-  provider_avatar;
+  pid;
 
   constructor(data) {
     super({
