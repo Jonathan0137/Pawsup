@@ -62,20 +62,27 @@ const ServicePage = () => {
       : setCondition({ ...condition, pet_breeds: "" });
   }, [selectedP]);
 
+  const url = `/api/services?${
+    condition.locations === "" ? "" : "locations=" + condition.locations
+  }${condition.pet_breeds === "" ? "" : "&pet_breeds=" + condition.pet_breeds}${
+    condition.minPrice === "" ? "" : "&minPrice=" + condition.minPrice
+  }${condition.maxPrice === "" ? "" : "&maxPrice=" + condition.maxPrice}${
+    condition.sortBy === "" ? "" : "&sortBy=" + condition.sortBy
+  }${
+    condition.sortDirection === ""
+      ? ""
+      : "&sortDirection=" + condition.sortDirection
+  }`;
+
+  console.log("URL is " + url);
+
   const conditions = async () => {
     setServices({
       data: null,
       error: false,
     });
     await axios
-      .get("/api/services", {
-        locations: condition.locations,
-        pet_breeds: condition.pet_breeds,
-        minPrice: condition.minPrice,
-        maxPrice: condition.maxPrice,
-        sortBy: condition.sortBy,
-        sortDirection: condition.sortDirection,
-      })
+      .get(url)
       .then((res) => {
         setServices({
           data: res.data,
@@ -211,7 +218,7 @@ const ServicePage = () => {
                         onClick={(e) =>
                           setCondition({
                             ...condition,
-                            sortBy: "priceperday",
+                            sortBy: "price_per_day",
                             sortDirection: "ASC",
                           })
                         }>
@@ -221,7 +228,7 @@ const ServicePage = () => {
                         onClick={(e) =>
                           setCondition({
                             ...condition,
-                            sortBy: "priceperday",
+                            sortBy: "price_per_day",
                             sortDirection: "DESC",
                           })
                         }>
