@@ -4,6 +4,7 @@ const { UserController } = require("../controllers/UserController");
 const { MediaPagesController } = require("../controllers/MediaPagesController");
 const { ProductsController } = require("../controllers/ProductsController");
 const { CommentsController } = require("../controllers/CommentsController");
+const { CartController } = require("../controllers/CartController");
 const { ProvidersController } = require("../controllers/ProvidersController");
 const { RepliesController } = require("../controllers/RepliesController");
 
@@ -16,6 +17,7 @@ router.use("/user", UserController);
 router.use("/mediapages", MediaPagesController);
 router.use("/products", ProductsController);
 router.use("/comments", CommentsController);
+router.use("/cart", CartController);
 router.use("/providers", ProvidersController);
 router.use("/replies", RepliesController);
 

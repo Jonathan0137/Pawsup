@@ -181,23 +181,42 @@ async function migrate() {
   );
 `);
     
-    // Create cart_items table
+    // Create product_cart_items table
     await db.query(`
-      CREATE TABLE IF NOT EXISTS cart_items (
+      CREATE TABLE IF NOT EXISTS product_cart_items (
         id serial PRIMARY KEY,
         user_id INTEGER NOT NULL,
-        cart_item_type VARCHAR(200) NOT NULL,
-        foreign_id INTEGER NOT NULL
+        product_id INTEGER NOT NULL,
+        quantity INTEGER NOT NULL
       );
     `);
 
-    // Populate cart_items table
+    // Populate product_cart_items table
     await db.query(`
-      INSERT INTO cart_items(user_id, cart_item_type, foreign_id)
+      INSERT INTO product_cart_items(user_id, product_id, quantity)
         VALUES
-        (1, 'service', 1),
-        (1, 'service', 2),
-        (1, 'product', 1);
+        (1, 1, 1),
+        (1, 2, 4);
+    `);
+
+    // Create service_cart_items table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS service_cart_items (
+        id serial PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        service_id INTEGER NOT NULL,
+        start_date VARCHAR(200) NOT NULL,
+        end_date VARCHAR(200) NOT NULL,
+        number_of_pets INTEGER NOT NULL
+      );
+    `);
+
+    // Populate service_cart_items table
+    await db.query(`
+      INSERT INTO service_cart_items(user_id, service_id, start_date, end_date, number_of_pets)
+        VALUES
+        (1, 1, '2021-01-01', '2021-01-15', 1),
+        (1, 2, '2021-02-10', '2021-02-16', 3);
     `);
 
     console.log("Successfully finished DB migrations");
