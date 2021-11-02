@@ -18,6 +18,7 @@ import "./ProductPage.css";
 
 const ProductPage = () => {
   const [products, setProducts] = useState({ data: null, error: false });
+  const [finder, setFinder] = useState(false);
   const [condition, setCondition] = useState({
     category: "",
     pet_breeds: "",
@@ -63,43 +64,15 @@ const ProductPage = () => {
       : setCondition({ ...condition, pet_breeds: "" });
   }, [selectedP]);
 
-  // useEffect(() => {
-  //   setProducts({
-  //     data: null,
-  //     error: false,
-  //   });
-  //   axios
-  //     .get("/api/products", {
-  //       categories: condition.category,
-  //       pet_breeds: condition.pet_breeds,
-  //       minPrice: condition.minPrice,
-  //       maxPrice: condition.maxPrice,
-  //       sortBy: condition.sortBy,
-  //       sortDirection: condition.sortDirection,
-  //     })
-  //     .then((res) => {
-  //       setProducts({
-  //         data: res.data,
-  //         error: false,
-  //       });
-  //     })
-  //     .catch(() => setProducts({ error: true }));
-  // }, ["/api/products"]);
-
-  // const conditions = async () => {
+  // useEffect(async () => {
   //   setProducts({
   //     data: null,
   //     error: false,
   //   });
   //   await axios
-  //     .get("/api/products", {
-  //       categories: condition.category,
-  //       pet_breeds: condition.pet_breeds,
-  //       minPrice: condition.minPrice,
-  //       maxPrice: condition.maxPrice,
-  //       sortBy: condition.sortBy,
-  //       sortDirection: condition.sortDirection,
-  //     })
+  //     .get(
+  //       `/api/products?categories=${condition.category}&pet_breeds=${condition.pet_breeds}&minPrice=${condition.minPrice}&maxPrice=${condition.maxPrice}&sortBy=${condition.sortBy}&sortDirection=${condition.sortDirection}`
+  //     )
   //     .then((res) => {
   //       setProducts({
   //         data: res.data,
@@ -107,26 +80,32 @@ const ProductPage = () => {
   //       });
   //     })
   //     .catch(() => setProducts({ error: true }));
-  // };
+  // }, [finder]);
 
-  if (products.data) {
-    content = products.data.map((product) => (
-      <div className="mb-3 rounded font-bold" key={product.product_id}>
-        {/* Link here */}
-        {/* <Link to={`the link`}> */}
-        <div
-          style={{ backgroundImage: `url('${product.product_pic_url[0]} ')` }}
-        ></div>
-        {/* </Link> */}
-        <Container>
-          <h3 className="bold mb-2">{product.data.product_name}</h3>
-          <h5 className="mb-2">{product.data.product_detail}</h5>
-          <h5 className="mb-2">{product.data.product_price}</h5>
-          <h5 className="mb-2">{product.data.product_rating}</h5>
-        </Container>
-      </div>
-    ));
-  }
+  // useEffect(() => {
+  //   console.log(
+  //     `/api/products?categories=${condition.category}&pet_breeds=${condition.pet_breeds}&minPrice=${condition.minPrice}&maxPrice=${condition.maxPrice}&sortBy=${condition.sortBy}&sortDirection=${condition.sortDirection}`
+  //   );
+  // }, [finder]);
+
+  // if (products.data) {
+  //   content = products.data.map((product) => (
+  //     <div className="mb-3 rounded font-bold" key={product.product_id}>
+  //       {/* Link here */}
+  //       {/* <Link to={`the link`}> */}
+  //       <div
+  //         style={{ backgroundImage: `url('${product.product_pic_url[0]} ')` }}
+  //       ></div>
+  //       {/* </Link> */}
+  //       <Container>
+  //         <h3 className="bold mb-2">{product.data.product_name}</h3>
+  //         <h5 className="mb-2">{product.data.product_detail}</h5>
+  //         <h5 className="mb-2">{product.data.product_price}</h5>
+  //         <h5 className="mb-2">{product.data.product_rating}</h5>
+  //       </Container>
+  //     </div>
+  //   ));
+  // }
 
   return (
     <>
@@ -296,6 +275,7 @@ const ProductPage = () => {
                             minPrice: Number(e.target.value),
                           });
                         }}
+                        isInvalid={minPrice > maxPrice}
                       />
                     </Form.Group>
                     <Form.Group
@@ -325,7 +305,7 @@ const ProductPage = () => {
                   <Button
                     className="findButton"
                     variant="primary"
-                    // onClick={}
+                    onClick={() => setFinder(!finder)}
                   >
                     Find
                   </Button>

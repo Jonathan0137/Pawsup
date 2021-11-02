@@ -1,46 +1,57 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import HeaderMenu from "../components/HeaderMenu";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./SignupPage.css";
 import axios from "axios";
 
 const SignupPage = () => {
-  const history = useHistory();
-
   // States
-  const initialState = "";
-  const [username, setUsername] = useState(initialState);
-  const [email, setEmail] = useState(initialState);
-  const [password, setPassword] = useState(initialState);
-  const [fname, setFname] = useState(initialState);
-  const [lname, setLname] = useState(initialState);
-  const [city, setCity] = useState(initialState);
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    fname: "",
+    lname: "",
+    city: "",
+    phone: "",
+  });
+  const [hasError, setHasError] = useState({
+    duplicate: false,
+    missInfo: false,
+    internal: false,
+  });
 
-  // Called when the "sign up" button is clicked.
+  const submitHandler = (e) => {
+    e.preventDefault();
+  };
+
   const SignUp = async () => {
     await axios
       .post("/api/user", {
-        username: { username },
-        email: { email },
-        password: { password },
-        fname: { fname },
-        lname: { lname },
-        city: { city },
-      }) // Need object specification
-      .then(
-        () => setUsername({ pass: true }),
-        setEmail(initialState),
-        setPassword(initialState),
-        setFname(initialState),
-        setLname(initialState),
-        setCity(initialState),
-        history.push("/")
-      );
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        fname: user.fname,
+        lname: user.lname,
+        city: user.city,
+        phone_number: user.phone,
+      })
+      .then(() => {
+        window.location = "/signin";
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setHasError({ missInfo: true });
+        } else if (err.response.status === 401) {
+          setHasError({ duplicate: true });
+        } else {
+          setHasError({ internal: true });
+        }
+      });
   };
 
   return (
-    <div>
+    <>
       <HeaderMenu />
       <div className="pageform">
         <Row>
@@ -48,57 +59,64 @@ const SignupPage = () => {
             <h2 className="mb-4 mt-3">Create An Account</h2>
           </Col>
         </Row>
-        <Form>
-          <Form.Group className="mb-2">
+        <Form onSubmit={submitHandler}>
+          <Form.Group className="mb-3">
             <Form.Label>Username *</Form.Label>
             <Form.Control
-              name="username"
               type="text"
-              value={username}
+              value={user.username}
               placeholder="Enter username"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
             />
           </Form.Group>
 
-          <Form.Group className="mb-2">
+          <Form.Group className="mb-3">
             <Form.Label>Password *</Form.Label>
             <Form.Control
-              name="password"
-              type="text"
-              value={password}
+              type="password"
+              value={user.password}
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
           </Form.Group>
 
-          <Form.Group className="mb-2">
+          <Form.Group className="mb-3">
             <Form.Label>Email address *</Form.Label>
             <Form.Control
-              name="email"
               type="email"
-              value={email}
+              value={user.email}
               placeholder="Enter email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
           </Form.Group>
 
-          <Form.Group className="mb-2">
+          <Form.Group className="mb-3">
+            <Form.Label>Phone number *</Form.Label>
+            <Form.Control
+              type="string"
+              value={user.phone}
+              placeholder="Phone number"
+              onChange={(e) => setUser({ ...user, phone: e.target.value })}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
             <Form.Label>First Name *</Form.Label>
             <Form.Control
               type="text"
-              value={fname}
+              value={user.fname}
               placeholder="First Name"
-              onChange={(e) => setFname(e.target.value)}
+              onChange={(e) => setUser({ ...user, fname: e.target.value })}
             />
           </Form.Group>
 
-          <Form.Group className="mb-2">
+          <Form.Group className="mb-3">
             <Form.Label>Last Name *</Form.Label>
             <Form.Control
               type="text"
-              value={lname}
+              value={user.lname}
               placeholder="Last Name"
-              onChange={(e) => setLname(e.target.value)}
+              onChange={(e) => setUser({ ...user, lname: e.target.value })}
             />
           </Form.Group>
 
@@ -106,20 +124,41 @@ const SignupPage = () => {
             <Form.Label>City *</Form.Label>
             <Form.Control
               type="text"
-              value={city}
+              value={user.city}
               placeholder="City"
-              onChange={(e) => setCity(e.target.value)}
+              onChange={(e) => setUser({ ...user, city: e.target.value })}
             />
           </Form.Group>
 
-          <div className="d-grid gap-2 mb-2">
-            <Button variant="primary" type="submit" onSubmit={SignUp}>
-              SignUp
+          {hasError.missInfo && (
+            <div className="alert alert-warning mb-3 mid" role="alert">
+              Please enter all required information.
+            </div>
+          )}
+          {hasError.duplicate && (
+            <div className="alert alert-warning mb-3 mid" role="alert">
+              This user has already been registered, please sign up with a
+              different username.
+            </div>
+          )}
+          {hasError.internal && (
+            <div className="alert alert-danger mb-3 mid" role="alert">
+              There is an internal error with Sign up, please try again later.
+            </div>
+          )}
+          <div className="mid">
+            <Button
+              className="mb-3 btn btn-dark bigger"
+              variant="primary"
+              type="submit"
+              onClick={SignUp}
+            >
+              Sign Up
             </Button>
           </div>
         </Form>
       </div>
-    </div>
+    </>
   );
 };
 

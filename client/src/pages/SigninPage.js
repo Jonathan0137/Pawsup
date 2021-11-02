@@ -1,59 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import HeaderMenu from "../components/HeaderMenu";
 import "./SigninPage.css";
 import axios from "axios";
 
 const SigninPage = () => {
-  const [details, setDetails] = useState({ email: "", password: "" });
-  const [user, setUser] = useState({ email: "", password: "" });
-  const [log, setLog] = useState({ pass: false });
+  const [details, setDetails] = useState({ name: "", password: "" });
   const [hasError, setHasError] = useState(false);
+  const [pass, setPass] = useState(false);
+  const [status, setStatus] = useState({ isLoggedIn: false, user: null });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("/api/auth/user")
+      .then((res) => {
+        setStatus(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    pass && (window.location = "/");
+  }, [pass]);
 
   const checkLogin = async () => {
     setHasError(false);
     await axios
       .post("/api/auth/login", {
-        username: details.email,
+        username: details.name,
         password: details.password,
       })
-      .then(() => setLog({ pass: true }))
-      .catch(() => setHasError(true));
+      .then(() => {
+        setPass(true);
+      })
+      .catch(() => {
+        setHasError(true);
+      });
   };
-
-  // const checkLogin = () => {
-  //   setLog({pass:true})
-  // };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    Login(details);
-  };
-
-  const Login = (user) => {
-    setUser({
-      email: user.email,
-      password: user.password,
-    });
   };
 
   const Logout = async () => {
-    await axios
-      .post("/api/auth/logout")
-      .then(
-        () => setLog({ pass: false }),
-        setUser({ email: "", password: "" }),
-        setDetails({ email: "", password: "" })
-      );
+    await axios.post("/api/auth/logout").then(() => {
+      window.location = "/signin";
+    });
   };
 
   return (
     <>
       <HeaderMenu />
       <div className="page bg-white">
-        {log.pass ? (
+        {loading ? (
+          <h6></h6>
+        ) : status.isLoggedIn ? (
           <Container>
-            <h3 className="mb-4">Welcome {user.email} </h3>
+            <h3 className="mb-4">Welcome {status.user.username} </h3>
+            <h3 className="mb-4">You may Logout with the button below </h3>
             <Button
               className="mb-2"
               variant="primary"
@@ -74,17 +82,17 @@ const SigninPage = () => {
                       className="mb-3 form-signin"
                       controlId="formEmail"
                     >
-                      <Form.Label>Email</Form.Label>
+                      <Form.Label>Username</Form.Label>
                       <Form.Control
-                        type="email"
-                        placeholder="Enter Email"
+                        type="text"
+                        placeholder="Enter Username"
                         onChange={(e) =>
                           setDetails(
-                            { ...details, email: e.target.value },
+                            { ...details, name: e.target.value },
                             setHasError(false)
                           )
                         }
-                        value={details.email}
+                        value={details.name}
                       />
                     </Form.Group>
                   </Col>
