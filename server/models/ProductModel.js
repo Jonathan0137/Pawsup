@@ -49,16 +49,6 @@ class ProductModel extends DBModel {
         query += ") AND";
       }
 
-      if (minPrice != null) {
-        params.push(minPrice);
-        query += ` product_price >= $${params.length} AND`;
-      }
-
-      if (maxPrice != null) {
-        params.push(maxPrice);
-        query += ` product_price <= $${params.length} AND`;
-      }
-
       // Remove the trailing " AND";
       query = query.slice(0, -4);
     }
@@ -73,7 +63,29 @@ class ProductModel extends DBModel {
       query += ` ORDER BY ${sortBy} ${sortDirection}`;
     }
 
-    const data = await db.query(query, params);
+    let data = await db.query(query, params);
+
+    data = data.filter((row) => {
+      let satisfiesMinPrice = true;
+      let satisfiesMaxPrice = true;
+      if (minPrice != null) {
+        satisfiesMinPrice = false;
+        row.product_price.forEach((price) => {
+          if (price >= minPrice) {
+            satisfiesMinPrice = true;
+          }
+        });
+      }
+      if (maxPrice != null) {
+        satisfiesMaxPrice = false;
+        row.product_price.forEach((price) => {
+          if (price <= maxPrice) {
+            satisfiesMaxPrice = true;
+          }
+        });
+      }
+      return satisfiesMinPrice && satisfiesMaxPrice;
+    });
     return data.map((row) => new ProductModel(row));
   }
 
