@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import "../components/Filter.css";
 import {
   Container,
+  Card,
   Nav,
   Navbar,
   Form,
@@ -13,7 +14,9 @@ import {
 } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./ProductPage.css";
+import "./ServicePage.css";
+
+let display_num = 3;
 
 const ServicePage = () => {
   const [services, setServices] = useState({ data: null, error: false });
@@ -38,8 +41,6 @@ const ServicePage = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
 
-  let content = null;
-
   // For categories
   useEffect(() => {
     selectedL.markham
@@ -62,6 +63,10 @@ const ServicePage = () => {
       : setCondition({ ...condition, pet_breeds: "" });
   }, [selectedP]);
 
+  useEffect(() => {
+    conditions();
+  }, []);
+
   const url = `/api/services?${
     condition.locations === "" ? "" : "locations=" + condition.locations
   }${condition.pet_breeds === "" ? "" : "&pet_breeds=" + condition.pet_breeds}${
@@ -73,8 +78,6 @@ const ServicePage = () => {
       ? ""
       : "&sortDirection=" + condition.sortDirection
   }`;
-
-  console.log("URL is " + url);
 
   const conditions = async () => {
     setServices({
@@ -92,13 +95,29 @@ const ServicePage = () => {
       .catch(() => setServices({ error: true }));
   };
 
+  const increment_display = () => {
+    display_num = display_num + 3;
+    conditions();
+  };
+
   return (
     <>
       <HeaderMenu />
-      <div className="page">
+      <div className="pager">
         <Container>
           <Container className="mt-3 ">
-            <h5>Featured Services</h5>
+            <Row class="mb-2">
+              <Col>Featured Services</Col>
+              <Col>
+                <a
+                  href="/createservice"
+                  className="btn btn-dark end"
+                  role="button"
+                >
+                  Create service
+                </a>
+              </Col>
+            </Row>
             <Container className="filter">
               <Navbar>
                 <Nav className="me-auto filter_options">
@@ -110,7 +129,8 @@ const ServicePage = () => {
                   <Nav.Link
                     onClick={() =>
                       setSelectedL({ toronto: !selectedL.toronto })
-                    }>
+                    }
+                  >
                     {selectedL.toronto ? (
                       <span className="selected">Toronto</span>
                     ) : (
@@ -120,7 +140,8 @@ const ServicePage = () => {
                   <Nav.Link
                     onClick={() =>
                       setSelectedL({ markham: !selectedL.markham })
-                    }>
+                    }
+                  >
                     {selectedL.markham ? (
                       <span className="selected">Markham</span>
                     ) : (
@@ -135,7 +156,8 @@ const ServicePage = () => {
                     Pet:
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedP({ cat: !selectedP.cat })}>
+                    onClick={() => setSelectedP({ cat: !selectedP.cat })}
+                  >
                     {selectedP.cat ? (
                       <span className="selected">Cat</span>
                     ) : (
@@ -143,7 +165,8 @@ const ServicePage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedP({ dog: !selectedP.dog })}>
+                    onClick={() => setSelectedP({ dog: !selectedP.dog })}
+                  >
                     {selectedP.dog ? (
                       <span className="selected">Dog</span>
                     ) : (
@@ -153,7 +176,8 @@ const ServicePage = () => {
                   <Nav.Link
                     onClick={() =>
                       setSelectedP({ hamster: !selectedP.hamster })
-                    }>
+                    }
+                  >
                     {selectedP.hamster ? (
                       <span className="selected">Hamster</span>
                     ) : (
@@ -161,7 +185,8 @@ const ServicePage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedP({ rabbit: !selectedP.rabbit })}>
+                    onClick={() => setSelectedP({ rabbit: !selectedP.rabbit })}
+                  >
                     {selectedP.rabbit ? (
                       <span className="selected">Rabbit</span>
                     ) : (
@@ -190,7 +215,8 @@ const ServicePage = () => {
                             sortBy: "service_rating",
                             sortDirection: "ASC",
                           })
-                        }>
+                        }
+                      >
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -200,7 +226,8 @@ const ServicePage = () => {
                             sortBy: "service_rating",
                             sortDirection: "DESC",
                           })
-                        }>
+                        }
+                      >
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -215,23 +242,25 @@ const ServicePage = () => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item
-                        onClick={(e) =>
+                        onClick={() =>
                           setCondition({
                             ...condition,
                             sortBy: "price_per_day",
                             sortDirection: "ASC",
                           })
-                        }>
+                        }
+                      >
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
-                        onClick={(e) =>
+                        onClick={() =>
                           setCondition({
                             ...condition,
                             sortBy: "price_per_day",
                             sortDirection: "DESC",
                           })
-                        }>
+                        }
+                      >
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -257,7 +286,8 @@ const ServicePage = () => {
                     <Form.Group
                       className="mt-1 mb-1"
                       md={1}
-                      controlId="maxPrice">
+                      controlId="maxPrice"
+                    >
                       <Form.Control
                         type="number"
                         placeholder="Max Price"
@@ -267,6 +297,12 @@ const ServicePage = () => {
                             ...condition,
                             maxPrice: Number(e.target.value),
                           });
+                          if (Number(e.target.value) === 0) {
+                            setCondition({
+                              ...condition,
+                              maxPrice: 10000,
+                            });
+                          }
                         }}
                         isInvalid={minPrice > maxPrice}
                       />
@@ -280,7 +316,8 @@ const ServicePage = () => {
                   <Button
                     className="findButton"
                     variant="primary"
-                    onClick={conditions}>
+                    onClick={conditions}
+                  >
                     Find
                   </Button>
                 </Col>
@@ -292,7 +329,68 @@ const ServicePage = () => {
               Error while fetching services, please try again later.
             </div>
           )}
-          {content}
+          <Container className="mb-3 mid">
+            {services.data ? (
+              <div>
+                <Row xs={1} md={2} lg={3} className="g-4">
+                  {services.data
+                    .map((service) => (
+                      <Col key={service.service_id}>
+                        <Card border="light" bg="light">
+                          <Card.Img
+                            variant="top"
+                            src={service.service_pic_url[0]}
+                          />
+                          <Card.Body>
+                            <Card.Title>
+                              <Row>
+                                <Col>{service.service_title}</Col>
+                                <Col xs="auto" className="price_rating">
+                                  ${service.price_per_day}
+                                </Col>
+                              </Row>
+                            </Card.Title>
+                            <Card.Subtitle>
+                              <Row>
+                                <Col>{service.service_detail}</Col>
+                                <Col xs="auto" className="price_rating">
+                                  Rating: {service.service_rating}
+                                </Col>
+                              </Row>
+                            </Card.Subtitle>
+                            <Card.Subtitle>
+                              <Row>
+                                <Col className="price_rating mt-1">
+                                  ({service.location})
+                                </Col>
+                              </Row>
+                            </Card.Subtitle>
+
+                            <Button
+                              variant="primary mt-2"
+                              onClick={() => {
+                                window.location.href = `/service/s${service.service_id}`;
+                              }}
+                            >
+                              Go to Service
+                            </Button>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    ))
+                    .slice(0, display_num)}
+                </Row>
+
+                <div className="d-grid gap-2 button_width">
+                  <Button variant="primary mt-4" onClick={increment_display}>
+                    Show More
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </Container>
         </Container>
       </div>
 

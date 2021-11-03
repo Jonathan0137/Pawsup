@@ -10,15 +10,17 @@ import {
   Row,
   Dropdown,
   Button,
+  Card,
 } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProductPage.css";
 // import { Link } from "react-router-dom";
 
+let display_num = 4;
+
 const ProductPage = () => {
   const [products, setProducts] = useState({ data: null, error: false });
-  const [finder, setFinder] = useState(false);
   const [condition, setCondition] = useState({
     category: "",
     pet_breeds: "",
@@ -39,8 +41,6 @@ const ProductPage = () => {
   });
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
-
-  let content = null;
 
   // For categories
   useEffect(() => {
@@ -64,57 +64,51 @@ const ProductPage = () => {
       : setCondition({ ...condition, pet_breeds: "" });
   }, [selectedP]);
 
-  // useEffect(async () => {
-  //   setProducts({
-  //     data: null,
-  //     error: false,
-  //   });
-  //   await axios
-  //     .get(
-  //       `/api/products?categories=${condition.category}&pet_breeds=${condition.pet_breeds}&minPrice=${condition.minPrice}&maxPrice=${condition.maxPrice}&sortBy=${condition.sortBy}&sortDirection=${condition.sortDirection}`
-  //     )
-  //     .then((res) => {
-  //       setProducts({
-  //         data: res.data,
-  //         error: false,
-  //       });
-  //     })
-  //     .catch(() => setProducts({ error: true }));
-  // }, [finder]);
+  useEffect(() => {
+    conditions();
+  }, []);
 
-  // useEffect(() => {
-  //   console.log(
-  //     `/api/products?categories=${condition.category}&pet_breeds=${condition.pet_breeds}&minPrice=${condition.minPrice}&maxPrice=${condition.maxPrice}&sortBy=${condition.sortBy}&sortDirection=${condition.sortDirection}`
-  //   );
-  // }, [finder]);
+  const urls = `/api/products?${
+    condition.category === "" ? "" : "categories=" + condition.category
+  }${condition.pet_breeds === "" ? "" : "&pet_breeds=" + condition.pet_breeds}${
+    condition.minPrice === "" ? "" : "&minPrice=" + condition.minPrice
+  }${condition.maxPrice === "" ? "" : "&maxPrice=" + condition.maxPrice}${
+    condition.sortBy === "" ? "" : "&sortBy=" + condition.sortBy
+  }${
+    condition.sortDirection === ""
+      ? ""
+      : "&sortDirection=" + condition.sortDirection
+  }`;
 
-  // if (products.data) {
-  //   content = products.data.map((product) => (
-  //     <div className="mb-3 rounded font-bold" key={product.product_id}>
-  //       {/* Link here */}
-  //       {/* <Link to={`the link`}> */}
-  //       <div
-  //         style={{ backgroundImage: `url('${product.product_pic_url[0]} ')` }}
-  //       ></div>
-  //       {/* </Link> */}
-  //       <Container>
-  //         <h3 className="bold mb-2">{product.data.product_name}</h3>
-  //         <h5 className="mb-2">{product.data.product_detail}</h5>
-  //         <h5 className="mb-2">{product.data.product_price}</h5>
-  //         <h5 className="mb-2">{product.data.product_rating}</h5>
-  //       </Container>
-  //     </div>
-  //   ));
-  // }
+  const conditions = async () => {
+    setProducts({
+      data: null,
+      error: false,
+    });
+    await axios
+      .get(urls)
+      .then((res) => {
+        setProducts({
+          data: res.data,
+          error: false,
+        });
+      })
+      .catch(() => setProducts({ error: true }));
+  };
+
+  const increment_display = () => {
+    display_num = display_num + 4;
+    conditions();
+  };
 
   return (
     <>
       <HeaderMenu />
-      <div className="page">
+      <div className="pager">
         <Container>
           {/* Filter Bar */}
-          <Container className="mt-3 ">
-            <h5>Featured Products</h5>
+          <Container className="mt-3">
+            <Col className="mb-3">Featured Products</Col>
             <Container className="filter">
               <Navbar className="nav_active">
                 <Nav className="me-auto filter_options">
@@ -292,6 +286,12 @@ const ProductPage = () => {
                             ...condition,
                             maxPrice: Number(e.target.value),
                           });
+                          if (Number(e.target.value) === 0) {
+                            setCondition({
+                              ...condition,
+                              maxPrice: 10000,
+                            });
+                          }
                         }}
                         isInvalid={minPrice > maxPrice}
                       />
@@ -305,7 +305,7 @@ const ProductPage = () => {
                   <Button
                     className="findButton"
                     variant="primary"
-                    onClick={() => setFinder(!finder)}
+                    onClick={conditions}
                   >
                     Find
                   </Button>
@@ -313,16 +313,73 @@ const ProductPage = () => {
               </Row>
             </Container>
           </Container>
-
           {products.error && (
-            <div className="alert alert-warning" role="alert">
+            <div className="alert alert-warning mid" role="alert">
               Error while fetching products, please try again later.
             </div>
           )}
-          {content}
+          <Container className="mb-3 mid">
+            {products.data ? (
+              <div>
+                <Row xs={1} md={2} lg={4} className="g-4">
+                  {products.data
+                    .map((product) => (
+                      <Col>
+                        <Card border="light" bg="light">
+                          <Card.Img
+                            variant="top"
+                            src={product.product_pic_url[0]}
+                          />
+                          <Card.Body>
+                            <Card.Title>
+                              <Row>
+                                <Col>{product.product_name}</Col>
+                                <Col xs="auto" className="price_rating">
+                                  ${product.product_price[0]}
+                                </Col>
+                              </Row>
+                            </Card.Title>
+                            <Card.Subtitle>
+                              <Row>
+                                <Col>{product.product_detail}</Col>
+                                <Col xs="auto" className="price_rating">
+                                  Rating: {product.product_rating}
+                                </Col>
+                              </Row>
+                            </Card.Subtitle>
+                            <Card.Subtitle>
+                              <Row>
+                                <Col className="price_rating mt-1">
+                                  {product.product_category}
+                                </Col>
+                              </Row>
+                            </Card.Subtitle>
+                            <Button
+                              variant="primary mt-2"
+                              onClick={() => {
+                                window.location.href = `/product/p${product.product_id}`;
+                              }}
+                            >
+                              Go to Product
+                            </Button>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    ))
+                    .slice(0, display_num)}
+                </Row>
+                <div className="d-grid gap-2 button_width">
+                  <Button variant="primary mt-4" onClick={increment_display}>
+                    Show More
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </Container>
         </Container>
       </div>
-
       <Footer />
     </>
   );

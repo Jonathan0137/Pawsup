@@ -116,7 +116,7 @@ const SigninPage = () => {
                 </Row>
                 <Row>
                   {hasError && (
-                    <div className="alert alert-warning" role="alert">
+                    <div className="alert alert-warning mid" role="alert">
                       Wrong Login info. Please try again.
                     </div>
                   )}
