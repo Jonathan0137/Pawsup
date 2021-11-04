@@ -69,9 +69,9 @@
 - A user needs to be able to pay for a good or service over the internet before the exchange of goods or services. (NODE-128) 40
 
 # Spike
+- Understanding how to deal with(process, store, post request) image files. 
  
 # Unfinished Work
-
-
+- NODE-89(Create Service): slight blocker due to unsure of how to process image files.
 
 
