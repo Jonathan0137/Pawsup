@@ -17,7 +17,7 @@ import axios from "axios";
 import "./ProductPage.css";
 // import { Link } from "react-router-dom";
 
-let display_num = 4;
+let display_num = 3;
 
 const ProductPage = () => {
   const [products, setProducts] = useState({ data: null, error: false });
@@ -97,7 +97,7 @@ const ProductPage = () => {
   };
 
   const increment_display = () => {
-    display_num = display_num + 4;
+    display_num = display_num + 3;
     conditions();
   };
 
@@ -321,7 +321,7 @@ const ProductPage = () => {
           <Container className="mb-3 mid">
             {products.data ? (
               <div>
-                <Row xs={1} md={2} lg={4} className="g-4">
+                <Row xs={1} md={2} lg={3} className="g-4">
                   {products.data
                     .map((product) => (
                       <Col>
