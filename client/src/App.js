@@ -1,23 +1,29 @@
 import "./App.css";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import SigninPage from './pages/SigninPage';
-import HomePage from './pages/HomePage';
-import SignupPage from './pages/SignupPage';
-import ServicePage from './pages/ServicePage';
-import ProductPage from './pages/ProductPage';
-import MediaPage from './pages/MediaPage';
-import AccountPage from './pages/AccountPage';
-import ProductDetailPage from './pages/ProductDetailPage';
-import ServiceDetailPage from './pages/ServiceDetailPage';
-import MediaDetailPage from './pages/MediaDetailPage';
-import CreateMedia from './pages/CreateMedia';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import SigninPage from "./pages/SigninPage";
+import HomePage from "./pages/HomePage";
+import SignupPage from "./pages/SignupPage";
+import ServicePage from "./pages/ServicePage";
+import ProductPage from "./pages/ProductPage";
+import MediaPage from "./pages/MediaPage";
+import AccountPage from "./pages/AccountPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
+import MediaDetailPage from "./pages/MediaDetailPage";
+import CreateMedia from "./pages/CreateMedia";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const App = () => {
-  const [detailProducts, setDetailProducts] = useState({ data: null, error: false });
-  const [detailService, setDetailServices] = useState({ data: null, error: false });
+  const [detailProducts, setDetailProducts] = useState({
+    data: null,
+    error: false,
+  });
+  const [detailService, setDetailServices] = useState({
+    data: null,
+    error: false,
+  });
   const [detailMedia, setDetailMedia] = useState({ data: null, error: false });
 
   const getDetailProducts = () => {
@@ -30,7 +36,7 @@ const App = () => {
         });
       })
       .catch(() => setDetailProducts({ error: true }));
-  }
+  };
 
   const getDetailServices = () => {
     axios
@@ -42,8 +48,8 @@ const App = () => {
         });
       })
       .catch(() => setDetailServices({ error: true }));
-  }
-  
+  };
+
   const getDetailMedia = () => {
     axios
       .get("/api/mediapages")
@@ -54,43 +60,55 @@ const App = () => {
         });
       })
       .catch(() => setDetailMedia({ error: true }));
-  }
+  };
   useEffect(() => {
     getDetailProducts();
     getDetailServices();
     getDetailMedia();
   }, []);
 
-
-
-
-  return(
+  return (
     <Router>
       <div>
-        <Route exact path='/' component={HomePage}/>
-        <Route exact path='/signin' component={SigninPage}/>
-        <Route exact path='/signup' component={SignupPage}/>
-        <Route exact path='/service' component={ServicePage}/>
-        <Route exact path='/product' component={ProductPage}/>
-        <Route exact path='/media' component={MediaPage}/>
-        <Route exact path='/realaccountpage' component={AccountPage}/>
-        <Route exact path='/CreateMedia' component={CreateMedia}/>
-        
-        {detailProducts.data && detailProducts.data.map((productDetailed) => 
-          <Route exact path={`/product/p${productDetailed.product_id}`}>
-            <ProductDetailPage data={productDetailed}/>
-          </Route>
-        )}
-        {detailService.data && detailService.data.map((serviceDetailed) => 
-          <Route exact path={`/service/s${serviceDetailed.service_id}`}>
-            <ServiceDetailPage data={serviceDetailed}/>
-          </Route>
-        )}
-        {detailMedia.data && detailMedia.data.map((mediaDetailed) => 
-          <Route exact path={`/media/m${mediaDetailed.id}`}>
-            <MediaDetailPage data={mediaDetailed}/>
-          </Route>
-        )}
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/signin" component={SigninPage} />
+        <Route exact path="/signup" component={SignupPage} />
+        <Route exact path="/service" component={ServicePage} />
+        <Route exact path="/product" component={ProductPage} />
+        <Route exact path="/media" component={MediaPage} />
+        <Route exact path="/realaccountpage" component={AccountPage} />
+        <Route exact path="/CreateMedia" component={CreateMedia} />
+
+        {detailProducts.data &&
+          detailProducts.data.map((productDetailed) => (
+            <Route
+              exact
+              path={`/product/p${productDetailed.product_id}`}
+              key={`p${productDetailed.product_id}`}
+            >
+              <ProductDetailPage data={productDetailed} />
+            </Route>
+          ))}
+        {detailService.data &&
+          detailService.data.map((serviceDetailed) => (
+            <Route
+              exact
+              path={`/service/s${serviceDetailed.service_id}`}
+              key={`s${serviceDetailed.service_id}`}
+            >
+              <ServiceDetailPage data={serviceDetailed} />
+            </Route>
+          ))}
+        {detailMedia.data &&
+          detailMedia.data.map((mediaDetailed) => (
+            <Route
+              exact
+              path={`/media/m${mediaDetailed.id}`}
+              key={`m${mediaDetailed.id}`}
+            >
+              <MediaDetailPage data={mediaDetailed} />
+            </Route>
+          ))}
       </div>
       <div>
         {detailProducts.error && (
@@ -110,9 +128,7 @@ const App = () => {
         )}
       </div>
     </Router>
-
-
   );
-}
+};
 
 export default App;
