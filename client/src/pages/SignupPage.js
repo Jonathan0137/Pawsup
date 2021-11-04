@@ -93,7 +93,7 @@ const SignupPage = () => {
           <Form.Group className="mb-3">
             <Form.Label>Phone number *</Form.Label>
             <Form.Control
-              type="string"
+              type="text"
               value={user.phone}
               placeholder="Phone number"
               onChange={(e) => setUser({ ...user, phone: e.target.value })}
