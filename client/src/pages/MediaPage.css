@@ -1,0 +1,13 @@
+.cardrow{
+    justify-content: space-around;
+    flex-direction:row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.Mediabutton{
+    margin-top: 50px;
+    display:flex;
+    justify-content: center;
+    align-self: center;
+}

@@ -16,21 +16,53 @@ UserController.get("/", async (req, res) => {
     }
 });
 
-//CREATE /api/user
-UserController.post("/", async (req, res) => {
-  const { username, password, email, location } = req.body;
+//GET /api/user/:id
+UserController.get("/:uid", async (req, res) => {
+  const { uid } = req.params;
 
-  if (!username || !password || !email || !location) {
+  try {
+    const user = await UserModel.getUserByID(uid);
+    if (!user) {
+      return res.status(404).json({
+        message: `User with ID '${uid}' not found`,
+      });
+    }
+    res.status(200).json(user.cleanCopy());
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Encountered an error while fetching user with ID '${id}'" });
+  }
+});
+
+//POST /api/user
+UserController.post("/", async (req, res) => {
+  const { username, email, password, fname, lname, city, phone_number } = req.body;
+
+  if (!username || !email || !password || !fname || !lname || !city || !phone_number ) {
     return res.status(400).json({
-      message: "[username, password, email, location] cannot be empty in response body",
+      message: "[username, email, password, fname, lname, city, phone_number] cannot be empty in response body",
+    });
+  }
+
+  const user_check = await UserModel.getUserByUsername(username);
+
+  if (user_check) {
+    return res.status(401).json({
+      message: `A user with the chosen username already exists`,
     });
   }
 
   const user = new UserModel({
     username: username,
-    password: password,
     email: email,
-    location: location,
+    password: password,
+    fname: fname,
+    lname: lname,
+    city: city,
+    phone_number: phone_number,
+    avatar: "https://i.imgur.com/QS8iSoig.jpg"
   });
 
   try {
@@ -44,15 +76,15 @@ UserController.post("/", async (req, res) => {
   }
 });
 // PUT /api/user/:uid
-// Able to change user's password, email, or location fields. Username cannot be changed.
+// Able to change user's password, email, location, or avatar fields. Username cannot be changed.
 // At least one of these fields must be in request body. 
 UserController.put("/:uid", async(req, res) => {
   const { uid } = req.params;
-  const { password, email, location } = req.body;
+  const { password, email, city, phone_number, avatar } = req.body;
 
-  if (!password && !email && !location) {
+  if (!password && !email && !city && !phone_number && !avatar) {
     return res.status(400).json({
-      message: "[password, email, location] cannot all be empty in response body. Nothing to edit!",
+      message: "[password, email, city, phone_number, avatar] cannot all be empty in response body. Nothing to edit!",
     });
   }
 
@@ -72,8 +104,16 @@ UserController.put("/:uid", async(req, res) => {
       user.email = email;
     }
 
-    if (location) {
-      user.location = location;
+    if (city) {
+      user.city = city;
+    }
+
+    if (phone_number){
+      user.phone_number = phone_number;
+    }
+
+    if (avatar) {
+      user.avatar = avatar;
     }
 
     await user.save();

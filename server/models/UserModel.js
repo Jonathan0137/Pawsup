@@ -4,9 +4,13 @@ const { DBModel } = require("./model");
 class UserModel extends DBModel {
     uid;
     username;
-    password;
     email;
-    location;
+    password;
+    fname;
+    lname;
+    city;
+    phone_number;
+    avatar;
 
     constructor(data) {
         super({

@@ -1,10 +1,10 @@
-body {
+.page {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-image: url('http://pawpus.finestudiotest.com/include/pic/backend/21070708564800.png');
-  background-repeat:no-repeat;
-  background-color:rgb(235, 238, 241);
+  margin-top: 50px;
+}
+
+.bg-white {
+  background-color: #fff;
 }
