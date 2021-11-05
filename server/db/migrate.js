@@ -3,6 +3,8 @@ const { db } = require("./db");
 
 async function migrate() {
   try {
+    await db.query(`DROP SCHEMA public CASCADE`);
+    await db.query(`CREATE SCHEMA public`);
     // Create users table
     await db.query(`
       CREATE TABLE IF NOT EXISTS users (
@@ -187,16 +189,17 @@ async function migrate() {
         id serial PRIMARY KEY,
         user_id INTEGER NOT NULL,
         product_id INTEGER NOT NULL,
-        quantity INTEGER NOT NULL
+        quantity INTEGER NOT NULL,
+        size VARCHAR NOT NULL
       );
     `);
 
     // Populate product_cart_items table
     await db.query(`
-      INSERT INTO product_cart_items(user_id, product_id, quantity)
+      INSERT INTO product_cart_items(user_id, product_id, quantity, size)
         VALUES
-        (1, 1, 1),
-        (1, 2, 4);
+        (1, 1, 1, 'Small'),
+        (1, 2, 4, 'Large');
     `);
 
     // Create service_cart_items table

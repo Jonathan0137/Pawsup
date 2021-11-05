@@ -11,6 +11,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
 import MediaDetailPage from "./pages/MediaDetailPage";
 import CreateMedia from "./pages/CreateMedia";
+import CartPage from "./pages/CartPage";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -78,6 +79,7 @@ const App = () => {
         <Route exact path="/media" component={MediaPage} />
         <Route exact path="/realaccountpage" component={AccountPage} />
         <Route exact path="/CreateMedia" component={CreateMedia} />
+        <Route exact path="/cart" component={CartPage} />
 
         {detailProducts.data &&
           detailProducts.data.map((productDetailed) => (

@@ -20,8 +20,8 @@ CartController.get("/", async (req, res) => {
       .map((row) => row.cleanCopy());
   
     res.json({
-      product_cart_items,
-      service_cart_items,
+      products: product_cart_items,
+      services: service_cart_items,
     });
   } catch(err) {
     console.error(err);
@@ -94,8 +94,8 @@ CartController.delete("/product/:id", async (req, res) => {
         .json({ message: "Please login to access this endpoint" });
     }
     const { uid } = req.user;
-    const product_id = req.params.id;
-    await ProductCartItemModel.deleteCartItemForUser(uid, product_id);
+    const product_cart_item_id = req.params.id;
+    await ProductCartItemModel.deleteCartItemForUser(uid, product_cart_item_id);
     
     res.json({ message: "Successfully deleted item from cart" });
   } catch(err) {
@@ -115,8 +115,8 @@ CartController.delete("/service/:id", async (req, res) => {
         .json({ message: "Please login to access this endpoint" });
     }
     const { uid } = req.user;
-    const service_id = req.params.id;
-    await ServiceCartItemModel.deleteCartItemForUser(uid, service_id);
+    const service_cart_item_id = req.params.id;
+    await ServiceCartItemModel.deleteCartItemForUser(uid, service_cart_item_id);
     
     res.json({ message: "Successfully deleted item from cart" });
   } catch(err) {

@@ -18,16 +18,18 @@ class ServiceCartItemModel extends DBModel {
   }
 
   static async getServiceCartItemsByUser(user_id) {
-    const query = "SELECT * FROM service_cart_items WHERE user_id = $1";
+    const query = `SELECT * FROM service_cart_items sci
+      LEFT JOIN services s ON sci.service_id = s.service_id
+      WHERE user_id = $1`;
     const params = [user_id];
 
     const data = await db.query(query, params);
     return data.map((row) => new ServiceCartItemModel(row));
   }
 
-  static async deleteCartItemForUser(user_id, service_id) {
-    const query = "DELETE FROM service_cart_items WHERE user_id = $1 AND service_id = $2";
-    const params = [user_id, service_id];
+  static async deleteCartItemForUser(user_id, id) {
+    const query = "DELETE FROM service_cart_items WHERE user_id = $1 AND id = $2";
+    const params = [user_id, id];
     await db.query(query, params);
   }
 }
