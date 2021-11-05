@@ -1,54 +1,89 @@
-import React from "react";
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
-import FeaturedPic1 from "../media/FeaturedServices1.png";
-import FeaturedPic2 from "../media/FeaturedServices2.jpg";
+import React, { useState, useEffect } from "react";
+import { Container, Card, Button, Row, Col, Alert } from "react-bootstrap";
+import axios from "axios";
 
 const FeaturedServices = () => {
+  const [services, setServices] = useState({ data: null, error: false });
+
+  useEffect(() => {
+    conditions();
+  }, []);
+
+  const conditions = async () => {
+    await axios
+      .get("/api/services")
+      .then((res) => {
+        setServices({
+          data: res.data,
+          error: false,
+        });
+      })
+      .catch(() => setServices({ error: true }));
+  };
+
   return (
     <div>
       <Container>
         <h4 className="mt3">Featured Services</h4>
 
-        <Row xs={1} md={2} className="g-4">
-          <Col>
-            <Card
-              style={{
-                width: "100%",
-                height: "100%",
-              }}>
-              <Card.Img
-                variant="top"
-                src={FeaturedPic1}
-                height="250vw"
-                width="100%"
-              />
-              <Card.Body>
-                <Card.Title>Malcom</Card.Title>
-                <Card.Text>Passionate caregiver!</Card.Text>
-                <Button variant="primary">Take me there!</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card
-              style={{
-                width: "100%",
-                height: "100%",
-              }}>
-              <Card.Img
-                variant="top"
-                src={FeaturedPic2}
-                height="250vw"
-                width="100%"
-              />
-              <Card.Body>
-                <Card.Title>Kerwin</Card.Title>
-                <Card.Text>Test</Card.Text>
-                <Button variant="primary">Take me there!</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+        {services.data ? (
+          <div>
+            <Row xs={1} md={2} className="g-4">
+              {services.data
+                .map((service) => (
+                  <Col key={service.service_id}>
+                    <Card border="light" bg="light">
+                      <Card.Img
+                        variant="top"
+                        src={service.service_pic_url[0]}
+                      />
+                      <Card.Body>
+                        <Card.Title>
+                          <Row>
+                            <Col>{service.service_title}</Col>
+                            <Col xs="auto" className="price_rating">
+                              ${service.price_per_day}
+                            </Col>
+                          </Row>
+                        </Card.Title>
+                        <Card.Subtitle>
+                          <Row>
+                            <Col>{service.service_detail}</Col>
+                            <Col xs="auto" className="price_rating">
+                              Rating: {service.service_rating}
+                            </Col>
+                          </Row>
+                        </Card.Subtitle>
+                        <Card.Subtitle>
+                          <Row>
+                            <Col className="price_rating mt-1">
+                              ({service.location})
+                            </Col>
+                          </Row>
+                        </Card.Subtitle>
+
+                        <Button
+                          variant="primary mt-2"
+                          onClick={() => {
+                            window.location.href = `/service/s${service.service_id}`;
+                          }}>
+                          Go to Service
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))
+                .slice(0, 2)}
+            </Row>
+            {services.data.length === 0 ? (
+              <Alert variant="light" className="mt-4">
+                No relevant services found!
+              </Alert>
+            ) : null}
+          </div>
+        ) : (
+          <div></div>
+        )}
       </Container>
     </div>
   );
