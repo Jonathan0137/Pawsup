@@ -1,0 +1,14 @@
+.pageform {
+  margin-right: 25%;
+  margin-left: 25%;
+}
+
+.mid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bigger {
+  width: 200px;
+}

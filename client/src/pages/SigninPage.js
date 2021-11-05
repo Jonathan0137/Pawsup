@@ -57,7 +57,7 @@ const SigninPage = () => {
       <HeaderMenu />
       <div className="page bg-white">
         {loading ? (
-          <h6></h6>
+          <h6> </h6>
         ) : status.isLoggedIn ? (
           <Container>
             <h3 className="mb-4">Welcome {status.user.username} </h3>
