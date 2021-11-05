@@ -6,10 +6,14 @@ import ReactStars from "react-rating-stars-component";
 import "./ProductDetailPage.css";
 import { QuantityPicker } from "react-qty-picker";
 import CommentSection from "./../components/CommentSection";
+import { useCartContext } from "../providers/CartProvider";
 import axios from "axios";
+
 const ProductDetailPage = ({ data }) => {
+  const { userInfo, cartItems, setCartItems } = useCartContext();
   const [currentPrice, setCurrentPrice] = useState(data.product_price[0]);
   const [quant, setQuant] = useState(1);
+  const [addedProductToCart, setAddedProductToCart] = useState(false);
   const [detailComments, setDetailComments] = useState({
     data: null,
     error: false,
@@ -31,6 +35,20 @@ const ProductDetailPage = ({ data }) => {
       })
       .catch(() => setDetailComments({ error: true }));
   };
+
+  const addProductToCart = () => {
+    const sizeIndex = data.product_price.indexOf(currentPrice);
+    axios
+      .post("/api/cart/product", { product_id: data.product_id, quantity: quant, size: data.product_type[sizeIndex] })
+      .then((response) => {
+        setAddedProductToCart(true);
+        setCartItems({
+          ...cartItems,
+          products: [...cartItems.products, { product_id: data.product_id }],
+        });
+      })
+      .catch((error) => console.error(error));
+  }
 
   useEffect(() => {
     getDetailComments();
@@ -118,8 +136,8 @@ const ProductDetailPage = ({ data }) => {
           </div>
           <div className="col-12 col-sm-2 purchase-details">
             <div className="d-grid gap-2">
-              <Button variant="warning" size="lg">
-                Add to Cart
+              <Button disabled={!userInfo.isLoggedIn || addedProductToCart} variant="warning" size="lg" onClick={addProductToCart}>
+                {!addedProductToCart ? 'Add to Cart' : 'Added to Cart'}
               </Button>
               <Button variant="outline-warning" size="lg">
                 Buy it Now
@@ -133,7 +151,6 @@ const ProductDetailPage = ({ data }) => {
           </h1>
           <p>{data.product_detail}</p>
         </div>
-
         <div className="col-12 comment">
           {detailComments.error && (
             <div className="alert comment-alert-warning" role="alert">

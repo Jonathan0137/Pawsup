@@ -1,5 +1,6 @@
 import Footer from "../components/Footer";
 import HeaderMenu from "../components/HeaderMenu";
+import AddServiceToCart from "../components/AddServiceToCart";
 import { Image, Carousel } from "react-bootstrap";
 import CommentSection from "./../components/CommentSection";
 import ReactStars from "react-rating-stars-component";
@@ -67,7 +68,7 @@ const ServiceDetailPage = ({ data }) => {
       <HeaderMenu />
       <div className="container">
         <div className="row info">
-          <div className="col-12 col-sm-6 servicePicConatiner">
+          <div className="col-12 col-sm-6 col-md-5 servicePicConatiner">
             <Carousel className="CarouselContainer">
               {data.service_pic_url &&
                 data.service_pic_url.map((pic, i) => (
@@ -82,7 +83,7 @@ const ServiceDetailPage = ({ data }) => {
                 ))}
             </Carousel>
           </div>
-          <div className="col-12 col-sm-6 serviceInfoConatiner">
+          <div className="col-12 col-sm-6 col-md-4 serviceInfoConatiner">
             <div className="col-12 serviceDetailContainter">
               <h2 className="serviceTitle">{data.service_title}</h2>
               <div className="serviceRating">
@@ -128,6 +129,9 @@ const ServiceDetailPage = ({ data }) => {
                 </p>
               </div>
             </div>
+          </div>
+          <div className="col-12 col-md-3">
+            {<AddServiceToCart serviceId={data.service_id} />}
           </div>
         </div>
         <div className="row detail">

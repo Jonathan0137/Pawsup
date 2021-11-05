@@ -11,6 +11,10 @@ const CartProvider = ({ children }) => {
     services: [],
   });
 
+  useEffect(() => {
+    refreshUserInfoAndCart();
+  }, []);
+
   const refreshUserInfoAndCart = async () => {
     try {
       const response = await axios.get("/api/auth/user");

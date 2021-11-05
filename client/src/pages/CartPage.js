@@ -163,7 +163,7 @@ const CartPage = () => {
                             </Card.Subtitle>
                           </Card.Title>
                           <Button className="mt-2" disabled={deletingProduct === product.id} variant="danger" onClick={() => removeProduct(product.id)}>
-                            Remove from Cart {deletingProduct == product.id && <Spinner animation="border" size="sm" />}
+                            Remove from Cart {deletingProduct === product.id && <Spinner animation="border" size="sm" />}
                           </Button>
                         </Card.Body>
                     </Card>

@@ -40,11 +40,12 @@ CartController.post("/product", async (req, res) => {
         .json({ message: "Please login to access this endpoint" });
     }
     const { uid } = req.user;
-    const { product_id, quantity } = req.body;
+    const { product_id, quantity, size } = req.body;
     const productCartItem = new ProductCartItemModel({
       user_id: uid,
       product_id: product_id,
       quantity: quantity,
+      size: size,
     })
     await productCartItem.insert();
     
