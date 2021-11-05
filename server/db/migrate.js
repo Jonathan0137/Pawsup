@@ -219,6 +219,15 @@ async function migrate() {
         (1, 2, '2021-02-10', '2021-02-16', 3);
     `);
 
+    // Create images table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS images (
+        image_id serial PRIMARY KEY,
+        image_name VARCHAR(200),
+        image_data BYTEA
+      );
+    `);
+
     console.log("Successfully finished DB migrations");
   } catch (err) {
     console.error("An error occurred while running DB migrations:");

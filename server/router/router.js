@@ -7,6 +7,7 @@ const { CommentsController } = require("../controllers/CommentsController");
 const { CartController } = require("../controllers/CartController");
 const { ProvidersController } = require("../controllers/ProvidersController");
 const { RepliesController } = require("../controllers/RepliesController");
+const { ImagesController } = require("../controllers/ImagesController");
 
 const express = require("express");
 const router = express.Router();
@@ -20,5 +21,6 @@ router.use("/comments", CommentsController);
 router.use("/cart", CartController);
 router.use("/providers", ProvidersController);
 router.use("/replies", RepliesController);
+router.use("/images", ImagesController)
 
 exports.router = router;

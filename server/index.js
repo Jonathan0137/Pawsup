@@ -6,8 +6,17 @@ const PGSession = require("connect-pg-simple");
 const { passport } = require("./config/passport-config");
 const { router } = require("./router/router");
 const { db } = require("./db/db");
+const fileupload = require("express-fileupload");
+
+
 
 const app = express();
+
+// NODE-102 start
+app.use(fileupload());
+app.use(express.urlencoded({ extended: false })); 
+// NODE-102 end
+
 app.use(express.json());
 app.use(
   session({
