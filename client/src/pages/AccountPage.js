@@ -4,78 +4,31 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button, Form,Col,Row} from 'react-bootstrap';
 import './AccountPage.css';
 import React from 'react';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 
 const AccountPage = () => {
 
-    const [filled, setfilled] = useState({
-        email: '',
-        password: '',
-        phonenumber: '',
-        location: ''
-    });
-    const [status, setStatus] = useState({ isLoggedIn: false, user: null });
-    const [changed,setchanged] = useState(false);
-
-    useEffect(() => {
-        axios
-        .get("/api/auth/user")
-        .then((res) => setStatus(res.data))
-        .catch();
-    }, []);
-
-    useEffect(() => {
-        changed && (window.location = "/realaccountpage");
-      }, [changed]);
-
-    const editemail = (event) => {
-        setfilled({...filled, email: event.target.value})
+    const [,] = useState()
+    const handleEdit = () => {
+        
     }
-
-    const editpassword = (event) => {
-        setfilled({...filled, password: event.target.value})
-    }
-
-    const editphonenumber = (event) => {
-        setfilled({...filled, phonenumber: event.target.value})
-    }
-
-    const editcity = (event) => {
-        setfilled({...filled, location: event.target.value})
-    }
-
-    const Savechanges = async () => {
-        await axios
-          .put(`/api/user/${status.user.uid}`, {
-            email: filled.email,
-            password: filled.password,
-            phone_number: filled.phonenumber,
-            city: filled.location,
-          })
-          .then(() => {
-              setchanged(true);
-          })
-          .catch(() => {
-          });
-      };
     
     return (
         <>
             <HeaderMenu />
-            {status.isLoggedIn ? (
-                <div>
+            <div>
                 <Container className='containercenter'>
-                <Form onSubmit={Savechanges}>
-
-
+                <Form>
                     <Form.Group as={Row} className="mb-3 form" controlId="formPlaintextEmail">
 
                         <Form.Label column sm="2">
                         Email
                         </Form.Label>
                         <Col className='editbutton'>
-                        <input onChange={editemail} value={filled.email} placeholder={status.user.email}/>
+                        <Form.Control plaintext readOnly defaultValue="email@example.com"/>
+                        <input/>
+                        
+                        <Button variant='primary' type='submit' onClick={handleEdit}>Edit</Button>
                         </Col>
                     </Form.Group>
 
@@ -85,7 +38,9 @@ const AccountPage = () => {
                         Password
                         </Form.Label>
                         <Col className='editbutton'>
-                        <input  onChange={editpassword} placeholder={status.user.password}/>
+                        <Form.Control plaintext readOnly defaultValue="example-password" />
+                        <input/>
+                        <Button variant='primary' type='submit' onClick={handleEdit}>Edit</Button>
                         </Col>
                     </Form.Group>
 
@@ -101,16 +56,19 @@ const AccountPage = () => {
                             <option>Service Provider</option>
                             
                         </Form.Control>
+                        <Button variant='primary' type='submit' onClick={handleEdit}>Edit</Button>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3 form" controlId="formPlaintextUid">
 
-                        <Form.Label column >
-                        Phone number
+                        <Form.Label column sm="2">
+                        Uid
                         </Form.Label>
                         <Col className='editbutton'>
-                        <input onChange={editphonenumber} placeholder={status.user.phone_number}/>
+                        <Form.Control plaintext readOnly defaultValue="example-uid" />
+                        <input/>
+                        <Button variant='primary' type='submit' >Edit</Button>
                         </Col>
                     </Form.Group>
                     
@@ -120,25 +78,16 @@ const AccountPage = () => {
                         Location
                         </Form.Label>
                         <Col className='editbutton'>
-                            <input onChange={editcity} placeholder={status.user.city}/>
+                            <Form.Control plaintext readOnly defaultValue="example-Location" />
+                            <input/>
+                            <Button variant='primary' type='submit' >Edit</Button>
                         </Col>
                     </Form.Group>
-                    <Container className='thetwobuttons'>
-                        
-                    <Button variant='primary' type='submit'>
-                    Save changes!
-                    </Button>
-                        
-                    <Button variant='primary' href='/'>
-                    Cancel
-                    </Button>
-                    
-                    </Container>
+
+
                 </Form>
                 </Container>
             </div>
-            ) : (<></>)}
-            
             <Footer />
         </>
 
