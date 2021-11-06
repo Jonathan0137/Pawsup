@@ -3,10 +3,69 @@ import Footer from "../components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container,  Button, Form, Col, Row, Card} from 'react-bootstrap';
 import './CreateMedia.css';
-import React from 'react';
+import React, {useState, useEffect}from 'react';
+import axios from 'axios';
 
 const CreateMediaPage = () => {
+    
+    const [filled,setfilled] = useState({
+        author_id: 1,
+        media_picture_url: [
+            "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cow_%28Fleckvieh_breed%29_Oeschinensee_Slaunger_2009-07-07.jpg",
+            "http://leosigh.com/wp-content/uploads/2016/12/rick-astley-never-gonna-give-you-up.jpg"
+        ],
+        media_title: '',
+        media_detail: '',
+        published_time: '',
+        number_of_likes: 0,
+    })
+    const [status, setStatus] = useState({ isLoggedIn: false, user: null });
+    const [posted,setposted] = useState(false);
 
+    useEffect(() => {
+        axios
+        .get("/api/auth/user")
+        .then((res) => setStatus(res.data))
+        .catch();
+    }, []);
+
+    useEffect(() => {
+        posted && (window.location = "/media");
+      }, [posted]);
+
+    
+
+
+    const Createpost = async () => {
+        await axios
+          .post('/api/mediapages', {
+            
+
+            "author_id": status.user.uid,
+            "media_picture_url": filled.media_picture_url,
+            "media_title": filled.media_title,
+            "media_detail": filled.media_detail,
+            "published_time": new Date().toLocaleDateString(),
+            "number_of_likes": 1421
+          })
+          .then(() => {
+              setposted(true);
+          })
+          .catch(() => {
+          });
+      };
+
+
+    const posttitle = (event) => {
+        setfilled({...filled, media_title: event.target.value})
+    }
+
+    const postdetail = (event) => {
+        setfilled({...filled, media_detail: event.target.value})
+    }
+
+    
+ 
     return (
         <>
         <HeaderMenu />
@@ -15,12 +74,12 @@ const CreateMediaPage = () => {
         <Container>
         <Card bg='light'>
         <Container className='detail' >
-            <Form className='detail mt-5'>
+            <Form className='detail mt-5' onSubmit={Createpost}>
             <Col>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Row>
                 <Form.Label>Title</Form.Label>
-                <Form.Control as='textarea' placeholder="Enter title" />
+                <Form.Control as='textarea' value={filled.media_title} onChange = {posttitle} placeholder="Enter title" />
                 </Row>
             </Form.Group>
 
@@ -28,7 +87,7 @@ const CreateMediaPage = () => {
                 <Row>
                 <Form.Label>Detail</Form.Label>
                 
-                <Form.Control as='textarea' rows={5} placeholder='Enter detail'/>
+                <Form.Control as='textarea' rows={5} value={filled.media_detail} onChange = {postdetail} placeholder='Enter detail'/>
                 
                 </Row>
             </Form.Group>
@@ -36,7 +95,7 @@ const CreateMediaPage = () => {
             <Form.Group controlId="formFileLg" className="mb-3 detail">
                 <Row>
                 <Form.Label>Upload some photos!</Form.Label>
-                <Form.Control type="file" />
+                <Form.Control type="file"/>
                 </Row>
             </Form.Group>
 

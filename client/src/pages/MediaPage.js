@@ -10,155 +10,101 @@ import mock6 from "../media/Social_mock6.jpg";
 import heart from "../media/heart.jpg";
 import { Container, Button, Form, Col, Row, Card, ListGroup, ListGroupItem, CardGroup, Collapse, Figure} from 'react-bootstrap';
 import './MediaPage.css';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import FigureImage from 'react-bootstrap/esm/FigureImage';
+
+let display_num = 3;
+
 
 const MediaPage = () => {
    
-    const Posts = [{
-        title:'My best friends!',
-        media_picture_url:mock1,
-        userName:'Jackson',
-        userProfilePic:'',
-        numberOfLikes:3,
-    },
-    {
-        title:'Fluffy friends!',
-        media_picture_url:mock2,
-        userName:'John',
-        userProfilePic:'',
-        numberOfLikes:5,
-    },
-    {
-        title:'Wear a mask...',
-        media_picture_url:mock3,
-        userName:'Liam',
-        userProfilePic:'',
-        numberOfLikes:7,
-    },
-    {
-        title:'She is lonely.',
-        media_picture_url:mock4,
-        userName:'Leo',
-        userProfilePic:'',
-        numberOfLikes:4,
-    },
-    {
-        title:'So tiny!',
-        media_picture_url:mock5,
-        userName:'Sam',
-        userProfilePic:'',
-        numberOfLikes:1,
-    },
-    {
-        title:'Sleepy kitty.',
-        media_picture_url:mock6,
-        userName:'Mary',
-        userProfilePic:'',
-        numberOfLikes:8,
-    }]
+    const [medias, setmedias] = useState({data: null, error: false});
+    const display = async () => {
+        setmedias({
+          data: null,
+          error: false,
+        });
+        await axios
+          .get("/api/mediapages")
+          .then((res) => {
+            setmedias({
+              data: res.data,
+              error: false,
+            });
+          })
+          .catch(() => setmedias({ error: true }));
+      };
+    
+    useEffect(() => {
+        display();
+      }, []);  
 
-    const [open,setOpen] = useState(false);
+    console.log(medias);
+    const increment_display = () => {
+        display_num = display_num + 3;
+        display();
+      };
 
     return (
         <>
             
             <HeaderMenu />
             
+            <Container className="mb-3 mid">
+            {medias.data ? (
+              <div>
+                <Row xs={1} md={2} lg={3} className="g-4">
+                  {medias.data
+                    .map((media) => (
+                      <Col key={media.id}>
+                        <Card border="light" bg="light">
+                          <Card.Img
+                            variant="top"
+                            src={media.media_picture_url[0]}
+                          />
+                          <Card.Body>
+                            <Card.Title>
+                              <Row>
+                                <Col>{media.media_title}</Col>
+                              </Row>
+                            </Card.Title>
+                            <Card.Subtitle>
+                              <Row>
+                                <Col></Col>
+                                <Col xs="auto" className="numoflikes">
+                                <FavoriteIcon className="icon" /> {media.number_of_likes}
+                                </Col>
+                              </Row>
+                            </Card.Subtitle>
+
+                            <Button
+                              variant="primary mt-2"
+                              onClick={() => {
+                                window.location.href = `/media/m${media.id}`;
+                              }}
+                            >
+                              View
+                            </Button>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    ))
+                    .slice(0, display_num)}
+                </Row>
+
+                <div className="d-grid gap-2 button_width">
+                  <Button variant="primary mt-4" onClick={increment_display}>
+                    Show More
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </Container>
            
-            <Container>
-            <Card className='mt-5'>
-                <Row className='cardrow mt-3'>
-            <Card style={{ width: '25rem' }}>
-            <Card.Img variant="top" src={mock1} />
-            <Card.Body>
-                <Card.Title>{Posts[0].title}</Card.Title>
-                <ListGroup className="list-group-flush">
-                    <ListGroupItem>By: {Posts[0].userName}</ListGroupItem>
-                    <ListGroupItem><Figure><FigureImage width={20} height={20} alt="20x20"src={heart} /></Figure>Likes: {Posts[0].numberOfLikes}</ListGroupItem>
-                </ListGroup>
-                <Button variant="primary">View</Button>
-            </Card.Body>
-            </Card>
-
-            <Card style={{ width: '25rem' }}>
-            <Card.Img variant="top" src={mock2} />
-            <Card.Body>
-                <Card.Title>{Posts[1].title}</Card.Title>
-                <ListGroup className="list-group-flush">
-                    <ListGroupItem>       By: {Posts[1].userName}</ListGroupItem>
-                    <ListGroupItem><Figure><FigureImage width={20} height={20} alt="20x20"src={heart} /></Figure>Likes: {Posts[1].numberOfLikes}</ListGroupItem>
-                </ListGroup>
-                <Button variant="primary">View</Button>
-            </Card.Body>
-            </Card>
-
-            <Card style={{ width: '25rem' }}>
-            <Card.Img variant="top" src={mock3} />
-            <Card.Body>
-                <Card.Title>{Posts[2].title}</Card.Title>
-                <ListGroup className="list-group-flush">
-                    <ListGroupItem>By: {Posts[2].userName}</ListGroupItem>
-                    <ListGroupItem><Figure><FigureImage width={20} height={20} alt="20x20"src={heart} /></Figure>Likes: {Posts[2].numberOfLikes}</ListGroupItem>
-                </ListGroup>
-                <Button variant="primary">View</Button>
-            </Card.Body>
-            </Card>
-
-            <Card style={{ width: '25rem' }}>
-            <Card.Img variant="top" src={mock4} />
-            <Card.Body>
-                <Card.Title>{Posts[3].title}</Card.Title>
-                <ListGroup className="list-group-flush">
-                    <ListGroupItem>By: {Posts[3].userName}</ListGroupItem>
-                    <ListGroupItem><Figure><FigureImage width={20} height={20} alt="20x20"src={heart} /></Figure>Likes: {Posts[3].numberOfLikes}</ListGroupItem>
-                </ListGroup>
-                <Button variant="primary">View</Button>
-            </Card.Body>
-            </Card>
-
-            <Card style={{ width: '25rem' }}>
-            <Card.Img variant="top" src={mock5} />
-            <Card.Body>
-                <Card.Title>{Posts[4].title}</Card.Title>
-                <ListGroup className="list-group-flush">
-                    <ListGroupItem>By: {Posts[4].userName}</ListGroupItem>
-                    <ListGroupItem><Figure><FigureImage width={20} height={20} alt="20x20"src={heart} /></Figure>Likes: {Posts[4].numberOfLikes}</ListGroupItem>
-                </ListGroup>
-                <Button variant="primary">View</Button>
-            </Card.Body>
-            </Card>
-
-            <Card style={{ width: '25rem' }}>
-            <Card.Img variant="top" src={mock6} />
-            <Card.Body>
-                <Card.Title>{Posts[5].title}</Card.Title>
-                <ListGroup className="list-group-flush">
-                    <ListGroupItem>By: {Posts[5].userName}</ListGroupItem>
-                    <ListGroupItem><Figure><FigureImage width={20} height={20} alt="20x20"src={heart} /></Figure>Likes: {Posts[5].numberOfLikes}</ListGroupItem>
-                </ListGroup>
-                <Button variant="primary">View</Button>
-            </Card.Body>
-            </Card>
-            </Row>
-            </Card>
-            
-
-            <div className="d-grid gap-2 Mediabutton">
-                <Button variant="primary" size="lg"onClick={() => setOpen(!open)}
-                    aria-controls="collapse-text"
-                    aria-expanded={open}>
-                    Load More
-                </Button>
-                <Collapse in={open}>
-                    <div id="collapse-text">
-                    Nothing more to load.
-                    </div>
-                </Collapse>
-            </div>
-            </Container>
-
-            
             <div className="d-grid gap-2 Mediabutton">
                 <Button href='/CreateMedia'variant="primary" size="lg">
                     CreateMedia
