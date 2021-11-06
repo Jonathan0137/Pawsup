@@ -72,6 +72,6 @@
 - Understanding how to deal with(process, store, post request) image files. 
  
 # Unfinished Work
-- NODE-89(Create Service): slight blocker due to unsure of how to process image files.
+- NODE-110: slight blocker due to unsure of how to process image files.
 
 
