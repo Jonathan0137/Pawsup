@@ -122,8 +122,9 @@
     flex-direction:row;
 }
 
-.accountpagetitle{
-    text-align:center;
+.thetwobuttons{
+  display:flex;
+  justify-content: space-between;
 }
 
 /* .body{
@@ -133,5 +134,5 @@
 .containercenter{
   display: flex;
   justify-content: center;
-    align-self: center;
+  align-self: center;
 }
