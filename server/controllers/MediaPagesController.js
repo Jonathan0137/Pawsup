@@ -1,5 +1,6 @@
 const express = require("express");
 const { MediaPageModel } = require("../models/MediaPageModel");
+const { UserModel } = require("../models/UserModel");
 // Base route: /api/mediapages
 const MediaPagesController = express.Router();
 

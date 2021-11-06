@@ -41,7 +41,6 @@ const MediaPage = () => {
         display();
       }, []);  
 
-    console.log(medias);
     const increment_display = () => {
         display_num = display_num + 3;
         display();
