@@ -1,19 +1,11 @@
 import HeaderMenu from '../components/HeaderMenu';
 import Footer from "../components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
-import mock1 from "../media/Social_mock1.jpg";
-import mock2 from "../media/Social_mock2.jpg";
-import mock3 from "../media/Social_mock3.jpg";
-import mock4 from "../media/Social_mock4.jpg";
-import mock5 from "../media/Social_mock5.jpg";
-import mock6 from "../media/Social_mock6.jpg";
-import heart from "../media/heart.jpg";
-import { Container, Button, Form, Col, Row, Card, ListGroup, ListGroupItem, CardGroup, Collapse, Figure} from 'react-bootstrap';
+import { Container, Button, Col, Row, Card} from 'react-bootstrap';
 import './MediaPage.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import FigureImage from 'react-bootstrap/esm/FigureImage';
 
 let display_num = 3;
 
