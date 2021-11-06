@@ -49,7 +49,7 @@ const ProductPage = () => {
       : selectedC.food
       ? setCondition({ ...condition, category: "Food" })
       : setCondition({ ...condition, category: "" });
-  }, [selectedC]);
+  }, [selectedC]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // For pet breeds
   useEffect(() => {
@@ -62,11 +62,11 @@ const ProductPage = () => {
       : selectedP.rabbit
       ? setCondition({ ...condition, pet_breeds: "Rabbit" })
       : setCondition({ ...condition, pet_breeds: "" });
-  }, [selectedP]);
+  }, [selectedP]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     conditions();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const urls = `/api/products?${
     condition.category === "" ? "" : "categories=" + condition.category

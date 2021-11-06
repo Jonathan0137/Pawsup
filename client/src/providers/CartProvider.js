@@ -13,7 +13,7 @@ const CartProvider = ({ children }) => {
 
   useEffect(() => {
     refreshUserInfoAndCart();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refreshUserInfoAndCart = async () => {
     try {
@@ -22,14 +22,15 @@ const CartProvider = ({ children }) => {
       if (response.data.isLoggedIn) {
         await refreshCartData();
       }
-    } catch(error) {
+    } catch (error) {
       console.error(error.response);
       setHasError(true);
     }
-  }
+  };
 
   const refreshCartData = async () => {
-    await axios.get('/api/cart')
+    await axios
+      .get("/api/cart")
       .then((response) => {
         setCartItems(response.data);
       })
@@ -37,18 +38,26 @@ const CartProvider = ({ children }) => {
         console.error(error.response);
         setHasError(true);
       });
-  }
+  };
 
   return (
-    <CartContext.Provider value={{ userInfo, hasError, cartItems, setCartItems, refreshUserInfoAndCart }}>
+    <CartContext.Provider
+      value={{
+        userInfo,
+        hasError,
+        cartItems,
+        setCartItems,
+        refreshUserInfoAndCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
-  )
-}
+  );
+};
 
 const useCartContext = () => {
   const context = useContext(CartContext);
   return context;
-}
+};
 
 export { CartProvider, useCartContext };

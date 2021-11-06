@@ -10,11 +10,17 @@ import "./CartPage.css";
 const calculateDateDiff = (startDate, endDate) => {
   startDate = new Date(startDate);
   endDate = new Date(endDate);
-  return Math.round((endDate - startDate)/(1000*60*60*24)) + 1;
-}
+  return Math.round((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+};
 
 const CartPage = () => {
-  const { userInfo, hasError, cartItems, setCartItems, refreshUserInfoAndCart } = useCartContext();
+  const {
+    userInfo,
+    hasError,
+    cartItems,
+    setCartItems,
+    refreshUserInfoAndCart,
+  } = useCartContext();
   const [loading, setLoading] = useState(true);
   const [deletingProduct, setDeletingProduct] = useState(null);
   const [deletingService, setDeletingService] = useState(null);
@@ -30,32 +36,39 @@ const CartPage = () => {
     let servicesSubtotal = 0;
 
     cartItems.services.forEach((service) => {
-      const numberOfDays = calculateDateDiff(service.start_date, service.end_date);
-      servicesSubtotal += service.price_per_day * numberOfDays * service.number_of_pets;
+      const numberOfDays = calculateDateDiff(
+        service.start_date,
+        service.end_date
+      );
+      servicesSubtotal +=
+        service.price_per_day * numberOfDays * service.number_of_pets;
     });
     return servicesSubtotal.toFixed(2);
   }, [cartItems]);
 
-  const numProducts = cartItems.products.reduce((num, product) => num += product.quantity, 0);
+  const numProducts = cartItems.products.reduce(
+    (num, product) => (num += product.quantity),
+    0
+  );
   const numServices = cartItems.services.length;
 
   useEffect(() => {
-    refreshUserInfoAndCart()
-      .then(() => {
-        setLoading(false);
-      });
-  }, []);
+    refreshUserInfoAndCart().then(() => {
+      setLoading(false);
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const removeProduct = (id) => {
     if (deletingProduct !== null) {
       return;
     }
     setDeletingProduct(id);
-    axios.delete(`/api/cart/product/${id}`)
+    axios
+      .delete(`/api/cart/product/${id}`)
       .then((response) => {
         setCartItems({
           ...cartItems,
-          products: cartItems.products.filter((product) => product.id !== id)
+          products: cartItems.products.filter((product) => product.id !== id),
         });
       })
       .catch((error) => {
@@ -64,18 +77,19 @@ const CartPage = () => {
       .finally(() => {
         setDeletingProduct(null);
       });
-  }
+  };
 
   const removeService = (id) => {
     if (deletingService !== null) {
       return;
     }
     setDeletingService(id);
-    axios.delete(`/api/cart/service/${id}`)
+    axios
+      .delete(`/api/cart/service/${id}`)
       .then((response) => {
         setCartItems({
           ...cartItems,
-          services: cartItems.services.filter((service) => service.id !== id)
+          services: cartItems.services.filter((service) => service.id !== id),
         });
       })
       .catch((error) => {
@@ -84,7 +98,7 @@ const CartPage = () => {
       .finally(() => {
         setDeletingService(null);
       });
-  }
+  };
 
   if (loading) {
     return (
@@ -97,7 +111,7 @@ const CartPage = () => {
           </div>
         </div>
       </>
-    )
+    );
   }
 
   if (hasError) {
@@ -108,7 +122,7 @@ const CartPage = () => {
           <h2>Unable to retrieve your cart data. Please try again later.</h2>
         </div>
       </>
-    )
+    );
   }
 
   if (!userInfo.isLoggedIn) {
@@ -135,43 +149,61 @@ const CartPage = () => {
                 {cartItems.products.map((product) => (
                   <Col key={product.id}>
                     <Card border="light" bg="light">
-                        <Card.Img
-                          variant="top"
-                          src={product.product_pic_url?.[0]}
-                        />
-                        <Card.Body>
-                          <Card.Title>
+                      <Card.Img
+                        variant="top"
+                        src={product.product_pic_url?.[0]}
+                      />
+                      <Card.Body>
+                        <Card.Title>
+                          <Row>
+                            <Col>
+                              <Link to={`/product/p${product.product_id}`}>
+                                {product.product_name}
+                              </Link>
+                            </Col>
+                            <Col xs="auto" className="price_rating">
+                              $
+                              {
+                                product.product_price?.[
+                                  product.product_type.indexOf(product.size)
+                                ]
+                              }
+                            </Col>
+                          </Row>
+                          <Card.Subtitle>
                             <Row>
-                              <Col>
-                                <Link to={`/product/p${product.product_id}`}>{product.product_name}</Link>
-                              </Col>
-                              <Col xs="auto" className="price_rating">
-                                ${product.product_price?.[product.product_type.indexOf(product.size)]}
+                              <Col className="mt-3">
+                                Size: <strong>{product.size}</strong>
                               </Col>
                             </Row>
-                            <Card.Subtitle>
-                              <Row>
-                                <Col className="mt-3">
-                                  Size: <strong>{product.size}</strong>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col className="mt-2">
-                                  Quantity: <strong>{product.quantity}</strong>
-                                </Col>
-                              </Row>
-                            </Card.Subtitle>
-                          </Card.Title>
-                          <Button className="mt-2" disabled={deletingProduct === product.id} variant="danger" onClick={() => removeProduct(product.id)}>
-                            Remove from Cart {deletingProduct === product.id && <Spinner animation="border" size="sm" />}
-                          </Button>
-                        </Card.Body>
+                            <Row>
+                              <Col className="mt-2">
+                                Quantity: <strong>{product.quantity}</strong>
+                              </Col>
+                            </Row>
+                          </Card.Subtitle>
+                        </Card.Title>
+                        <Button
+                          className="mt-2"
+                          disabled={deletingProduct === product.id}
+                          variant="danger"
+                          onClick={() => removeProduct(product.id)}
+                        >
+                          Remove from Cart{" "}
+                          {deletingProduct === product.id && (
+                            <Spinner animation="border" size="sm" />
+                          )}
+                        </Button>
+                      </Card.Body>
                     </Card>
                   </Col>
                 ))}
               </Row>
               <div className="mt-3">
-                <p>Subtotal ({numProducts} item{numProducts > 1 ? 's' : ''}): <strong>${productsSubtotal}</strong> </p>
+                <p>
+                  Subtotal ({numProducts} item{numProducts > 1 ? "s" : ""}):{" "}
+                  <strong>${productsSubtotal}</strong>{" "}
+                </p>
               </div>
               <div className="mt-3">
                 <Button>Products Checkout</Button>
@@ -180,7 +212,7 @@ const CartPage = () => {
           )}
           {!numProducts && <p>You currently have no products in your cart.</p>}
         </div>
-        <hr/>
+        <hr />
         <h3>Services {numServices > 0 && `(${cartItems.services.length})`}</h3>
         <div>
           {numServices > 0 && (
@@ -189,48 +221,69 @@ const CartPage = () => {
                 {cartItems.services.map((service) => (
                   <Col key={service.id}>
                     <Card border="light" bg="light">
-                        <Card.Img
-                          variant="top"
-                          src={service.service_pic_url?.[0]}
-                        />
-                        <Card.Body>
-                          <Card.Title>
-                            <Row>
-                              <Col>
-                                <Link to={`/service/s${service.service_id}`}>{service.service_title}</Link>
-                              </Col>
-                              <Col xs="auto" className="price_rating">
-                                ${service.price_per_day}/day
-                              </Col>
-                            </Row>
-                          </Card.Title>
-                          <Card.Subtitle>
-                            <Row>
-                              <Col className="mt-3">
-                                Duration: <strong>{service.start_date}</strong> to <strong>{service.end_date}</strong>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="mt-2">
-                                # of Days: <strong>{calculateDateDiff(service.start_date, service.end_date)}</strong>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="mt-2">
-                                # of Pets: <strong>{service.number_of_pets}</strong>
-                              </Col>
-                            </Row>
-                          </Card.Subtitle>
-                          <Button className="mt-2" disabled={deletingService === service.id} variant="danger" onClick={() => removeService(service.id)}>
-                            Remove from Cart {deletingService === service.id && <Spinner animation="border" size="sm" />}
-                          </Button>
-                        </Card.Body>
+                      <Card.Img
+                        variant="top"
+                        src={service.service_pic_url?.[0]}
+                      />
+                      <Card.Body>
+                        <Card.Title>
+                          <Row>
+                            <Col>
+                              <Link to={`/service/s${service.service_id}`}>
+                                {service.service_title}
+                              </Link>
+                            </Col>
+                            <Col xs="auto" className="price_rating">
+                              ${service.price_per_day}/day
+                            </Col>
+                          </Row>
+                        </Card.Title>
+                        <Card.Subtitle>
+                          <Row>
+                            <Col className="mt-3">
+                              Duration: <strong>{service.start_date}</strong> to{" "}
+                              <strong>{service.end_date}</strong>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col className="mt-2">
+                              # of Days:{" "}
+                              <strong>
+                                {calculateDateDiff(
+                                  service.start_date,
+                                  service.end_date
+                                )}
+                              </strong>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col className="mt-2">
+                              # of Pets:{" "}
+                              <strong>{service.number_of_pets}</strong>
+                            </Col>
+                          </Row>
+                        </Card.Subtitle>
+                        <Button
+                          className="mt-2"
+                          disabled={deletingService === service.id}
+                          variant="danger"
+                          onClick={() => removeService(service.id)}
+                        >
+                          Remove from Cart{" "}
+                          {deletingService === service.id && (
+                            <Spinner animation="border" size="sm" />
+                          )}
+                        </Button>
+                      </Card.Body>
                     </Card>
                   </Col>
                 ))}
               </Row>
               <div className="mt-3">
-                <p>Subtotal ({numServices} item{numServices > 1 ? 's' : ''}): <strong>${servicesSubtotal}</strong> </p>
+                <p>
+                  Subtotal ({numServices} item{numServices > 1 ? "s" : ""}):{" "}
+                  <strong>${servicesSubtotal}</strong>{" "}
+                </p>
               </div>
               <div className="mt-3">
                 <Button>Services Checkout</Button>
@@ -242,7 +295,7 @@ const CartPage = () => {
       </Container>
       <Footer />
     </>
-  )
-}
+  );
+};
 
 export default CartPage;
