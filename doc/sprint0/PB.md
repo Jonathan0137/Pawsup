@@ -34,7 +34,7 @@ The user stories are ordered by priority below (i.e. 1 is highest priority, 22 i
 
   - As **Tyler (customer) and Caitlyn (service provider)**, we want to browse around the header menu so that I can understand what kind of features this site offers.
 
-  - <u>Acceptance Criteria:</u> The Header cell should have a logo that is clickable to the home page. A home page button, a Service Button, a Product Button, a Social Media button, an account button, and a setting button.
+  - <u>Acceptance Criteria:</u> The Header cell should have a logo that is clickable to the home page. A home page button, a Service Button, a Product Button, a Social Media button, an account button.
   - <u>Priority:</u> 4
   - <u>Story Point Estimate:</u> 5
 
@@ -61,16 +61,16 @@ The user stories are ordered by priority below (i.e. 1 is highest priority, 22 i
 
 <div></div>
 
-- **User Story #7: Service Page (Click into each Item)**
+- **User Story #7: Detail Service Page (Click into each Item)**
 
   - As **Tyler (customer)**, I want to browse around each service on the service page and click on the service to see the service description and comments. I must also know the location of the house indicated by a map. So that I can decide if I would like to use the service or not.
-  - <u>Acceptance Criteria:</u> Each service should have its own page that has the item’s description, date of availability and Comments with details. The page should also contain a map to indicate the location of the house.
+  - <u>Acceptance Criteria:</u> Each service should have its own page that has the item’s description, date of availability and Comments with details.
   - <u>Priority:</u> 7
   - <u>Story Point Estimate:</u> 8
 
 <div></div>
 
-- **User Story #8: Service Page (Post a service)**
+- **User Story #8: Create Service Page (Post a service)**
   - As **Caitlyn (service provider)**, I would like to post, edit, delete a service so that I can take care of pets and gain profit.
   - <u>Acceptance Criteria:</u> Service providers should be able to post a service post with Pictures, Date of availability, Price, Extra Services, Locations. etc
   - <u>Priority:</u> 8
@@ -78,7 +78,7 @@ The user stories are ordered by priority below (i.e. 1 is highest priority, 22 i
 
 <div></div>
 
-- **User Story #9: Service Page (Add to cart)**
+- **User Story #9: Add to cart (Service Page)**
   - As **Tyler (customer)**, I want to browse around each service on the service page and click on the service and be able to add service to my cart so that I can save them and buy it later.
   - <u>Acceptance Criteria:</u> Each service’s page should have a buy/add to cart button with the time period selected. The price should change accordingly when a different amount of data is selected. Extra Services functionality should also be able to add to the cart.
   - <u>Priority:</u> 9
@@ -86,75 +86,76 @@ The user stories are ordered by priority below (i.e. 1 is highest priority, 22 i
 
 <div></div>
 
-- **User Story #10: View Service Provider Profile**
-  - As **Tyler (customer)**, I would like to see the profile of the service providers so that I can decide whether to use their service.
-  - <u>Acceptance Criteria:</u> Users should be able to see the service providers posted information such as name, location and like ratings.
+
+- **User Story #10: Comment (Service Page)**
+  - As **Tyler (customer)**, I want to have the ability to comment on each service after purchase to warn others or encourage others about the service.
+  - <u>Acceptance Criteria:</u> Users should be able to comment on the service.
   - <u>Priority:</u> 10
-  - <u>Story Point Estimate:</u> 5
-
-<div></div>
-
-- **User Story #11: Service Page (Review and Rating)**
-  - As **Tyler (customer)**, I want to have the ability to comment and rate a rating on each service after purchase to warn others or encourage others about the service.
-  - <u>Acceptance Criteria:</u> Users should be able to comment and rate a rating of the service.
-  - <u>Priority:</u> 11
   - <u>Story Point Estimate:</u> 20
 
 <div></div>
 
 <hr>
 
-- **User Story #12: Products Page (See all the products)**
+- **User Story #11: Products Page (See all the products)**
 
   - As **Tyler (customer) and Caitlyn (service provider)**, we want to browse around each product on the product page so that I can see what type of products are offered.
 
   - <u>Acceptance Criteria:</u> On the Product Page, we should have listed our products with price, pictures and description. We also need to have filters such as (Category, Pet, type). We also need to have sorting functionality.
-  - <u>Priority:</u> 12
+  - <u>Priority:</u> 11
   - <u>Story Point Estimate:</u> 13
 
 <div></div>
 
-- **User Story #13: Product Page (Click into each Item and the Item’s page)**
+- **User Story #12: Detail Product Page**
 
   - As **Tyler (customer)**, I want to browse around each product on the product page and click on the product to see the item’s description and comments. So that I can decide if I would like to buy the product or not.
   - <u>Acceptance Criteria:</u> Each product should have its own page that has the item’s description, and Comments and details of the item.
-  - <u>Priority:</u> 13
+  - <u>Priority:</u> 12
   - <u>Story Point Estimate:</u> 8
 
 <div></div>
 
-- **User Story #14: Product Page (Add to cart)**
+- **User Story #13: Cart System (Product)**
   - As **Tyler (customer)**, I want to browse around each product on the product page and click on the product and be able to add items to my cart so that I can save them and buy them later.
   - <u>Acceptance Criteria:</u> Each product’s page should have a buy/add to cart button with the quantity selected. Quantity should be preselected by the default number. And The price should change accordingly when a different quantity is selected.
-  - <u>Priority:</u> 14
+  - <u>Priority:</u> 13
   - <u>Story Point Estimate:</u> 13
 
 <div></div>
 
-- **User Story #15: Product Page (Comment and Rating)**
+- **User Story #14: Comment (Product Page)**
 
-  - As **Tyler (customer)**, I want to have the ability to comment and rate a rating on each product after purchase to warn others or encourage others about the product.
+  - As **Tyler (customer)**, I want to have the ability to comment on each product after purchase to warn others or encourage others about the product.
 
-  - <u>Acceptance Criteria:</u> Users should be able to comment and rate a rating of the product.
-  - <u>Priority:</u> 15
+  - <u>Acceptance Criteria:</u> Users should be able to comment on product.
+  - <u>Priority:</u> 14
   - <u>Story Point Estimate:</u> 20
 
 <div></div>
 
 <hr>
 
-- **User Story #16: Cart Payment**
+- **User Story #15: Cart Payment**
 
   - As **Tyler (customer) and Caitlyn (service provider)**, I want to pay for my purchases and receive payments for my service. SO that I can actually get the product I want or make money.
   - <u>Acceptance Criteria:</u> People should be able to use a visa or PayPal card to purchase items from the site. People should also receive messages when they receive payment
-  - <u>Priority:</u> 16
+  - <u>Priority:</u> 15
   - <u>Story Point Estimate:</u> 100
 
 <div></div>
 
 <hr>
 
-- **User Story #17: Social Media Page (Create a Post)**
+- **User Story #16: Social Media Page (Browse around)**
+  - As **Tyler (customer) and Caitlyn (service provider)**, they want to have the ability to see other people's post with their own posts. 
+  - <u>Acceptance Criteria:</u> Users should be able to see other people's post along side with their own post.
+  - <u>Priority:</u> 16
+  - <u>Story Point Estimate:</u> 20
+
+<div></div>
+
+- **User Story #17: Create Media Page (Create a Post)**
   - As **Tyler (customer) and Caitlyn (service provider)**, we want to have the ability to post a picture of pets with captions to show off their pets.
   - <u>Acceptance Criteria:</u> Users should be able to post pictures with descriptions so that other users can see them.
   - <u>Priority:</u> 17
@@ -162,7 +163,7 @@ The user stories are ordered by priority below (i.e. 1 is highest priority, 22 i
 
 <div></div>
 
-- **User Story #18: Social Media Page (Comment and Rating)**
+- **User Story #18: Comment System (Social Media Page)**
   - As **Tyler (customer) and Caitlyn (service provider)**, they want to have the ability to comment and like a post so that other people can see that I commented or liked the post.
   - <u>Acceptance Criteria:</u> Users should be able to comment on and like a post.
   - <u>Priority:</u> 18
@@ -170,40 +171,19 @@ The user stories are ordered by priority below (i.e. 1 is highest priority, 22 i
 
 <div></div>
 
-<hr>
-
-- **User Story #19: Contact Admin**
-
-  - As **Tyler (customer)**, I want to be able to contact PawsUp admins to report service providers if there are any issues.
-  - <u>Acceptance Criteria:</u> Users should be able to contact the admin via the Report button on the side of the Service page.
+- **User Story #19: Detail Media Page**
+  - As **Tyler (customer) and Caitlyn (service provider)**, they want to have the ability to see other people's post page and be able to comment on them
+  - <u>Acceptance Criteria:</u> Each Social Media Post should have a detail media post containing pictures, provider informations and can see the list of comments.
   - <u>Priority:</u> 19
-  - <u>Story Point Estimate:</u> 5
-
-<div></div>
-
-- **User Story #20: Certify Service Providers as Admin**
-
-  - As **Pawsup (admin)**, I want to be able to certify service providers so pet owners can confidently use that service provider.
-  - <u>Acceptance Criteria:</u> Admin should be able to indicate if a service provider is certified.
-  - <u>Priority:</u> 20
-  - <u>Story Point Estimate:</u> 1
-
-<div></div>
-
-- **User Story #21: Update Products on Products page as Admin**
-
-  - As **Pawsup (admin)**, I want to modify products on the products page so that I can add new products in/take products off and modify their prices.
-  - <u>Acceptance Criteria:</u> Admin should be able to add new products and take products off and modify their prices.
-  - <u>Priority:</u> 21
-  - <u>Story Point Estimate:</u> 13
+  - <u>Story Point Estimate:</u> 20
 
 <div></div>
 
 <hr>
 
-- **User Story #22: COVID-19 Safety Protocol Page**
+- **User Story #20: COVID-19 Safety Protocol Page**
 
   - As **Tyler (customer)**, I want to consult with the website with their regulations regarding COVID-19, so that I can decide if it is safe to let the website service my pet.
   - <u>Acceptance Criteria:</u> People should be able to see a safety page to decide if it is safe to let the website service their pet.
-  - <u>Priority:</u> 22
+  - <u>Priority:</u> 20
   - <u>Story Point Estimate:</u> 3
