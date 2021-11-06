@@ -73,6 +73,6 @@
 - Figuring out the payment system
  
 # Unfinished Work
-- NODE-110 Unfinished due to difficulty in understanding how to deal with image files, need more time to understand how to correctly process it and store it.
+- NODE-106 Technically unfinished due to difficulty in understanding how to deal with image files, need more time to understand how to correctly process it and store it.
 
 
