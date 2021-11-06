@@ -15,7 +15,7 @@ async function migrate() {
           fname VARCHAR(30) NOT NULL,
           lname VARCHAR(30) NOT NULL,
           city VARCHAR(30) NOT NULL,
-          phone_number bigint NOT NULL,
+          phone_number VARCHAR(30) NOT NULL,
           avatar VARCHAR(200) NOT NULL
       );
     `);
