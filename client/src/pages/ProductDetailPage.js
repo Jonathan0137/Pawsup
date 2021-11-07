@@ -60,14 +60,7 @@ const ProductDetailPage = ({ data }) => {
       <div className="container">
         <div className="row info">
           <div className="col-12 col-sm-4 productPicConatiner">
-            <Carousel
-              className="CarouselContainer "
-              variant="dark"
-              prevLabel=""
-              nextLabel=""
-              prevIcon=""
-              nextIcon=""
-            >
+            <Carousel className="CarouselContainer">
               {data.product_pic_url &&
                 data.product_pic_url.map((pic, i) => (
                   <Carousel.Item>
