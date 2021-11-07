@@ -139,9 +139,6 @@ const ProductDetailPage = ({ data }) => {
               <Button disabled={!userInfo.isLoggedIn || addedProductToCart} variant="warning" size="lg" onClick={addProductToCart}>
                 {!addedProductToCart ? 'Add to Cart' : 'Added to Cart'}
               </Button>
-              <Button variant="outline-warning" size="lg">
-                Buy it Now
-              </Button>
             </div>
           </div>
         </div>
