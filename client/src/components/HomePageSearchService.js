@@ -23,7 +23,8 @@ const HomePageSearchService = ({ search }) => {
             <Form.Control
               as="select"
               placeholder={serviceArea}
-              onChange={(e) => setServiceArea(e.target.value)}>
+              onChange={(e) => setServiceArea(e.target.value)}
+            >
               <option>Markham</option>
               <option>Toronto</option>
               <option>Kirkland</option>
@@ -39,7 +40,12 @@ const HomePageSearchService = ({ search }) => {
             <Form.Control
               type="number"
               placeholder={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
+              onChange={(e) => {
+                if (Number(e.target.value) < 0) {
+                  e.target.value = 0;
+                }
+                setMinPrice(e.target.value);
+              }}
               isInvalid={Number(minPrice) > Number(maxPrice)}
             />
             <Form.Control.Feedback type="invalid">
@@ -51,7 +57,12 @@ const HomePageSearchService = ({ search }) => {
             <Form.Control
               type="number"
               placeholder={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
+              onChange={(e) => {
+                if (Number(e.target.value) < 0) {
+                  e.target.value = 0;
+                }
+                setMaxPrice(e.target.value);
+              }}
               isInvalid={Number(minPrice) > Number(maxPrice)}
             />
             <Form.Control.Feedback type="invalid">
@@ -64,7 +75,8 @@ const HomePageSearchService = ({ search }) => {
             <Form.Control
               as="select"
               placeholder={pet}
-              onChange={(e) => setPet(e.target.value)}>
+              onChange={(e) => setPet(e.target.value)}
+            >
               <option>Dog</option>
               <option>Cat</option>
             </Form.Control>
@@ -75,7 +87,8 @@ const HomePageSearchService = ({ search }) => {
             <Form.Control
               as="select"
               placeholder={numberOfPet}
-              onChange={(e) => setNumberOfPet(e.target.value)}>
+              onChange={(e) => setNumberOfPet(e.target.value)}
+            >
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -90,7 +103,8 @@ const HomePageSearchService = ({ search }) => {
             <Button
               className="findButton"
               variant="primary"
-              onClick={service_find}>
+              onClick={service_find}
+            >
               Find
             </Button>
           </Col>
