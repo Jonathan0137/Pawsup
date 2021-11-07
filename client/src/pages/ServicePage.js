@@ -312,6 +312,9 @@ const ServicePage = () => {
                         type="number"
                         placeholder="Min Price"
                         onChange={(e) => {
+                          if (Number(e.target.value) < 0) {
+                            e.target.value = 0;
+                          }
                           setMinPrice(Number(e.target.value));
                           setCondition({
                             ...condition,
@@ -329,6 +332,9 @@ const ServicePage = () => {
                         type="number"
                         placeholder="Max Price"
                         onChange={(e) => {
+                          if (Number(e.target.value) < 0) {
+                            e.target.value = 0;
+                          }
                           setMaxPrice(Number(e.target.value));
                           setCondition({
                             ...condition,
