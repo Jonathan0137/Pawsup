@@ -11,7 +11,7 @@ class ServiceModel extends DBModel {
   price_per_day;
   service_rating;
   service_pet_breed;
-  pid;
+  user_id;
 
   constructor(data) {
     super({
@@ -80,6 +80,11 @@ class ServiceModel extends DBModel {
   static async getServiceByID(service_id) {
     const data = await db.query("SELECT * FROM services WHERE service_id = $1", [service_id]);
     return data.length > 0 ? new ServiceModel(data[0]) : null;
+  }
+
+  static async getServicesByUser(user_id) {
+    const data = await db.query("SELECT * FROM services WHERE user_id = $1", [user_id]);
+    return data.map((row) => new ServiceModel(row));
   }
 }
 

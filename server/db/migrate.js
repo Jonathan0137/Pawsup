@@ -59,13 +59,13 @@ async function migrate() {
         price_per_day DECIMAL DEFAULT 0.00,
         service_rating DECIMAL DEFAULT 0,
         service_pet_breed VARCHAR(200) NOT NULL,
-        pid INTEGER REFERENCES providers (provider_id)
+        user_id INTEGER REFERENCES users (uid)
       );
     `);
 
     // Populate services table
     await db.query(`
-      INSERT INTO services(service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, pid)
+      INSERT INTO services(service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, user_id)
         VALUES 
         ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Cat grooming', 'Cat grooming service', '{"Bath","Toys"}', 'Markham', 60, 3, 'Cat', 1),
         ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Dog walking', 'Dog grooming service', '{"Bath","Toys"}', 'Markham', 55, 2.7, 'Dog', 1),
