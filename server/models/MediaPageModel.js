@@ -27,6 +27,11 @@ class MediaPageModel extends DBModel {
     const data = await db.query("SELECT * FROM mediaPages WHERE id = $1", [id]);
     return data.length > 0 ? new MediaPageModel(data[0]) : null;
   }
+
+  static async getMediaPagesByUser(user_id) {
+    const data = await db.query("SELECT * FROM mediaPages WHERE author_id = $1", [user_id]);
+    return data.map((row) => new MediaPageModel(row));
+    }
 }
 
 exports.MediaPageModel = MediaPageModel;

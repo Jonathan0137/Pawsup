@@ -37,6 +37,26 @@ MediaPagesController.get("/:id", async (req, res) => {
   }
 });
 
+//GET /api/mediapages/for_user/:user_id
+MediaPagesController.get("/for_user/:user_id", async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const mediaPages = await MediaPageModel.getMediaPagesByUser(user_id);
+    if (!mediaPages) {
+      return res.status(404).json({
+        message: `No media pages for user '${user_id}' `,
+      });
+    }
+    res.json(mediaPages.map((mediaPage) => mediaPage.cleanCopy()));
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Encountered an error while fetching media Pages" });
+  }
+});
+
 // POST /api/mediapages
 MediaPagesController.post("/", async (req, res) => {
   const { author_id, media_picture_url, media_title, media_detail, published_time, number_of_likes} = req.body;
