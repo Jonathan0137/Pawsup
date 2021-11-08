@@ -25,14 +25,20 @@ const CartPage = () => {
   const [deletingProduct, setDeletingProduct] = useState(null);
   const [deletingService, setDeletingService] = useState(null);
   const productsSubtotal = useMemo(() => {
+    if (loading) {
+      return 0;
+    }
     let productsSubtotal = 0;
     cartItems.products.forEach((product) => {
       const sizeIndex = product.product_type.indexOf(product.size);
       productsSubtotal += product.product_price[sizeIndex] * product.quantity;
     });
     return productsSubtotal.toFixed(2);
-  }, [cartItems]);
+  }, [cartItems, loading]);
   const servicesSubtotal = useMemo(() => {
+    if (loading) {
+      return 0;
+    }
     let servicesSubtotal = 0;
 
     cartItems.services.forEach((service) => {
@@ -44,7 +50,7 @@ const CartPage = () => {
         service.price_per_day * numberOfDays * service.number_of_pets;
     });
     return servicesSubtotal.toFixed(2);
-  }, [cartItems]);
+  }, [cartItems, loading]);
 
   const numProducts = cartItems.products.reduce(
     (num, product) => (num += product.quantity),
