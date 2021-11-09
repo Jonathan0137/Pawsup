@@ -7,7 +7,7 @@ import axios from "axios";
 
 function CreateService() {
   const [service, setService] = useState({
-    service_pic_url: [],
+    service_pic_url: [""],
     service_title: "",
     service_detail: "",
     service_facility: ["", "", ""],
@@ -17,11 +17,22 @@ function CreateService() {
     service_pet_breed: "Dog",
   });
   const [hasError, setHasError] = useState(false);
+  const [picError, setPicError] = useState(false);
+  const [pic, setPic] = useState(false);
   const [status, setStatus] = useState({ isLoggedIn: false, user: null });
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const config = {
+    headers: { "content-type": "multipart/form-data" },
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
+  };
+
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+    setService({ ...service, service_pic_url: [e.target.files[0].name] });
   };
 
   useEffect(() => {
@@ -36,18 +47,42 @@ function CreateService() {
       });
   }, []);
 
-  // const Create = async () => {
-  //   await axios
-  //     .post("", {})
-  //     .then(() => {
-  //       window.location = "/";
-  //     })
-  //     .catch((err) => {
-  //       setHasError(true);
-  //     });
-  // };
-  const Create = () => {
-    console.log(service.service_rating);
+  const upImg = async () => {
+    const fd = new FormData();
+    fd.append("img", file, file.name);
+    await axios
+      .post("/api/images", fd, config)
+      .then(() => {
+        setPic(true);
+      })
+      .catch(() => {
+        setPicError(true);
+      });
+  };
+
+  const Create = async () => {
+    if (pic) {
+      await axios
+        .post("/api/services", {
+          service_pic_url: service.service_pic_url,
+          service_title: service.service_title,
+          service_detail: service.service_detail,
+          service_facility: service.service_facility,
+          location: service.location,
+          price_per_day: service.price_per_day,
+          service_rating: service.service_rating,
+          service_pet_breed: service.service_pet_breed,
+          user_id: status.user.uid,
+        })
+        .then(() => {
+          window.location = "/service";
+        })
+        .catch(() => {
+          setHasError(true);
+        });
+    } else {
+      setHasError(true);
+    }
   };
 
   return (
@@ -222,39 +257,34 @@ function CreateService() {
               </Form.Control>
             </Form.Group>
 
-            {/* <InputGroup
-            type="file"
-            multiple
-            className="mb-3 bold"
-            onChange={(e) => {
-              setService({ ...service, service_pic_url: e.target.files });
-            }}
-          >
-            <InputGroup.Text>
-              Service Sample pictures (can upload multiple pictures at once)
-            </InputGroup.Text>
-          </InputGroup> */}
-
-            <Form.Group controlId="formFileMultiple" className="mb-3 bold">
+            <Form.Group controlId="formFile" className="mb-3 bold">
               <Form.Label>
-                Service Sample pictures (can upload multiple pictures at once)
+                Service Sample picture (must select 1 picture, please upload it
+                before creating service).
               </Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                onChange={(e) => {
-                  setService({ ...service, service_pic_url: e.target.value });
-                }}
-              />
+              <input type="file" onChange={handleFile} />
             </Form.Group>
 
+            {picError && (
+              <div className="alert alert-warning mb-3 mid" role="alert">
+                Picture upload failed, please try again later.
+              </div>
+            )}
             {hasError && (
               <div className="alert alert-warning mb-3 mid" role="alert">
-                Please enter all required information.
+                Please enter all required information and upload picture first.
               </div>
             )}
 
             <div className="mid">
+              <Button
+                className="mb-3 btn btn-success bigger"
+                variant="primary"
+                type="submit"
+                onClick={upImg}
+              >
+                Upload Image
+              </Button>
               <Button
                 className="mb-3 btn btn-dark bigger"
                 variant="primary"

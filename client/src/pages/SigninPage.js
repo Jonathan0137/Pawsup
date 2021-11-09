@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import HeaderMenu from "../components/HeaderMenu";
 import "./SigninPage.css";
 import axios from "axios";
@@ -57,7 +57,10 @@ const SigninPage = () => {
       <HeaderMenu />
       <div className="page bg-white">
         {loading ? (
-          <h6> </h6>
+          <div>
+            <Spinner animation="grow" variant="primary" />
+            <p>Loading...</p>
+          </div>
         ) : status.isLoggedIn ? (
           <Container>
             <h3 className="mb-4">Welcome {status.user.username} </h3>
