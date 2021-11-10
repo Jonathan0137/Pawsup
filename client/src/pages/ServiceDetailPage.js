@@ -39,7 +39,7 @@ const ServiceDetailPage = ({ data }) => {
   };
   const getProviderInfo = () => {
     axios
-      .get(`/api/user/${data.pid}`)
+      .get(`/api/user/${data.user_id}`)
       .then((res) => {
         setProviderInfo({
           data: res.data,
