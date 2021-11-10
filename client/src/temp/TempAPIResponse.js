@@ -1,18 +1,18 @@
 const AllServiceDetailedPage = [
     {
-      serviceId: "s1",
+      service_id: "1",
       serviceProviderId: "10001",
       serviceProviderName: "Wade",
       serviceProviderPhone: "647-402-xxxx",
       serviceProviderEmail: "wade@gmail.com",
       serviceProviderAvatar: "https://ui-avatars.com/api/name=Wade&background=random",
-      servicePicURL: ["https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"],
-      serviceTitle: "A Place For Dog Home 1",
+      service_pic_url: ["https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"],
+      service_title: "A Place For Dog Home 1",
       serviceDetail: "warm place for dog to live.Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
       serviceFacility: ["Bath", "Pet Toy", "Pet Room"],
       Location: "Markham",
       rating: 4,
-      pricePerday: 10,
+      price_per_day: 10,
       ListOfComments: [
         {
           CommentTitle: "A Grate Place for Dog",
@@ -56,19 +56,19 @@ const AllServiceDetailedPage = [
 
     },
     {
-      serviceId: "s2",
+      service_id: "2",
       serviceProviderId: "10002",
       serviceProviderName: "Wade",
       serviceProviderPhone: "647-402-xxxx",
       serviceProviderEmail: "wade@gmail.com",
       serviceProviderAvatar: "https://ui-avatars.com/api/name=Wade&background=white",
-      servicePicURL: ["https://www.ippinka.com/wp-content/uploads/2015/07/Inside-Dog-House-Your-Pets-Home-Within-a-Home-01.jpg"],
-      serviceTitle: "A good place for cat",
+      service_pic_url: ["https://www.ippinka.com/wp-content/uploads/2015/07/Inside-Dog-House-Your-Pets-Home-Within-a-Home-01.jpg"],
+      service_title: "A good place for cat",
       serviceDetail: "Cat house",
       serviceFacility: ["Bath", "Pet Toy", "Pet Room"],
       Location: "Markham",
       rating: 5,
-      pricePerday: 10,
+      price_per_day: 10,
       ListOfComments: [
         {
           CommentTitle: "Not bad for a cat house",
@@ -93,7 +93,7 @@ const AllServiceDetailedPage = [
 ];
 const AllMediaDetailedPage = [
   {
-    mediaId : "m1",
+    mediaId : "1",
     autorName : "Kevin",
     autorProfilePicURL : "https://ui-avatars.com/api/name=Kevin&background=random",
     mediaPictureURL: [
@@ -131,7 +131,7 @@ const AllMediaDetailedPage = [
     ],
     mediaTitle: "Come Look at my pictures!",
     mediaDetail: "Here are some pictures of famous cities",
-    numberOfLikes: 20,
+    number_of_likes: 20,
     PublishedTime: "22/04/20",
     ListOfComments: [
       {
