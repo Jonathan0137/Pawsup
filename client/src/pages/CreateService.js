@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HeaderMenu from "../components/HeaderMenu";
 import Footer from "../components/Footer";
-import { Form, Button, Row, Col, Container } from "react-bootstrap";
+import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import "./SignupPage.css";
 import axios from "axios";
 
@@ -89,7 +89,10 @@ function CreateService() {
     <>
       <HeaderMenu />
       {loading ? (
-        <h6> </h6>
+        <div className="page">
+          <Spinner animation="grow" variant="primary" />
+          <p>Loading...</p>
+        </div>
       ) : status.isLoggedIn ? (
         <div className="pageform">
           <Row>
@@ -298,9 +301,7 @@ function CreateService() {
           <Footer />
         </div>
       ) : (
-        <Container>
-          <h3 className="mt-4">Please Login first</h3>
-        </Container>
+        (window.location = "/signin")
       )}
     </>
   );
