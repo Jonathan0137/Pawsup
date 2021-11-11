@@ -16,7 +16,8 @@ async function migrate() {
           lname VARCHAR(30) NOT NULL,
           city VARCHAR(30) NOT NULL,
           phone_number VARCHAR(30) NOT NULL,
-          avatar VARCHAR(200) NOT NULL
+          avatar VARCHAR(200) NOT NULL,
+          is_service_provider BOOLEAN DEFAULT FALSE 
       );
     `);
 

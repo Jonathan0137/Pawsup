@@ -11,6 +11,7 @@ class UserModel extends DBModel {
     city;
     phone_number;
     avatar;
+    is_service_provider;
 
     constructor(data) {
         super({
