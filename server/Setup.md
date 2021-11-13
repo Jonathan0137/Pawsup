@@ -1,4 +1,4 @@
-# PawsUp - Server Setup
+# Pawsup - Server Setup
 
 ## Prerequisites
 

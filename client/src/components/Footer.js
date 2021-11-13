@@ -14,7 +14,7 @@ const Footer = () => {
                 </div>
                 <div className="row justify-content-center footer_copyRight">             
                     <div className="col-auto">
-                        <p>Copyright © 2021 Pawpus All rights reserved.</p>
+                        <p>Copyright © 2021 Pawsup All rights reserved.</p>
                     </div>
                 </div>
 
