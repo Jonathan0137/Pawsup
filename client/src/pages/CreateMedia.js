@@ -23,6 +23,11 @@ const CreateMediaPage = () => {
     const [posted,setposted] = useState(false);
     const [loading,setloading] = useState(true);
 
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+    };
+
     useEffect(() => {
         axios
         .get("/api/auth/user")
@@ -37,13 +42,6 @@ const CreateMediaPage = () => {
     useEffect(() => {
         posted && (window.location = "/media");
       }, [posted]);
-
-    
-    console.log(status.user);
-    console.log(filled);
-    let time = new Date().toLocaleDateString();
-    console.log(time);
-
 
     const Createpost = async () => {
         await axios
@@ -84,7 +82,7 @@ const CreateMediaPage = () => {
          <Container>
          <Card bg='light'>
          <Container className='detail' >
-             <Form className='detail mt-5' onSubmit={Createpost}>
+             <Form className='detail mt-5' onSubmit={submitHandler}>
              <Col>
              <Form.Group className="mb-3" controlId="formBasicEmail">
                  <Row>
@@ -111,7 +109,7 @@ const CreateMediaPage = () => {
  
              <Row>
                  <Col className='subform'>
-                     <Button variant="primary" type="submit">
+                     <Button variant="primary" onClick={Createpost}>
                          Post
                      </Button>
                  </Col>
