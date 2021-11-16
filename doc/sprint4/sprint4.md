@@ -38,6 +38,6 @@
 - Ensure all price ranges are positive (Ivan) (3) NODE-168
 - Update logout interface and CreateService page redirection (Ivan) (5) NODE-185
 
-Spike
+# Spike
 
 
