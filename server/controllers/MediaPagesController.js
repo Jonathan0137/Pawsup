@@ -57,6 +57,28 @@ MediaPagesController.get("/for_user/:user_id", async (req, res) => {
   }
 });
 
+// DELETE /api/mediapages/:id
+MediaPagesController.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const mediapage = await MediaPageModel.getMediaPagesByID(id);
+    if (!mediapage) {
+      return res.status(404).json({
+        message: `Service with ID '${id}' not found`,
+      });
+    }
+
+    await mediapage.delete();
+    res.status(200).json({ message: "Successfully deleted mediapage" });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Encountered an error while deleting mediapage" });
+  }
+});
+
 // POST /api/mediapages
 MediaPagesController.post("/", async (req, res) => {
   const { author_id, media_picture_url, media_title, media_detail, published_time, number_of_likes} = req.body;
