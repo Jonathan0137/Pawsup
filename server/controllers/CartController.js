@@ -103,7 +103,7 @@ CartController.delete("/product/:id", async (req, res) => {
     console.error(err);
     res
       .status(500)
-      .json({ message: "Encountered an error while inserting data" });
+      .json({ message: "Encountered an error while deleting data" });
   }
 });
 
@@ -124,7 +124,28 @@ CartController.delete("/service/:id", async (req, res) => {
     console.error(err);
     res
       .status(500)
-      .json({ message: "Encountered an error while inserting data" });
+      .json({ message: "Encountered an error while deleting data" });
+  }
+});
+
+// DELETE /api/cart
+CartController.delete("/", async (req, res) => {
+  try {
+    if (!req.user) {
+      return res
+        .status(401)
+        .json({ message: "Please login to access this endpoint" });
+    }
+    const { uid } = req.user;
+    await ServiceCartItemModel.deleteAllCartItemsForUser(uid);
+    await ProductCartItemModel.deleteAllCartItemsForUser(uid);
+
+    res.json({ message: "Successfully emptied the user's cart" });
+  } catch(err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Encountered an error while deleting data" });
   }
 });
 

@@ -31,6 +31,12 @@ class ProductCartItemModel extends DBModel {
     const params = [user_id, id];
     await db.query(query, params);
   }
+
+  static async deleteAllCartItemsForUser(user_id) {
+    const query = "DELETE FROM product_cart_items WHERE user_id = $1";
+    const params = [user_id];
+    await db.query(query, params);
+  }
 }
 
 exports.ProductCartItemModel = ProductCartItemModel;
