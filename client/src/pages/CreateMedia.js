@@ -1,7 +1,7 @@
 import HeaderMenu from '../components/HeaderMenu';
 import Footer from "../components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container,  Button, Form, Col, Row, Card} from 'react-bootstrap';
+import { Container,  Button, Form, Col, Row, Card, Alert, Spinner} from 'react-bootstrap';
 import './CreateMedia.css';
 import React, {useState, useEffect}from 'react';
 import axios from 'axios';
@@ -22,11 +22,16 @@ const CreateMediaPage = () => {
     const [status, setStatus] = useState({ isLoggedIn: false, user: null });
     const [posted,setposted] = useState(false);
     const [loading,setloading] = useState(true);
-
+    const [hasError, setHasError] = useState({
+        duplicate: false,
+        missInfo: false,
+        internal: false,
+      });
 
     const submitHandler = (e) => {
         e.preventDefault();
     };
+
 
     useEffect(() => {
         axios
@@ -51,12 +56,19 @@ const CreateMediaPage = () => {
             "media_title": filled.media_title,
             "media_detail": filled.media_detail,
             "published_time": new Date().toLocaleDateString(),
-            "number_of_likes": 1421
+            "number_of_likes": 1
           })
           .then(() => {
               setposted(true);
           })
-          .catch(() => {
+          .catch((err) => {
+            if (err.response.status === 400) {
+                setHasError({ missInfo: true });
+              } else if (err.response.status === 401) {
+                setHasError({ duplicate: true });
+              } else {
+                setHasError({ internal: true });
+              }
           });
       };
  
@@ -69,13 +81,15 @@ const CreateMediaPage = () => {
         setfilled({...filled, media_detail: event.target.value})
     }
     
+    console.log(hasError.missInfo);
     return (
         <>
         <HeaderMenu />
         {loading ? (
-            <Container>
+            <div className='page'>
+            <Spinner animation="grow" variant="primary" />
             <h3 className="mt-4">Loading...</h3>
-            </Container>
+            </div>
         ) : status.isLoggedIn ? (
             <div>
             <h1 align='center' >Create a post!</h1>
@@ -86,17 +100,16 @@ const CreateMediaPage = () => {
              <Col>
              <Form.Group className="mb-3" controlId="formBasicEmail">
                  <Row>
-                 <Form.Label>Title</Form.Label>
+                 <Form.Label>Title *</Form.Label>
                  <Form.Control as='textarea' value={filled.media_title} onChange = {posttitle} placeholder="Enter title" />
                  </Row>
              </Form.Group>
  
              <Form.Group className="mb-3" controlId="formBasicPassword">
                  <Row>
-                 <Form.Label>Detail</Form.Label>
+                 <Form.Label>Detail *</Form.Label>
                  
                  <Form.Control as='textarea' rows={5} value={filled.media_detail} onChange = {postdetail} placeholder='Enter detail'/>
-                 
                  </Row>
              </Form.Group>
  
@@ -106,7 +119,8 @@ const CreateMediaPage = () => {
                  <Form.Control type="file"/>
                  </Row>
              </Form.Group>
- 
+            
+             {hasError.missInfo ? <Alert variant='danger'>Please enter all required fields</Alert> : null}    
              <Row>
                  <Col className='subform'>
                      <Button variant="primary" onClick={Createpost}>
