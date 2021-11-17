@@ -1,19 +1,25 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Button, Form, Col, Row } from "react-bootstrap";
+import { Container, Button, Form, Col, Row, Alert } from "react-bootstrap";
 import "./EditAccountPage.css";
 import React from "react";
 import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 
 const EditAccountPage = () => {
-  const [filled, setfilled] = useState({
-    email: "",
-    password: "",
-    phonenumber: "",
-    location: "",
-  });
   const [status, setStatus] = useState({ isLoggedIn: false, user: null });
   const [changed, setchanged] = useState(false);
+  const [hasError, setHasError] = useState({
+    duplicate: false,
+    missInfo: false,
+    internal: false,
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     axios
@@ -26,34 +32,26 @@ const EditAccountPage = () => {
     changed && (window.location = "/realaccountpage");
   }, [changed]);
 
-  const editemail = (event) => {
-    setfilled({ ...filled, email: event.target.value });
-  };
-
-  const editpassword = (event) => {
-    setfilled({ ...filled, password: event.target.value });
-  };
-
-  const editphonenumber = (event) => {
-    setfilled({ ...filled, phonenumber: event.target.value });
-  };
-
-  const editcity = (event) => {
-    setfilled({ ...filled, location: event.target.value });
-  };
-
-  const Savechanges = async () => {
+  const Savechanges = async (data) => {
     await axios
       .put(`/api/user/${status.user.uid}`, {
-        email: filled.email,
-        password: filled.password,
-        phone_number: filled.phonenumber,
-        city: filled.location,
+        email: data.email,
+        password: data.password,
+        phone_number: data.phonenumber,
+        city: data.location,
       })
       .then(() => {
         setchanged(true);
       })
-      .catch(() => {});
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setHasError({ missInfo: true });
+        } else if (err.response.status === 401) {
+          setHasError({ duplicate: true });
+        } else {
+          setHasError({ internal: true });
+        }
+      });
   };
 
   return (
@@ -61,7 +59,10 @@ const EditAccountPage = () => {
       {status.isLoggedIn ? (
         <div>
           <Container className="containercenter">
-            <Form onSubmit={Savechanges}>
+            <Form
+              onSubmit={handleSubmit(Savechanges)}
+              className="editaccountformwidth"
+            >
               <Form.Group
                 as={Row}
                 className="mb-3 form"
@@ -72,11 +73,19 @@ const EditAccountPage = () => {
                 </Form.Label>
                 <Col className="editbutton">
                   <input
-                    onChange={editemail}
-                    value={filled.email}
                     placeholder={status.user.email}
+                    {...register("email", {
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+                        message: "This is not a valid email",
+                      },
+                    })}
                   />
                 </Col>
+                {errors.email && (
+                  <Alert variant="warning">{errors.email.message}</Alert>
+                )}
               </Form.Group>
 
               <Form.Group
@@ -89,29 +98,10 @@ const EditAccountPage = () => {
                 </Form.Label>
                 <Col className="editbutton">
                   <input
-                    onChange={editpassword}
+                    type="password"
                     placeholder={status.user.password}
+                    {...register("password")}
                   />
-                </Col>
-              </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="mb-3 form"
-                controlId="formPlaintextPassword"
-              >
-                <Form.Label column>User type</Form.Label>
-                <Col className="editbutton">
-                  <Form.Control
-                    plaintext
-                    readOnly
-                    defaultValue="example-usertype"
-                  />
-                  <Form.Control as="select" defaultValue="Choose Service ...">
-                    <option>...</option>
-                    <option>Pet Owner</option>
-                    <option>Service Provider</option>
-                  </Form.Control>
                 </Col>
               </Form.Group>
 
@@ -123,10 +113,27 @@ const EditAccountPage = () => {
                 <Form.Label column>Phone number</Form.Label>
                 <Col className="editbutton">
                   <input
-                    onChange={editphonenumber}
+                    type="text"
                     placeholder={status.user.phone_number}
+                    {...register("phonenumber", {
+                      pattern: {
+                        value: /^[0-9]*$/,
+                        message: "Numbers only",
+                      },
+                      /* minLength: {
+                        value: 10,
+                        message: "Not a 10 digits phone number",
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: "Not a 10 digits phone number",
+                      }, */
+                    })}
                   />
                 </Col>
+                {errors.phonenumber && (
+                  <Alert variant="warning">{errors.phonenumber.message}</Alert>
+                )}
               </Form.Group>
 
               <Form.Group
@@ -138,9 +145,19 @@ const EditAccountPage = () => {
                   Location
                 </Form.Label>
                 <Col className="editbutton">
-                  <input onChange={editcity} placeholder={status.user.city} />
+                  <input
+                    type="text"
+                    placeholder={status.user.city}
+                    {...register("location")}
+                  />
                 </Col>
               </Form.Group>
+
+              {hasError.missInfo ? (
+                <Alert as={Row} variant="warning">
+                  No changes were made
+                </Alert>
+              ) : null}
               <Container className="thetwobuttons">
                 <Button variant="primary" type="submit">
                   Save changes!
