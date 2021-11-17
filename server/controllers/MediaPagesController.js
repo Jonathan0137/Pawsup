@@ -123,4 +123,26 @@ MediaPagesController.post("/", async (req, res) => {
   }
 });
 
+// PUT /api/mediapages/:id
+MediaPagesController.put("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const mediapage = await MediaPageModel.getMediaPagesByID(id);
+    if (!mediapage) {
+      return res.status(404).json({
+        message: `Mediapage with ID '${id}' not found`,
+      });
+    }
+    mediapage.number_of_likes = (mediapage.number_of_likes + 1);
+    await mediapage.save();
+    res.status(200).json(mediapage.cleanCopy());
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Encountered an error while incrementing numberoflikes" });
+  }
+});
+
 exports.MediaPagesController = MediaPagesController;
