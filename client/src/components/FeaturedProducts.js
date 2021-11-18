@@ -34,9 +34,10 @@ const FeaturedProducts = () => {
                   <Col key={product.product_id}>
                     <Card border="light" bg="light">
                       <Card.Img
-                        height="350vw"
+                        style={{ objectFit: "cover" }}
+                        height="450vw"
                         variant="top"
-                        src={product.product_pic_url[0]}
+                        src={`/api/images?image_name=${product.product_pic_url}`}
                       />
                       <Card.Body>
                         <Card.Title>

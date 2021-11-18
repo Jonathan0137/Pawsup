@@ -314,15 +314,17 @@ const ProductPage = () => {
           )}
           <Container className="mb-3 mid">
             {products.data ? (
-              <div>
+              <div style={{ width: "inherit" }}>
                 <Row xs={1} md={2} lg={3} className="g-4">
                   {products.data
                     .map((product) => (
                       <Col>
                         <Card border="light" bg="light">
                           <Card.Img
+                            style={{ objectFit: "cover" }}
                             variant="top"
-                            src={product.product_pic_url[0]}
+                            height="450vw"
+                            src={`/api/images?image_name=${product.product_pic_url}`}
                           />
                           <Card.Body>
                             <Card.Title>

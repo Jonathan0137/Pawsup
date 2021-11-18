@@ -361,15 +361,17 @@ const ServicePage = () => {
           )}
           <Container className="mb-3 mid">
             {services.data ? (
-              <div>
+              <div style={{ width: "inherit" }}>
                 <Row xs={1} md={2} lg={3} className="g-4">
                   {services.data
                     .map((service) => (
                       <Col key={service.service_id}>
                         <Card border="light" bg="light">
                           <Card.Img
+                            style={{ objectFit: "cover" }}
                             variant="top"
-                            src={service.service_pic_url[0]}
+                            height="450vw"
+                            src={`/api/images?image_name=${service.service_pic_url}`}
                           />
                           <Card.Body>
                             <Card.Title>
