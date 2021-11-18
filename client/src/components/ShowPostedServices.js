@@ -10,7 +10,6 @@ const ShowPostedServices = ({ data }) => {
   const getUserServices = () => {
     axios
       .get(`/api/services/for_user/${data.uid}`)
-    //   .get(`/api/services/for_user/3`)
       .then((res) => {
         setListServices({
           data: res.data,
@@ -19,7 +18,16 @@ const ShowPostedServices = ({ data }) => {
       })
       .catch(() => setListServices({ error: true }));
   };
-
+  const removeService = (id) => {
+    axios
+      .delete(`/api/services/${id}`)
+      .then(() => {
+        window.location = "/realaccountpage";
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   useEffect(() => {
     getUserServices();
   }, [data.uid]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -68,8 +76,8 @@ const ShowPostedServices = ({ data }) => {
 
                       <Button
                         className="mt-2"
-                        //   disabled={deletingService === service.id}
                         variant="danger"
+                        onClick={() => removeService(service.service_id)}
                       >
                         Remove Service{" "}
                       </Button>

@@ -11,7 +11,6 @@ const ShowPostedMedia = ({ data }) => {
   const getUserMedia = () => {
     axios
       .get(`/api/mediapages/for_user/${data.uid}`)
-        // .get(`/api/mediapages/for_user/3`)
       .then((res) => {
         setListMedia({
           data: res.data,
@@ -20,7 +19,16 @@ const ShowPostedMedia = ({ data }) => {
       })
       .catch(() => setListMedia({ error: true }));
   };
-
+  const removeMedia = (id) => {
+    axios
+      .delete(`/api/mediapages/${id}`)
+      .then(() => {
+        window.location = "/realaccountpage";
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   useEffect(() => {
     getUserMedia();
   }, [data.uid]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -44,7 +52,7 @@ const ShowPostedMedia = ({ data }) => {
           </>
         ) : (
           <>
-            <h1>List of Your Posted Media</h1>
+            <h1>List of Your Posted Social</h1>
             <Row xs={1} md={2} lg={3} className="g-4">
               {listMedia.data.map((media) => (
                 <Col key={media.id}>
@@ -67,9 +75,8 @@ const ShowPostedMedia = ({ data }) => {
 
                       <Button
                         className="mt-2"
-                        //   disabled={deletingService === service.id}
                         variant="danger"
-                        //   onClick={() => removeService(service.id)}
+                        onClick={() => removeMedia(media.id)}
                       >
                         Remove Social{" "}
                       </Button>
