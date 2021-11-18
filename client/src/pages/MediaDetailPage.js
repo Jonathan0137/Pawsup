@@ -45,6 +45,11 @@ const MediaDetailPage = ({ data }) => {
       })
       .catch(() => setAuthorInfo({ error: true }));
   };
+
+  const addLikes = () => {
+    axios.put(`/api/mediapages/${data.id}`);
+  }
+
   const slideNumberStyle = {
     fontSize: "20px",
     fontWeight: "bold",
@@ -131,6 +136,7 @@ const MediaDetailPage = ({ data }) => {
                 onClick={() => {
                   setClick(true);
                   setNumLike(numLike + 1);
+                  addLikes();
                 }}
               >
                 {isclick === true ? (
