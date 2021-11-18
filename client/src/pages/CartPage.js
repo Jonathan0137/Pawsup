@@ -24,6 +24,8 @@ const CartPage = () => {
   const [loading, setLoading] = useState(true);
   const [deletingProduct, setDeletingProduct] = useState(null);
   const [deletingService, setDeletingService] = useState(null);
+  const [cError, setcError] = useState(false);
+  const [cSucc, setcSucc] = useState(false);
   const productsSubtotal = useMemo(() => {
     if (loading) {
       return 0;
@@ -52,6 +54,7 @@ const CartPage = () => {
     return servicesSubtotal.toFixed(2);
   }, [cartItems, loading]);
 
+  let total = +productsSubtotal + +servicesSubtotal;
   const numProducts = cartItems.products.reduce(
     (num, product) => (num += product.quantity),
     0
@@ -103,6 +106,42 @@ const CartPage = () => {
       })
       .finally(() => {
         setDeletingService(null);
+      });
+  };
+
+  // const checkout = async () => {
+  //   await axios
+  //     .post("/api/payment", {
+  //       paymentID: 1,
+  //       payerID: 1,
+  //       total: productsSubtotal,
+  //       currency: "CAD",
+  //     })
+  //     .then(() => {
+  //       axios
+  //         .delete("/api/cart")
+  //         .then(() => {
+  //           setcError(false);
+  //         })
+  //         .catch(() => {
+  //           setcError(true);
+  //         });
+  //     })
+  //     .catch(() => {
+  //       setcError(true);
+  //     });
+  // };
+
+  const checkout = async () => {
+    await axios
+      .delete("/api/cart")
+      .then(() => {
+        setcError(false);
+        setcSucc(true);
+        window.location = "/cart";
+      })
+      .catch(() => {
+        setcError(true);
       });
   };
 
@@ -211,9 +250,6 @@ const CartPage = () => {
                   <strong>${productsSubtotal}</strong>{" "}
                 </p>
               </div>
-              <div className="mt-3">
-                <Button>Products Checkout</Button>
-              </div>
             </>
           )}
           {!numProducts && <p>You currently have no products in your cart.</p>}
@@ -291,13 +327,35 @@ const CartPage = () => {
                   <strong>${servicesSubtotal}</strong>{" "}
                 </p>
               </div>
-              <div className="mt-3">
-                <Button>Services Checkout</Button>
-              </div>
             </>
           )}
           {!numServices && <p>You currently have no services in your cart.</p>}
         </div>
+        <hr />
+        {(numProducts > 0 || numServices > 0) && (
+          <>
+            <div className="mt-3 page">
+              <p>
+                Total : <strong>${total}</strong>{" "}
+              </p>
+            </div>
+            <div className="mt-3 page">
+              <Button className="btn btn-primary btn-lg" onClick={checkout}>
+                Checkout
+              </Button>
+            </div>
+            {cSucc && (
+              <div className="alert alert-success mb-3 mid mt-3" role="alert">
+                Purchase Success!
+              </div>
+            )}
+            {cError && (
+              <div className="alert alert-warning mb-3 mid mt-3" role="alert">
+                Internal Error with Checkout, please try again later.
+              </div>
+            )}
+          </>
+        )}
       </Container>
       <Footer />
     </>
