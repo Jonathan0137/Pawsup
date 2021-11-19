@@ -114,8 +114,6 @@ const ServicePage = () => {
       : "&sortDirection=" + condition.sortDirection
   }`;
 
-  console.log("URL is " + url);
-
   const conditions = async () => {
     setServices({
       data: null,
