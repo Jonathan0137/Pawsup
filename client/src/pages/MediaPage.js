@@ -55,7 +55,7 @@ const MediaPage = () => {
                             style={{ objectFit: "cover" }}
                             variant="top"
                             height="450vw"
-                            src={`/api/images?image_name=${media.media_picture_url}`}
+                            src={`/api/images?image_name=${media.media_picture_url[0]}`}
                           />
                           <Card.Body>
                             <Card.Title>
