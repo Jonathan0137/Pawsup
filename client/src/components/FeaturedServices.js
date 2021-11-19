@@ -37,7 +37,7 @@ const FeaturedServices = () => {
                         style={{ objectFit: "cover" }}
                         variant="top"
                         height="450vw"
-                        src={`/api/images?image_name=${service.service_pic_url}`}
+                        src={`/api/images?image_name=${service.service_pic_url[0]}`}
                       />
                       <Card.Body>
                         <Card.Title>

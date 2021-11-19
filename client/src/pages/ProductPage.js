@@ -324,7 +324,7 @@ const ProductPage = () => {
                             style={{ objectFit: "cover" }}
                             variant="top"
                             height="450vw"
-                            src={`/api/images?image_name=${product.product_pic_url}`}
+                            src={`/api/images?image_name=${product.product_pic_url[0]}`}
                           />
                           <Card.Body>
                             <Card.Title>
