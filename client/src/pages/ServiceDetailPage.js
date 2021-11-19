@@ -75,9 +75,10 @@ const ServiceDetailPage = ({ data }) => {
                   <Carousel.Item>
                     <Image
                       className="serviceImg"
-                      src={pic}
+                      style={{ objectFit: "cover" }}
+                      src={`/api/images?image_name=${pic}`}
                       alt={i}
-                      width="100%"
+                      height="350vw"
                     />
                   </Carousel.Item>
                 ))}

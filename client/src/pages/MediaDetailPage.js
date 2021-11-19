@@ -59,7 +59,7 @@ const MediaDetailPage = ({ data }) => {
     const mediaPics = [];
     data.media_picture_url.map((pic, i) =>
       mediaPics.push({
-        image: pic,
+        image: `/api/images?image_name=${pic}`
       })
     );
     return mediaPics;

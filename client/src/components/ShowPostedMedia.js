@@ -53,38 +53,45 @@ const ShowPostedMedia = ({ data }) => {
         ) : (
           <>
             <h1>List of Your Posted Social</h1>
-            <Row xs={1} md={2} lg={3} className="g-4">
-              {listMedia.data.map((media) => (
-                <Col key={media.id}>
-                  <Card border="light" bg="light">
-                    <Card.Img variant="top" src={media.media_picture_url[0]} />
-                    <Card.Body>
-                      <Card.Title>
-                        <Row>
-                          <Col>
-                            <Link to={`/media/m${media.id}`}>
-                              {media.media_title}
-                            </Link>
-                          </Col>
-                          <Col xs="auto" className="numLike">
-                            <FavoriteIcon className="icon" />
-                            {media.number_of_likes}
-                          </Col>
-                        </Row>
-                      </Card.Title>
+            <div style={{ width: "inherit" }}>
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {listMedia.data.map((media) => (
+                  <Col key={media.id}>
+                    <Card border="light" bg="light">
+                      <Card.Img
+                        variant="top"
+                        src={`/api/images?image_name=${media.media_picture_url[0]}`}
+                        style={{ objectFit: "cover" }}
+                        height="450vw"
+                      />
+                      <Card.Body>
+                        <Card.Title>
+                          <Row>
+                            <Col>
+                              <Link to={`/media/m${media.id}`}>
+                                {media.media_title}
+                              </Link>
+                            </Col>
+                            <Col xs="auto" className="numLike">
+                              <FavoriteIcon className="icon" />
+                              {media.number_of_likes}
+                            </Col>
+                          </Row>
+                        </Card.Title>
 
-                      <Button
-                        className="mt-2"
-                        variant="danger"
-                        onClick={() => removeMedia(media.id)}
-                      >
-                        Remove Social{" "}
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+                        <Button
+                          className="mt-2"
+                          variant="danger"
+                          onClick={() => removeMedia(media.id)}
+                        >
+                          Remove Social{" "}
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
           </>
         )}
       </Container>

@@ -66,10 +66,10 @@ const ProductDetailPage = ({ data }) => {
                   <Carousel.Item>
                     <Image
                       className="productImag"
-                      src={pic}
+                      style={{ objectFit: "cover" }}
+                      src={`/api/images?image_name=${pic}`}
                       alt={i}
-                      width="70%"
-                      height="auto"
+                      height="350vw"
                     />
                   </Carousel.Item>
                 ))}

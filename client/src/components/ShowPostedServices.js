@@ -52,13 +52,16 @@ const ShowPostedServices = ({ data }) => {
         ) : (
           <>
             <h1>List of Your Posted Services</h1>
+            <div style={{ width: "inherit" }}>
             <Row xs={1} md={2} lg={3} className="g-4">
               {listServices.data.map((service) => (
                 <Col key={service.service_id}>
                   <Card border="light" bg="light">
                     <Card.Img
                       variant="top"
-                      src={service.service_pic_url?.[0]}
+                      style={{ objectFit: "cover" }}
+                      height="450vw"
+                      src={`/api/images?image_name=${service.service_pic_url?.[0]}`}
                     />
                     <Card.Body>
                       <Card.Title>
@@ -86,6 +89,7 @@ const ShowPostedServices = ({ data }) => {
                 </Col>
               ))}
             </Row>
+            </div>
           </>
         )}
       </Container>
