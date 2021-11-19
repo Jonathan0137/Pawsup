@@ -39,5 +39,5 @@
 - Update logout interface and CreateService page redirection (Ivan) (5) NODE-185
 
 # Spike
-
+- Before sprint 4, we were using urls for the mock images but we soon realized that this was not viable if a user wanted to upload actual images. Because normally users are expected to upload picture instances rather than picture urls. As a result, we started looking into images with form-data and spent quite a while taking care of image handling.
 
