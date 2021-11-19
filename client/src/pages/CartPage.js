@@ -189,14 +189,16 @@ const CartPage = () => {
         <h3>Products {numProducts > 0 && `(${cartItems.products.length})`}</h3>
         <div>
           {numProducts > 0 && (
-            <>
+            <div style={{ width: "inherit" }}>
               <Row xs={1} md={2} lg={3} className="g-4">
                 {cartItems.products.map((product) => (
                   <Col key={product.id}>
                     <Card border="light" bg="light">
                       <Card.Img
+                        style={{ objectFit: "cover" }}
+                        height="450vw"
                         variant="top"
-                        src={product.product_pic_url?.[0]}
+                        src={`/api/images?image_name=${product.product_pic_url?.[0]}`}
                       />
                       <Card.Body>
                         <Card.Title>
@@ -250,7 +252,7 @@ const CartPage = () => {
                   <strong>${productsSubtotal}</strong>{" "}
                 </p>
               </div>
-            </>
+            </div>
           )}
           {!numProducts && <p>You currently have no products in your cart.</p>}
         </div>
@@ -258,14 +260,16 @@ const CartPage = () => {
         <h3>Services {numServices > 0 && `(${cartItems.services.length})`}</h3>
         <div>
           {numServices > 0 && (
-            <>
+            <div style={{ width: "inherit" }}>
               <Row xs={1} md={2} lg={3} className="g-4">
                 {cartItems.services.map((service) => (
                   <Col key={service.id}>
                     <Card border="light" bg="light">
                       <Card.Img
+                        style={{ objectFit: "cover" }}
+                        height="450vw"
                         variant="top"
-                        src={service.service_pic_url?.[0]}
+                        src={`/api/images?image_name=${service.service_pic_url?.[0]}`}
                       />
                       <Card.Body>
                         <Card.Title>
@@ -327,7 +331,7 @@ const CartPage = () => {
                   <strong>${servicesSubtotal}</strong>{" "}
                 </p>
               </div>
-            </>
+            </div>
           )}
           {!numServices && <p>You currently have no services in your cart.</p>}
         </div>
