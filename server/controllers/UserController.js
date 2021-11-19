@@ -62,7 +62,8 @@ UserController.post("/", async (req, res) => {
     lname: lname,
     city: city,
     phone_number: phone_number,
-    avatar: "https://i.imgur.com/QS8iSoig.jpg"
+    //avatar: "https://i.imgur.com/QS8iSoig.jpg"
+    avatar: "avatar1.png"
   });
 
   try {

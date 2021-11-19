@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Button, Form, Col, Row, Alert } from "react-bootstrap";
+import { Container, Button, Form, Col, Row, Alert, Card } from "react-bootstrap";
 import "./EditAccountPage.css";
 import React from "react";
 import { useState, useEffect } from "react";
@@ -15,6 +15,13 @@ const EditAccountPage = () => {
     internal: false,
   });
 
+  const [avatar, setavatar] = useState(null);
+  const [file, setFile] = useState(null);
+  //const [picError, setPicError] = useState(false);
+  const [pic, setPic] = useState(false);
+  const config = {
+    headers: { "content-type": "multipart/form-data" },
+  };
   const {
     register,
     handleSubmit,
@@ -32,9 +39,26 @@ const EditAccountPage = () => {
     changed && (window.location = "/realaccountpage");
   }, [changed]);
 
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+    setPic(true);
+    setavatar(e.target.files[0].name);
+  };
+
   const Savechanges = async (data) => {
+    if (pic) {
+      const fd = new FormData();
+      fd.append("img", file, file.name);
+      await axios
+        .post("/api/images", fd, config)
+        .then(() => {
+        })
+        .catch(() => {
+        });
+    }
     await axios
       .put(`/api/user/${status.user.uid}`, {
+        avatar: avatar,
         email: data.email,
         password: data.password,
         phone_number: data.phonenumber,
@@ -63,6 +87,31 @@ const EditAccountPage = () => {
               onSubmit={handleSubmit(Savechanges)}
               className="editaccountformwidth"
             >
+
+              <Form.Group
+                as={Row}
+                className="mb-3 form"
+                controlId="formPlaintextEmail"
+              >
+                <Form.Label column >
+                  Your Avatar:
+                </Form.Label>
+                <Card border="light" bg="light">
+                          <Card.Img
+                            style={{ objectFit: "cover" }}
+                            variant="top"
+                            height="450vw"
+                            src={`/api/images?image_name=${status.user.avatar}`}
+                          />
+                </Card>
+                <Form.Label column >
+                  Upload a picture to update your current Avatar:
+                </Form.Label>
+                <Form.Control type="file" onChange={handleFile}></Form.Control>
+                
+              </Form.Group>
+
+
               <Form.Group
                 as={Row}
                 className="mb-3 form"

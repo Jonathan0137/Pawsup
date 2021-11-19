@@ -127,7 +127,7 @@ const MediaDetailPage = ({ data }) => {
             </div>
 
             <div className="col-2 authorInfo">
-              <Avatar alt="mediaAvatar" src={authorInfo.data.avatar} />
+              <Avatar alt="mediaAvatar" src={`/api/images?image_name=${authorInfo.data.avatar}`}/>
               <p className="mediaAuthorName">{authorInfo.data.username}</p>
 
               <button

@@ -112,7 +112,7 @@ const ServiceDetailPage = ({ data }) => {
             </div>
             <div className="serviceProviderInformation">
               <div className="d-flex serviceProviderIconAndName">
-                <Avatar alt="serviceAvatar" src={providerInfo.data.avatar} />
+                <Avatar alt="serviceAvatar" src={`/api/images?image_name=${providerInfo.data.avatar}`}/>
                 <p className="serviceProviderName">
                   {providerInfo.data.fname} {providerInfo.data.lname}
                 </p>
