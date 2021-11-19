@@ -63,7 +63,7 @@ const ProductDetailPage = ({ data }) => {
             <Carousel className="CarouselContainer">
               {data.product_pic_url &&
                 data.product_pic_url.map((pic, i) => (
-                  <Carousel.Item>
+                  <Carousel.Item key={i}>
                     <Image
                       className="productImag"
                       style={{ objectFit: "cover" }}
@@ -108,6 +108,7 @@ const ProductDetailPage = ({ data }) => {
                       size="lg"
                       style={{ margin: "1rem" }}
                       onClick={() => setCurrentPrice(data.product_price[i])}
+                      key={i}
                     >
                       {size}
                     </Button>

@@ -317,8 +317,8 @@ const ProductPage = () => {
               <div style={{ width: "inherit" }}>
                 <Row xs={1} md={2} lg={3} className="g-4">
                   {products.data
-                    .map((product) => (
-                      <Col>
+                    .map((product, index) => (
+                      <Col key={index}>
                         <Card border="light" bg="light">
                           <Card.Img
                             style={{ objectFit: "cover" }}

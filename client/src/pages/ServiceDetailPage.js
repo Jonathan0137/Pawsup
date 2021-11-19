@@ -72,7 +72,7 @@ const ServiceDetailPage = ({ data }) => {
             <Carousel className="CarouselContainer">
               {data.service_pic_url &&
                 data.service_pic_url.map((pic, i) => (
-                  <Carousel.Item>
+                  <Carousel.Item key={i}>
                     <Image
                       className="serviceImg"
                       style={{ objectFit: "cover" }}
@@ -141,7 +141,7 @@ const ServiceDetailPage = ({ data }) => {
           <h1>Facility</h1>
           <div className="d-flex justify-content-around serviceFacility">
             {data.service_facility &&
-              data.service_facility.map((facility, i) => <p>{facility}</p>)}
+              data.service_facility.map((facility, i) => <p key={i}>{facility}</p>)}
           </div>
         </div>
         <div className="col-12 serviceComment">
