@@ -1,53 +1,82 @@
-const express = require("express");
+const express = require("express"); 
+const path = require("path"); 
+const app = express(); 
+const paypal = require("paypal-rest-sdk");
+
 const PaymentController = express.Router();
 var PAYPAL_API = 'https://api-m.sandbox.paypal.com';
-var CLIENT =
-  'AUJoKVGO3q1WA1tGgAKRdY6qx0qQNIQ6vl6D3k7y64T4qh5WozIQ7V3dl3iusw5BwXYg_T5FzLCRguP8';
-var SECRET =
-  'EOw8LNwDhM7esrQ3nHfzKc7xiWnJc83Eawln4YLfUgivfx1LGzu9Mj0F5wlarilXDqdK9Q5aHVo-VGjJ';
 
-PaymentController.post('/', function(req, res)
-  {
-    // 2. Get the payment ID and the payer ID from the request body.
+  paypal.configure({
+    'mode': 'sandbox', 
+    'client_id': 'AUJoKVGO3q1WA1tGgAKRdY6qx0qQNIQ6vl6D3k7y64T4qh5WozIQ7V3dl3iusw5BwXYg_T5FzLCRguP8',
+    'client_secret': 'EOw8LNwDhM7esrQ3nHfzKc7xiWnJc83Eawln4YLfUgivfx1LGzu9Mj0F5wlarilXDqdK9Q5aHVo-VGjJ'
+  });
 
-    const { paymentID, payerID, total, currency} = req.body
+  // start payment process 
+PaymentController.post("/", async (req , res) => {
+  const { total, redirect } = req.body;
 
-    // 3. Call /v1/payments/payment/PAY-XXX/execute to finalize the payment.
-    express.post(PAYPAL_API + '/v1/payments/payment/' + paymentID +
-      '/execute',
-      {
-        auth:
-        {
-          user: CLIENT,
-          pass: SECRET
-        },
-        body:
-        {
-          payer_id: payerID,
-          transactions: [
-          {
-            amount:
-            {
-              total: total,
-              currency: currency
+  if (!total || !redirect) {
+    return res.status(400).json({
+      message: "Fields are missing from request body. Requires a subtotal and a redirect URL.",
+    });
+	// create payment object 
+  }
+  
+
+    var payment = {
+            "intent": "authorize",
+	"payer": {
+		"payment_method": "paypal"
+	},
+	"redirect_urls": {
+    /*"return_url": "http://127.0.0.1:3000/success",
+		"cancel_url": "http://127.0.0.1:3000/err"*/
+		"return_url": redirect,
+		"cancel_url": redirect
+	},
+	"transactions": [{
+		"amount": {
+			"total": total,
+			"currency": "CAD"
+		},
+		"description": " Your PawsApp purchase "
+	}]
+    }
+	
+	
+	// call the create Pay method 
+    createPay( payment ) 
+        .then( ( transaction ) => {
+            var id = transaction.id; 
+            var links = transaction.links;
+            var counter = links.length; 
+            while( counter -- ) {
+                if ( links[counter].method == 'REDIRECT') {
+					// redirect to paypal where user approves the transaction 
+                    return res.redirect( links[counter].href )
+                }
             }
-          }]
-        },
-        json: true
-      },
-      function(err, response)
-      {
-        if (err)
-        {
-          console.error(err);
-          return res.sendStatus(500);
-        }
-        // 4. Return a success response to the client
-        res.json(
-        {
-          status: 'success'
+        })
+        .catch( ( err ) => { 
+            console.log( err ); 
+            return res.status(500).json({
+              message: `Payment failed. We'll get 'em next time.`,
+            });
         });
-      });
-  })
+}); 
+
+var createPay = ( payment ) => {
+  return new Promise( ( resolve , reject ) => {
+      paypal.payment.create( payment , function( err , payment ) {
+       if ( err ) {
+           reject(err); 
+       }
+      else {
+          resolve(payment); 
+      }
+      }); 
+  });
+}				
 
 exports.PaymentController = PaymentController;
