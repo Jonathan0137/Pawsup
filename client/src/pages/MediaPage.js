@@ -43,17 +43,19 @@ const MediaPage = () => {
             
             <HeaderMenu />
             
-            <Container className="mb-3 mid">
+            <Container className="mt-4 mb-3 mid">
             {medias.data ? (
-              <div>
+              <div style={{ width: "inherit" }}>
                 <Row xs={1} md={2} lg={3} className="g-4">
                   {medias.data
                     .map((media) => (
                       <Col key={media.id}>
                         <Card border="light" bg="light">
                           <Card.Img
+                            style={{ objectFit: "cover" }}
                             variant="top"
-                            src={media.media_picture_url[0]}
+                            height="450vw"
+                            src={`/api/images?image_name=${media.media_picture_url}`}
                           />
                           <Card.Body>
                             <Card.Title>
