@@ -41,7 +41,7 @@ const ShowPostedServices = ({ data }) => {
 
   return (
     <>
-      <Container className="pt-5 pb-3">
+      <Container className="pt-5 pb-3 accountPg">
         {listServices.data.length === 0 ? (
           <>
             <h1>You have no Posted Service</h1>

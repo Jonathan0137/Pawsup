@@ -134,6 +134,7 @@
   display: flex;
   justify-content: center;
   align-self: center;
+  background-color: white;
 }
 
 .editaccountformwidth{

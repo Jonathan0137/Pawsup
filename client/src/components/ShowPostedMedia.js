@@ -42,7 +42,7 @@ const ShowPostedMedia = ({ data }) => {
 
   return (
     <>
-      <Container className="pt-5 pb-3">
+      <Container className="pt-5 pb-3 accountPg">
         {listMedia.data.length === 0 ? (
           <>
             <h1>You have no Posted Social</h1>
