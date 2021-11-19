@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HeaderMenu from "../components/HeaderMenu";
 import Footer from "../components/Footer";
-import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import "./SignupPage.css";
 import axios from "axios";
 
@@ -32,6 +32,13 @@ function CreateService() {
 
   const handleFile = (e) => {
     setFile(e.target.files[0]);
+
+    setPic(true);
+    if (!pic) {
+      setPicError(false);
+    } else {
+      setPicError(true);
+    }
     setService({ ...service, service_pic_url: [e.target.files[0].name] });
   };
 
@@ -47,21 +54,26 @@ function CreateService() {
       });
   }, []);
 
-  const upImg = async () => {
+  /* const upImg = async () => {
     const fd = new FormData();
     fd.append("img", file, file.name);
     await axios
       .post("/api/images", fd, config)
       .then(() => {
-        setPic(true);
       })
       .catch(() => {
-        setPicError(true);
       });
-  };
+  }; */
 
   const Create = async () => {
     if (pic) {
+      const fd = new FormData();
+      fd.append("img", file, file.name);
+      await axios
+        .post("/api/images", fd, config)
+        .then(() => {})
+        .catch(() => {});
+
       await axios
         .post("/api/services", {
           service_pic_url: service.service_pic_url,
@@ -81,7 +93,7 @@ function CreateService() {
           setHasError(true);
         });
     } else {
-      setHasError(true);
+      setPicError(true);
     }
   };
 
@@ -262,41 +274,42 @@ function CreateService() {
 
             <Form.Group controlId="formFile" className="mb-3 bold">
               <Form.Label>
-                Service Sample picture (must select 1 picture, please upload it
-                before creating service).
+                Service Sample picture (must select exactly 1 picture)
               </Form.Label>
               <input type="file" onChange={handleFile} />
             </Form.Group>
 
             {picError && (
               <div className="alert alert-warning mb-3 mid" role="alert">
-                Picture upload failed, please try again later.
+                Your service post needs a picture
               </div>
             )}
             {hasError && (
               <div className="alert alert-warning mb-3 mid" role="alert">
-                Please enter all required information and upload picture first.
+                Please enter all required information.
               </div>
             )}
 
-            <div className="mid">
-              <Button
-                className="mb-3 btn btn-success bigger"
-                variant="primary"
-                type="submit"
-                onClick={upImg}
-              >
-                Upload Image
-              </Button>
-              <Button
-                className="mb-3 btn btn-dark bigger"
-                variant="primary"
-                type="submit"
-                onClick={Create}
-              >
-                Create Service
-              </Button>
-            </div>
+            <Row>
+              <Col className="mid">
+                <Button
+                  className="mb-3 btn bigger"
+                  variant="primary"
+                  onClick={Create}
+                >
+                  Create Service
+                </Button>
+              </Col>
+              <Col className="mid">
+                <Button
+                  className="mb-3 btn  bigger"
+                  variant="primary"
+                  href="/service"
+                >
+                  Cancel
+                </Button>
+              </Col>
+            </Row>
           </Form>
           <Footer />
         </div>
