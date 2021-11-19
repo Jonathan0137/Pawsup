@@ -94,7 +94,7 @@ const CommentSection = ({ comments, commentData }) => {
         ))}
 
       {isLoggedIn && (
-        <Form onSubmit={submitHandler} on>
+        <Form onSubmit={submitHandler}>
           <Form.TextArea
             onInput={(e) => {
               setReplyMessage(e.target.value);

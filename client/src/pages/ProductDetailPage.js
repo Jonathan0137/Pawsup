@@ -92,7 +92,7 @@ const ProductDetailPage = ({ data }) => {
                   count={5}
                   size={24}
                   activeColor="#ffd700"
-                  value={data.product_rating}
+                  value={Number(data.product_rating)}
                   isHalf={true}
                   edit={false}
                   emptyIcon={<i className="far fa-star"></i>}

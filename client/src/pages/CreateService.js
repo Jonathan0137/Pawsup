@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HeaderMenu from "../components/HeaderMenu";
 import Footer from "../components/Footer";
-import { Container, Form, Button, Row, Col, Spinner } from "react-bootstrap";
+import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import "./SignupPage.css";
 import axios from "axios";
 

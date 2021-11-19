@@ -7,11 +7,9 @@ import { CartProvider } from "./providers/CartProvider";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 ReactDOM.render(
-  <React.StrictMode>
     <CartProvider>
       <App />
-    </CartProvider>
-  </React.StrictMode>,
+    </CartProvider>,
   document.getElementById("root")
 );
 

@@ -93,7 +93,7 @@ const ServiceDetailPage = ({ data }) => {
                   count={5}
                   size={24}
                   activeColor="#ffd700"
-                  value={data.service_rating}
+                  value={Number(data.service_rating)}
                   isHalf={true}
                   edit={false}
                   emptyIcon={<i className="far fa-star"></i>}
