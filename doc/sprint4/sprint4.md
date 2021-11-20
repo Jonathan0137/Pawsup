@@ -15,7 +15,7 @@
 - Create Media Page Issue (Meng) (20) NODE-159
 - Edit Account Page issue (Meng) (20) NODE-157
 - Checkout Cart and Payment frontend (Ivan) (20) NODE-164
-- Add a checkbox in the Edit User Account page to indicate if user is a service provider (Frank) (5)
+- Add a checkbox in the Edit User Account page to indicate if user is a service provider (Frank) (5) NODE-177
 - Make Service page display images properly (Frank) (5) NODE-187
 - Make Product page display images properly (Frank) (5) NODE-188
 - Add tabs in User Account page for deleting services, deleting socials, and edit account (Jonathan) (20) NODE-165
@@ -32,7 +32,7 @@
 
 ## Bugs
 - Fix bug where going to cart page after inserting product/service into cart will crash the page (Gary) (1) NODE-174
-- Display ”no items can be found” when no items can be found (Frank) (5)
+- Display ”no items can be found” when no items can be found (Frank) (5) NODE-178
 - Create Service image processing and post request (Ivan) (8) NODE-163
 - 404 Redirect Page (Ivan) (5) NODE-118
 - Ensure all price ranges are positive (Ivan) (3) NODE-168
