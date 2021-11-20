@@ -37,6 +37,10 @@
 - 404 Redirect Page (Ivan) (5) NODE-118
 - Ensure all price ranges are positive (Ivan) (3) NODE-168
 - Update logout interface and CreateService page redirection (Ivan) (5) NODE-185
+- Fixed Signup page email field bug and optimized the whole Signup page (Meng) (3) NODE-200
+- CreateService page optimized by upload image button omitted and added a cancel button (Meng) (5) NODE-201
+- MediaPage now displays images intances, not urls (Meng) (5) NODE-196
+- Fixed MediaPage image bug (Meng) (1) NODE-203
 
 # Spike
 - Before sprint 4, we were using urls for the mock images but we soon realized that this was not viable if a user wanted to upload actual images. Because normally users are expected to upload picture instances rather than picture urls. As a result, we started looking into images with form-data and spent quite a while taking care of image handling.
