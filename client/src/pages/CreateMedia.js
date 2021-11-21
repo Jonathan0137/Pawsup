@@ -73,8 +73,7 @@ const CreateMediaPage = () => {
       fd.append("img", file, file.name);
       await axios
         .post("/api/images", fd, config)
-        .then(() => {
-        })
+        .then(() => {})
         .catch(() => {
           setPicError(true);
         });
@@ -190,9 +189,7 @@ const CreateMediaPage = () => {
           </Container>
         </div>
       ) : (
-        <Container>
-          <h3 className="mt-4">Please Login first</h3>
-        </Container>
+        (window.location = "/signin")
       )}
 
       <Footer />

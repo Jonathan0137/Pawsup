@@ -2,7 +2,14 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const paypal = require("paypal-rest-sdk");
+const cors = require("cors");
 
+app.use(
+  cors({
+    origin: "*",
+    methods: ["POST"],
+  })
+);
 const PaymentController = express.Router();
 var PAYPAL_API = "https://api-m.sandbox.paypal.com";
 
