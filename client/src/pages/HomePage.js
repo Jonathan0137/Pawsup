@@ -19,7 +19,7 @@ const HomePage = () => {
         <div className="container">
           <div className="row title-container text-center">
             <div className="title">
-              <h1>Temporay Harbor Warmth Like Home</h1>
+              <h1>Temporary Harbors, Warmth Like Home</h1>
             </div>
             <div className="subtitle">
               <h4>Best Pets Service platform, Solve your Every Worries</h4>

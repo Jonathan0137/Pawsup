@@ -12,11 +12,14 @@ const HeaderMenu = () => {
   const [status, setStatus] = useState({ isLoggedIn: false, user: null });
   const { cartItems } = useCartContext();
 
+  const Logout = async () => {
+    await axios.post("/api/auth/logout").then(() => {
+      window.location = "/signin";
+    });
+  };
+
   useEffect(() => {
-    axios
-      .get("/api/auth/user")
-      .then((res) => setStatus(res.data))
-      .catch();
+    axios.get("/api/auth/user").then((res) => setStatus(res.data));
   }, []);
 
   return (
@@ -29,9 +32,7 @@ const HeaderMenu = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto flex-fill">
             {status.isLoggedIn ? (
-              <Nav.Link as={Link} to="/signin">
-                Logout
-              </Nav.Link>
+              <Nav.Link onClick={Logout}>Logout</Nav.Link>
             ) : (
               <Nav.Link as={Link} to="/signin">
                 Login/Signup
@@ -54,7 +55,7 @@ const HeaderMenu = () => {
             </div>
             {status.isLoggedIn && (
               <Nav.Link as={Link} to="/cart">
-                Cart ({ cartItems.products.length + cartItems.services.length })
+                Cart ({cartItems.products.length + cartItems.services.length})
               </Nav.Link>
             )}
             {status.isLoggedIn && (

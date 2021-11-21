@@ -1,6 +1,6 @@
 {
-  "short_name": "PawsUp",
-  "name": "PawsUp",
+  "short_name": "Pawsup",
+  "name": "Pawsup",
   "icons": [
     {
       "src": "favicon.ico",
@@ -15,6 +15,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#F8F9FA",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary"
 }

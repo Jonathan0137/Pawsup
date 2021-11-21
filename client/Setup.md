@@ -1,4 +1,4 @@
-# PawsUp - Client Setup
+# Pawsup - Client Setup
 
 ## Prerequisites
 

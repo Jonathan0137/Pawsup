@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import HeaderMenu from "../components/HeaderMenu";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import "./SignupPage.css";
 import axios from "axios";
-
+import {useForm} from "react-hook-form";
 const SignupPage = () => {
   // States
-  const [user, setUser] = useState({
+  /* const [user, setUser] = useState({
     username: "",
     email: "",
     password: "",
@@ -14,27 +14,33 @@ const SignupPage = () => {
     lname: "",
     city: "",
     phone: "",
-  });
+  }); */
   const [hasError, setHasError] = useState({
     duplicate: false,
     missInfo: false,
     internal: false,
   });
 
-  const submitHandler = (e) => {
+  /* const submitHandler = (e) => {
     e.preventDefault();
-  };
+  }; */
 
-  const SignUp = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const SignUp = async (data) => {
     await axios
       .post("/api/user", {
-        username: user.username,
-        email: user.email,
-        password: user.password,
-        fname: user.fname,
-        lname: user.lname,
-        city: user.city,
-        phone_number: user.phone,
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        fname: data.fname,
+        lname: data.lname,
+        city: data.city,
+        phone_number: data.phone,
       })
       .then(() => {
         window.location = "/signin";
@@ -59,14 +65,12 @@ const SignupPage = () => {
             <h2 className="mb-4 mt-3">Create An Account</h2>
           </Col>
         </Row>
-        <Form onSubmit={submitHandler}>
+        <Form onSubmit={handleSubmit(SignUp)}>
           <Form.Group className="mb-3">
             <Form.Label>Username *</Form.Label>
             <Form.Control
-              type="text"
-              value={user.username}
               placeholder="Enter username"
-              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              {...register("username")}
             />
           </Form.Group>
 
@@ -74,59 +78,77 @@ const SignupPage = () => {
             <Form.Label>Password *</Form.Label>
             <Form.Control
               type="password"
-              value={user.password}
               placeholder="Password"
-              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              {...register("password")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Email address *</Form.Label>
             <Form.Control
-              type="email"
-              value={user.email}
               placeholder="Enter email"
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              {...register("email", {
+                pattern: {
+                  value:
+                    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+                  message: "This is not a valid email",
+                },
+              })}
             />
+            {errors.email && (
+                  <Alert variant="warning">{errors.email.message}</Alert>
+                )}
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Phone number *</Form.Label>
             <Form.Control
-              type="text"
-              value={user.phone}
+            type="text"
               placeholder="Phone number"
-              onChange={(e) => setUser({ ...user, phone: e.target.value })}
+              {...register("phone", {
+                pattern: {
+                  value: /^[0-9]*$/,
+                  message: "Numbers only",
+                },
+                /* minLength: {
+                  value: 10,
+                  message: "Not a 10 digits phone number",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "Not a 10 digits phone number",
+                }, */
+              })}
             />
+            {errors.phone && (
+                  <Alert variant="warning">{errors.phone.message}</Alert>
+                )}
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>First Name *</Form.Label>
             <Form.Control
-              type="text"
-              value={user.fname}
+            type="text"
               placeholder="First Name"
-              onChange={(e) => setUser({ ...user, fname: e.target.value })}
+              {...register("fname")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Last Name *</Form.Label>
             <Form.Control
-              type="text"
-              value={user.lname}
+            type="text"
               placeholder="Last Name"
-              onChange={(e) => setUser({ ...user, lname: e.target.value })}
+              {...register("lname")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>City *</Form.Label>
             <Form.Control
-              type="text"
-              value={user.city}
+            type="text"
               placeholder="City"
-              onChange={(e) => setUser({ ...user, city: e.target.value })}
+              {...register("city")}
             />
           </Form.Group>
 
@@ -151,7 +173,6 @@ const SignupPage = () => {
               className="mb-3 btn btn-dark bigger"
               variant="primary"
               type="submit"
-              onClick={SignUp}
             >
               Sign Up
             </Button>

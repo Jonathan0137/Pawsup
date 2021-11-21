@@ -24,15 +24,23 @@ const CartPage = () => {
   const [loading, setLoading] = useState(true);
   const [deletingProduct, setDeletingProduct] = useState(null);
   const [deletingService, setDeletingService] = useState(null);
+  const [cError, setcError] = useState(false);
+  const [cSucc, setcSucc] = useState(false);
   const productsSubtotal = useMemo(() => {
+    if (loading) {
+      return 0;
+    }
     let productsSubtotal = 0;
     cartItems.products.forEach((product) => {
       const sizeIndex = product.product_type.indexOf(product.size);
       productsSubtotal += product.product_price[sizeIndex] * product.quantity;
     });
     return productsSubtotal.toFixed(2);
-  }, [cartItems]);
+  }, [cartItems, loading]);
   const servicesSubtotal = useMemo(() => {
+    if (loading) {
+      return 0;
+    }
     let servicesSubtotal = 0;
 
     cartItems.services.forEach((service) => {
@@ -44,8 +52,9 @@ const CartPage = () => {
         service.price_per_day * numberOfDays * service.number_of_pets;
     });
     return servicesSubtotal.toFixed(2);
-  }, [cartItems]);
+  }, [cartItems, loading]);
 
+  let total = +productsSubtotal + +servicesSubtotal;
   const numProducts = cartItems.products.reduce(
     (num, product) => (num += product.quantity),
     0
@@ -100,6 +109,42 @@ const CartPage = () => {
       });
   };
 
+  // const checkout = async () => {
+  //   await axios
+  //     .post("/api/payment", {
+  //       paymentID: 1,
+  //       payerID: 1,
+  //       total: productsSubtotal,
+  //       currency: "CAD",
+  //     })
+  //     .then(() => {
+  //       axios
+  //         .delete("/api/cart")
+  //         .then(() => {
+  //           setcError(false);
+  //         })
+  //         .catch(() => {
+  //           setcError(true);
+  //         });
+  //     })
+  //     .catch(() => {
+  //       setcError(true);
+  //     });
+  // };
+
+  const checkout = async () => {
+    await axios
+      .delete("/api/cart")
+      .then(() => {
+        setcError(false);
+        setcSucc(true);
+        window.location = "/cart";
+      })
+      .catch(() => {
+        setcError(true);
+      });
+  };
+
   if (loading) {
     return (
       <>
@@ -144,14 +189,16 @@ const CartPage = () => {
         <h3>Products {numProducts > 0 && `(${cartItems.products.length})`}</h3>
         <div>
           {numProducts > 0 && (
-            <>
+            <div style={{ width: "inherit" }}>
               <Row xs={1} md={2} lg={3} className="g-4">
                 {cartItems.products.map((product) => (
                   <Col key={product.id}>
                     <Card border="light" bg="light">
                       <Card.Img
+                        style={{ objectFit: "cover" }}
+                        height="450vw"
                         variant="top"
-                        src={product.product_pic_url?.[0]}
+                        src={`/api/images?image_name=${product.product_pic_url?.[0]}`}
                       />
                       <Card.Body>
                         <Card.Title>
@@ -205,10 +252,7 @@ const CartPage = () => {
                   <strong>${productsSubtotal}</strong>{" "}
                 </p>
               </div>
-              <div className="mt-3">
-                <Button>Products Checkout</Button>
-              </div>
-            </>
+            </div>
           )}
           {!numProducts && <p>You currently have no products in your cart.</p>}
         </div>
@@ -216,14 +260,16 @@ const CartPage = () => {
         <h3>Services {numServices > 0 && `(${cartItems.services.length})`}</h3>
         <div>
           {numServices > 0 && (
-            <>
+            <div style={{ width: "inherit" }}>
               <Row xs={1} md={2} lg={3} className="g-4">
                 {cartItems.services.map((service) => (
                   <Col key={service.id}>
                     <Card border="light" bg="light">
                       <Card.Img
+                        style={{ objectFit: "cover" }}
+                        height="450vw"
                         variant="top"
-                        src={service.service_pic_url?.[0]}
+                        src={`/api/images?image_name=${service.service_pic_url?.[0]}`}
                       />
                       <Card.Body>
                         <Card.Title>
@@ -285,13 +331,35 @@ const CartPage = () => {
                   <strong>${servicesSubtotal}</strong>{" "}
                 </p>
               </div>
-              <div className="mt-3">
-                <Button>Services Checkout</Button>
-              </div>
-            </>
+            </div>
           )}
           {!numServices && <p>You currently have no services in your cart.</p>}
         </div>
+        <hr />
+        {(numProducts > 0 || numServices > 0) && (
+          <>
+            <div className="mt-3 page">
+              <p>
+                Total : <strong>${total}</strong>{" "}
+              </p>
+            </div>
+            <div className="mt-3 page">
+              <Button className="btn btn-primary btn-lg" onClick={checkout}>
+                Checkout
+              </Button>
+            </div>
+            {cSucc && (
+              <div className="alert alert-success mb-3 mid mt-3" role="alert">
+                Purchase Success!
+              </div>
+            )}
+            {cError && (
+              <div className="alert alert-warning mb-3 mid mt-3" role="alert">
+                Internal Error with Checkout, please try again later.
+              </div>
+            )}
+          </>
+        )}
       </Container>
       <Footer />
     </>

@@ -16,7 +16,8 @@ async function migrate() {
           lname VARCHAR(30) NOT NULL,
           city VARCHAR(30) NOT NULL,
           phone_number VARCHAR(30) NOT NULL,
-          avatar VARCHAR(200) NOT NULL
+          avatar VARCHAR(200) NOT NULL,
+          is_service_provider BOOLEAN DEFAULT FALSE 
       );
     `);
 
@@ -24,8 +25,8 @@ async function migrate() {
     await db.query(`
       INSERT INTO users(username, email, password, fname, lname, city, phone_number, avatar)
         VALUES
-        ('testuser', 'testuser@email.com', 'testpassword', 'FirstName', 'LastName', 'Scarborough', '9053728193', 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg'),
-        ('testuser2', 'testuser2@email.com', 'testpassword2', 'FirstName2', 'LastName2', 'Toronto', '4163921742', 'https://www.planetware.com/wpimages/2019/11/canada-in-pictures-beautiful-places-to-photograph-morraine-lake.jpg');
+        ('testuser', 'testuser@email.com', 'testpassword', 'FirstName', 'LastName', 'Scarborough', '9053728193', 'avatar1.png'),
+        ('testuser2', 'testuser2@email.com', 'testpassword2', 'FirstName2', 'LastName2', 'Toronto', '4163921742', 'avatar2.png');
     `);
 
     // Create providers table
@@ -43,8 +44,8 @@ async function migrate() {
     await db.query(`
       INSERT INTO providers(provider_name, provider_phone, provider_email, provider_avatar)
         VALUES
-        ('FirstName LastName', '123-456-7890', 'testuser@email.com', 'www.exampleurl.com'),
-        ('FirstName2 LastName2', '123-456-7890', 'testuser2@email.com', 'www.exampleurl2.com');
+        ('FirstName LastName', '123-456-7890', 'testuser@email.com', 'avatar1.png'),
+        ('FirstName2 LastName2', '123-456-7890', 'testuser2@email.com', 'avatar2.png');
     `);
 
     // Create services table
@@ -59,19 +60,19 @@ async function migrate() {
         price_per_day DECIMAL DEFAULT 0.00,
         service_rating DECIMAL DEFAULT 0,
         service_pet_breed VARCHAR(200) NOT NULL,
-        pid INTEGER REFERENCES providers (provider_id)
+        user_id INTEGER REFERENCES users (uid)
       );
     `);
 
     // Populate services table
     await db.query(`
-      INSERT INTO services(service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, pid)
+      INSERT INTO services(service_pic_url, service_title, service_detail, service_facility, location, price_per_day, service_rating, service_pet_breed, user_id)
         VALUES 
-        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Cat grooming', 'Cat grooming service', '{"Bath","Toys"}', 'Markham', 60, 3, 'Cat', 1),
-        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Dog walking', 'Dog grooming service', '{"Bath","Toys"}', 'Markham', 55, 2.7, 'Dog', 1),
-        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Parrot training', 'Parrow training service', '{"Bath","Toys"}', 'Scarborough', 100, 4.9, 'Parrot', 2),
-        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Pet emergency care', 'Emergency care service', '{"Bath","Toys"}', 'Toronto', 200, 3.6, 'Hamster', 2),
-        ('{"https://www.homestratosphere.com/wp-content/uploads/2018/08/dog-house-lead-image-080318-min.jpg", "https://static.thebark.com/sites/default/files/styles/full/public/content/blog/full/dog-proofing-your-home-room-guide.jpg?itok=VXvCpDpB"}', 'Pet sitting', 'Pet sitting service', '{"Bath","Toys"}', 'Toronto', 20, 1.2, 'Dog', 2);
+        ('{"service1.jpg", "service2.jpg"}', 'Cat grooming', 'Cat grooming service', '{"Bath","Toys"}', 'Markham', 60, 3, 'Cat', 1),
+        ('{"service1.jpg", "service2.jpg"}', 'Dog walking', 'Dog grooming service', '{"Bath","Toys"}', 'Markham', 55, 2.7, 'Dog', 1),
+        ('{"service1.jpg", "service2.jpg"}', 'Parrot training', 'Parrow training service', '{"Bath","Toys"}', 'Scarborough', 100, 4.9, 'Parrot', 2),
+        ('{"service1.jpg", "service2.jpg"}', 'Pet emergency care', 'Emergency care service', '{"Bath","Toys"}', 'Toronto', 200, 3.6, 'Hamster', 2),
+        ('{"service1.jpg", "service2.jpg"}', 'Pet sitting', 'Pet sitting service', '{"Bath","Toys"}', 'Toronto', 20, 1.2, 'Dog', 2);
     `);
 
     // Create products table
@@ -94,10 +95,10 @@ async function migrate() {
     await db.query(`
       INSERT INTO products(product_name, product_detail, product_origin, product_category, product_pet_breed, product_type, product_pic_url, product_price, product_rating)
         VALUES
-        ('Green Farms Dog Food', 'Delicious and healthy dog food', 'Pawsup', 'Food', 'Dog', '{"Small", "Medium", "Large"}', '{"https://cdn.shopify.com/s/files/1/1074/9060/products/PuppyLargeDogFrontRight6kg_2000x.png?v=1600605800", "https://cdn.shopify.com/s/files/1/1074/9060/products/sizfishtreats_e7b8446f-fd19-4223-a0a8-0e282fe014ee_1600x.jpg?v=1626106610"}', '{2.99, 3.99, 5.99}', 3.5), 
-        ('Red Farms Cat Food', 'Delicious and healthy cat food', 'Pawsup', 'Food', 'Cat', '{"Small", "Medium", "Large"}', '{"https://cdn.shopify.com/s/files/1/1074/9060/products/PuppyLargeDogFrontRight6kg_2000x.png?v=1600605800", "https://cdn.shopify.com/s/files/1/1074/9060/products/sizfishtreats_e7b8446f-fd19-4223-a0a8-0e282fe014ee_1600x.jpg?v=1626106610"}', '{2.99, 3.99, 5.99}', 4.5), 
-        ('Mouse Toy', 'Fun and interactive cat toy', 'Pawsup', 'Toy', 'Cat', '{"Small", "Medium", "Large"}', '{"https://cdn.shopify.com/s/files/1/1074/9060/products/PuppyLargeDogFrontRight6kg_2000x.png?v=1600605800", "https://cdn.shopify.com/s/files/1/1074/9060/products/sizfishtreats_e7b8446f-fd19-4223-a0a8-0e282fe014ee_1600x.jpg?v=1626106610"}', '{2.99, 3.99, 5.99}', 2.3), 
-        ('Hamster Wheel', 'Fun hamster wheel', 'Pawsup', 'Toy', 'Hamster', '{"Small", "Medium", "Large"}', '{"https://cdn.shopify.com/s/files/1/1074/9060/products/PuppyLargeDogFrontRight6kg_2000x.png?v=1600605800", "https://cdn.shopify.com/s/files/1/1074/9060/products/sizfishtreats_e7b8446f-fd19-4223-a0a8-0e282fe014ee_1600x.jpg?v=1626106610"}', '{2.99, 3.99, 5.99}', 0.2);
+        ('Green Farms Dog Food', 'Delicious and healthy dog food', 'Pawsup', 'Food', 'Dog', '{"Small", "Medium", "Large"}', '{"product1.jpg", "product2.jpg"}', '{2.99, 3.99, 5.99}', 3.5), 
+        ('Red Farms Cat Food', 'Delicious and healthy cat food', 'Pawsup', 'Food', 'Cat', '{"Small", "Medium", "Large"}', '{"product1.jpg", "product2.jpg"}', '{2.99, 3.99, 5.99}', 4.5), 
+        ('Mouse Toy', 'Fun and interactive cat toy', 'Pawsup', 'Toy', 'Cat', '{"Small", "Medium", "Large"}', '{"product1.jpg", "product2.jpg"}', '{2.99, 3.99, 5.99}', 2.3), 
+        ('Hamster Wheel', 'Fun hamster wheel', 'Pawsup', 'Toy', 'Hamster', '{"Small", "Medium", "Large"}', '{"product1.jpg", "product2.jpg"}', '{2.99, 3.99, 5.99}', 0.2);
     `);
 
     // Create comments table
@@ -117,8 +118,8 @@ async function migrate() {
     await db.query(`
       INSERT INTO comments(comment_type, foreign_id, comment_detail, author_name, author_profile_pic_url, comment_time)
         VALUES
-        ('product', 2, 'My cat loved it! Wow!', 'chris221', 'www.hostedpic1.com', '2021-10-20 4:00PM'),
-        ('product', 3, 'It was delicious. Wait... What do you mean its for dogs?', 'tommy55', 'www.hostedpic5.com', '2021-10-21 1:10PM'
+        ('product', 2, 'My cat loved it! Wow!', 'chris221', 'avatar1.png', '2021-10-20 4:00PM'),
+        ('product', 3, 'It was delicious. Wait... What do you mean its for dogs?', 'tommy55', 'avatar2.png', '2021-10-21 1:10PM'
       );
     `);
 
@@ -138,26 +139,13 @@ async function migrate() {
     await db.query(`
       INSERT INTO replies(cid, reply_username, reply_avatar_url, reply_detail, reply_time)
         VALUES
-        (1, 'chris22', 'www.hostedpic32.com', 'I will try buying it too then', '2021-10-20 5:30PM'),
-        (1, 'catwoman55', 'www.hostedpic32.com', 'My cat liked it as well!', '2021-10-20 5:55PM'),
-        (1, 'tammy9', 'www.hostedpic32.com', 'I think my cat will like it too', '2021-10-20 7:19PM'),
-        (2, 'nancy92', 'www.hostedpic32.com', 'Hahaha', '2021-10-21 4:19PM'),
-        (2, 'matt445', 'www.hostedpic32.com', 'I hope you are feeling okay', '2021-10-21 5:22PM'
+        (1, 'chris22', 'avatar2.png', 'I will try buying it too then', '2021-10-20 5:30PM'),
+        (1, 'catwoman55', 'avatar2.png', 'My cat liked it as well!', '2021-10-20 5:55PM'),
+        (1, 'tammy9', 'avatar2.png', 'I think my cat will like it too', '2021-10-20 7:19PM'),
+        (2, 'nancy92', 'avatar2.png', 'Hahaha', '2021-10-21 4:19PM'),
+        (2, 'matt445', 'avatar2.png', 'I hope you are feeling okay', '2021-10-21 5:22PM'
       );
     `);
-
-    // Create mediapages table
-    await db.query(`
-    CREATE TABLE IF NOT EXISTS users (
-        uid serial PRIMARY KEY,
-        username VARCHAR(30) NOT NULL,
-        email VARCHAR(30) NOT NULL,
-        password VARCHAR(30) NOT NULL,
-        fname VARCHAR(30) NOT NULL,
-        lname VARCHAR(30) NOT NULL,
-        city VARCHAR(30) NOT NULL
-    );
-`);
 
   // Create mediapages table
   await db.query(`
@@ -176,9 +164,9 @@ async function migrate() {
   await db.query(`
   INSERT INTO mediaPages(author_id, media_picture_url, media_title, media_detail, published_time, number_of_likes)
     VALUES
-    (1, '{"https://upload.wikimedia.org/wikipedia/commons/8/8c/Cow_%28Fleckvieh_breed%29_Oeschinensee_Slaunger_2009-07-07.jpg","http://leosigh.com/wp-content/uploads/2016/12/rick-astley-never-gonna-give-you-up.jpg"}', 'Cute Cow', 'This is a picture of a cow!', '2021-09-11 3:12 PM', 7),
-    (2, '{"https://images.unsplash.com/photo-1529778873920-4da4926a72c2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80","http://leosigh.com/wp-content/uploads/2016/12/rick-astley-never-gonna-give-you-up.jpg"}', 'Adorable Cat', 'This is a picture of a cat!', '2021-10-11 7:15 AM', 2),
-    (1, '{"https://thehappypuppysite.com/wp-content/uploads/2017/10/Cute-Dog-Names-HP-long-1024x555.jpg","http://leosigh.com/wp-content/uploads/2016/12/rick-astley-never-gonna-give-you-up.jpg"}', 'Beautiful Pupper', 'This is a picture of a dog!', '2021-11-15 09:55 AM', 11
+    (1, '{"media1.jpg","media1.jpg"}', 'Cute Cow', 'This is a picture of a cow!', '2021-09-11 3:12 PM', 7),
+    (2, '{"media2.jpg","media2.jpg"}', 'Adorable Cat', 'This is a picture of a cat!', '2021-10-11 7:15 AM', 2),
+    (1, '{"media2.jpg","media2.jpg"}', 'Beautiful Pupper', 'This is a picture of a dog!', '2021-11-15 09:55 AM', 11
 
   );
 `);

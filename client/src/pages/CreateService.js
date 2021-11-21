@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import HeaderMenu from "../components/HeaderMenu";
 import Footer from "../components/Footer";
-import { Form, Button, Row, Col, Container } from "react-bootstrap";
+import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import "./SignupPage.css";
 import axios from "axios";
 
 function CreateService() {
   const [service, setService] = useState({
-    service_pic_url: [],
+    service_pic_url: [""],
     service_title: "",
     service_detail: "",
     service_facility: ["", "", ""],
@@ -17,11 +17,29 @@ function CreateService() {
     service_pet_breed: "Dog",
   });
   const [hasError, setHasError] = useState(false);
+  const [picError, setPicError] = useState(false);
+  const [pic, setPic] = useState(false);
   const [status, setStatus] = useState({ isLoggedIn: false, user: null });
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const config = {
+    headers: { "content-type": "multipart/form-data" },
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
+  };
+
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+
+    setPic(true);
+    if (!pic) {
+      setPicError(false);
+    } else {
+      setPicError(true);
+    }
+    setService({ ...service, service_pic_url: [e.target.files[0].name] });
   };
 
   useEffect(() => {
@@ -36,25 +54,57 @@ function CreateService() {
       });
   }, []);
 
-  // const Create = async () => {
-  //   await axios
-  //     .post("", {})
-  //     .then(() => {
-  //       window.location = "/";
-  //     })
-  //     .catch((err) => {
-  //       setHasError(true);
-  //     });
-  // };
-  const Create = () => {
-    console.log(service.service_rating);
+  /* const upImg = async () => {
+    const fd = new FormData();
+    fd.append("img", file, file.name);
+    await axios
+      .post("/api/images", fd, config)
+      .then(() => {
+      })
+      .catch(() => {
+      });
+  }; */
+
+  const Create = async () => {
+    if (pic) {
+      const fd = new FormData();
+      fd.append("img", file, file.name);
+      await axios
+        .post("/api/images", fd, config)
+        .then(() => {})
+        .catch(() => {});
+
+      await axios
+        .post("/api/services", {
+          service_pic_url: service.service_pic_url,
+          service_title: service.service_title,
+          service_detail: service.service_detail,
+          service_facility: service.service_facility,
+          location: service.location,
+          price_per_day: service.price_per_day,
+          service_rating: service.service_rating,
+          service_pet_breed: service.service_pet_breed,
+          user_id: status.user.uid,
+        })
+        .then(() => {
+          window.location = "/service";
+        })
+        .catch(() => {
+          setHasError(true);
+        });
+    } else {
+      setPicError(true);
+    }
   };
 
   return (
     <>
       <HeaderMenu />
       {loading ? (
-        <h6> </h6>
+        <div className="page">
+          <Spinner animation="grow" variant="primary" />
+          <p>Loading...</p>
+        </div>
       ) : status.isLoggedIn ? (
         <div className="pageform">
           <Row>
@@ -222,55 +272,49 @@ function CreateService() {
               </Form.Control>
             </Form.Group>
 
-            {/* <InputGroup
-            type="file"
-            multiple
-            className="mb-3 bold"
-            onChange={(e) => {
-              setService({ ...service, service_pic_url: e.target.files });
-            }}
-          >
-            <InputGroup.Text>
-              Service Sample pictures (can upload multiple pictures at once)
-            </InputGroup.Text>
-          </InputGroup> */}
-
-            <Form.Group controlId="formFileMultiple" className="mb-3 bold">
+            <Form.Group controlId="formFile" className="mb-3 bold">
               <Form.Label>
-                Service Sample pictures (can upload multiple pictures at once)
+                Service Sample picture (must select exactly 1 picture)
               </Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                onChange={(e) => {
-                  setService({ ...service, service_pic_url: e.target.value });
-                }}
-              />
+              <input type="file" onChange={handleFile} />
             </Form.Group>
 
+            {picError && (
+              <div className="alert alert-warning mb-3 mid" role="alert">
+                Your service post needs a picture
+              </div>
+            )}
             {hasError && (
               <div className="alert alert-warning mb-3 mid" role="alert">
                 Please enter all required information.
               </div>
             )}
 
-            <div className="mid">
-              <Button
-                className="mb-3 btn btn-dark bigger"
-                variant="primary"
-                type="submit"
-                onClick={Create}
-              >
-                Create Service
-              </Button>
-            </div>
+            <Row>
+              <Col className="mid">
+                <Button
+                  className="mb-3 btn bigger"
+                  variant="primary"
+                  onClick={Create}
+                >
+                  Create Service
+                </Button>
+              </Col>
+              <Col className="mid">
+                <Button
+                  className="mb-3 btn  bigger"
+                  variant="primary"
+                  href="/service"
+                >
+                  Cancel
+                </Button>
+              </Col>
+            </Row>
           </Form>
           <Footer />
         </div>
       ) : (
-        <Container>
-          <h3 className="mt-4">Please Login first</h3>
-        </Container>
+        (window.location = "/signin")
       )}
     </>
   );

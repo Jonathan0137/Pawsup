@@ -60,23 +60,16 @@ const ProductDetailPage = ({ data }) => {
       <div className="container">
         <div className="row info">
           <div className="col-12 col-sm-4 productPicConatiner">
-            <Carousel
-              className="CarouselContainer "
-              variant="dark"
-              prevLabel=""
-              nextLabel=""
-              prevIcon=""
-              nextIcon=""
-            >
+            <Carousel className="CarouselContainer">
               {data.product_pic_url &&
                 data.product_pic_url.map((pic, i) => (
-                  <Carousel.Item>
+                  <Carousel.Item key={i}>
                     <Image
                       className="productImag"
-                      src={pic}
+                      style={{ objectFit: "cover" }}
+                      src={`/api/images?image_name=${pic}`}
                       alt={i}
-                      width="70%"
-                      height="auto"
+                      height="350vw"
                     />
                   </Carousel.Item>
                 ))}
@@ -99,7 +92,7 @@ const ProductDetailPage = ({ data }) => {
                   count={5}
                   size={24}
                   activeColor="#ffd700"
-                  value={data.product_rating}
+                  value={Number(data.product_rating)}
                   isHalf={true}
                   edit={false}
                   emptyIcon={<i className="far fa-star"></i>}
@@ -115,6 +108,7 @@ const ProductDetailPage = ({ data }) => {
                       size="lg"
                       style={{ margin: "1rem" }}
                       onClick={() => setCurrentPrice(data.product_price[i])}
+                      key={i}
                     >
                       {size}
                     </Button>
@@ -138,9 +132,6 @@ const ProductDetailPage = ({ data }) => {
             <div className="d-grid gap-2">
               <Button disabled={!userInfo.isLoggedIn || addedProductToCart} variant="warning" size="lg" onClick={addProductToCart}>
                 {!addedProductToCart ? 'Add to Cart' : 'Added to Cart'}
-              </Button>
-              <Button variant="outline-warning" size="lg">
-                Buy it Now
               </Button>
             </div>
           </div>

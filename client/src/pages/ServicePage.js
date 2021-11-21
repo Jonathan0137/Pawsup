@@ -114,8 +114,6 @@ const ServicePage = () => {
       : "&sortDirection=" + condition.sortDirection
   }`;
 
-  console.log("URL is " + url);
-
   const conditions = async () => {
     setServices({
       data: null,
@@ -149,8 +147,7 @@ const ServicePage = () => {
                 <a
                   href="/createservice"
                   className="btn btn-dark end"
-                  role="button"
-                >
+                  role="button">
                   Create service
                 </a>
               </Col>
@@ -166,8 +163,7 @@ const ServicePage = () => {
                   <Nav.Link
                     onClick={() =>
                       setSelectedL({ toronto: !selectedL.toronto })
-                    }
-                  >
+                    }>
                     {selectedL.toronto ? (
                       <span className="selected">Toronto</span>
                     ) : (
@@ -177,8 +173,7 @@ const ServicePage = () => {
                   <Nav.Link
                     onClick={() =>
                       setSelectedL({ markham: !selectedL.markham })
-                    }
-                  >
+                    }>
                     {selectedL.markham ? (
                       <span className="selected">Markham</span>
                     ) : (
@@ -193,8 +188,7 @@ const ServicePage = () => {
                     Pet:
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedP({ cat: !selectedP.cat })}
-                  >
+                    onClick={() => setSelectedP({ cat: !selectedP.cat })}>
                     {selectedP.cat ? (
                       <span className="selected">Cat</span>
                     ) : (
@@ -202,8 +196,7 @@ const ServicePage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedP({ dog: !selectedP.dog })}
-                  >
+                    onClick={() => setSelectedP({ dog: !selectedP.dog })}>
                     {selectedP.dog ? (
                       <span className="selected">Dog</span>
                     ) : (
@@ -213,8 +206,7 @@ const ServicePage = () => {
                   <Nav.Link
                     onClick={() =>
                       setSelectedP({ hamster: !selectedP.hamster })
-                    }
-                  >
+                    }>
                     {selectedP.hamster ? (
                       <span className="selected">Hamster</span>
                     ) : (
@@ -222,8 +214,7 @@ const ServicePage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedP({ rabbit: !selectedP.rabbit })}
-                  >
+                    onClick={() => setSelectedP({ rabbit: !selectedP.rabbit })}>
                     {selectedP.rabbit ? (
                       <span className="selected">Rabbit</span>
                     ) : (
@@ -252,8 +243,7 @@ const ServicePage = () => {
                             sortBy: "service_rating",
                             sortDirection: "ASC",
                           })
-                        }
-                      >
+                        }>
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -263,8 +253,7 @@ const ServicePage = () => {
                             sortBy: "service_rating",
                             sortDirection: "DESC",
                           })
-                        }
-                      >
+                        }>
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -285,8 +274,7 @@ const ServicePage = () => {
                             sortBy: "price_per_day",
                             sortDirection: "ASC",
                           })
-                        }
-                      >
+                        }>
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -296,8 +284,7 @@ const ServicePage = () => {
                             sortBy: "price_per_day",
                             sortDirection: "DESC",
                           })
-                        }
-                      >
+                        }>
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -326,8 +313,7 @@ const ServicePage = () => {
                     <Form.Group
                       className="mt-1 mb-1"
                       md={1}
-                      controlId="maxPrice"
-                    >
+                      controlId="maxPrice">
                       <Form.Control
                         type="number"
                         placeholder="Max Price"
@@ -359,8 +345,7 @@ const ServicePage = () => {
                   <Button
                     className="findButton"
                     variant="primary"
-                    onClick={conditions}
-                  >
+                    onClick={conditions}>
                     Find
                   </Button>
                 </Col>
@@ -374,15 +359,17 @@ const ServicePage = () => {
           )}
           <Container className="mb-3 mid">
             {services.data ? (
-              <div>
+              <div style={{ width: "inherit" }}>
                 <Row xs={1} md={2} lg={3} className="g-4">
                   {services.data
                     .map((service) => (
                       <Col key={service.service_id}>
                         <Card border="light" bg="light">
                           <Card.Img
+                            style={{ objectFit: "cover" }}
                             variant="top"
-                            src={service.service_pic_url[0]}
+                            height="450vw"
+                            src={`/api/images?image_name=${service.service_pic_url[0]}`}
                           />
                           <Card.Body>
                             <Card.Title>
@@ -413,8 +400,7 @@ const ServicePage = () => {
                               variant="primary mt-2"
                               onClick={() => {
                                 window.location.href = `/service/s${service.service_id}`;
-                              }}
-                            >
+                              }}>
                               Go to Service
                             </Button>
                           </Card.Body>

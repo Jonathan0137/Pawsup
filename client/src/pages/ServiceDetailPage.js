@@ -39,7 +39,7 @@ const ServiceDetailPage = ({ data }) => {
   };
   const getProviderInfo = () => {
     axios
-      .get(`/api/user/${data.pid}`)
+      .get(`/api/user/${data.user_id}`)
       .then((res) => {
         setProviderInfo({
           data: res.data,
@@ -72,12 +72,13 @@ const ServiceDetailPage = ({ data }) => {
             <Carousel className="CarouselContainer">
               {data.service_pic_url &&
                 data.service_pic_url.map((pic, i) => (
-                  <Carousel.Item>
+                  <Carousel.Item key={i}>
                     <Image
                       className="serviceImg"
-                      src={pic}
+                      style={{ objectFit: "cover" }}
+                      src={`/api/images?image_name=${pic}`}
                       alt={i}
-                      width="100%"
+                      height="350vw"
                     />
                   </Carousel.Item>
                 ))}
@@ -92,7 +93,7 @@ const ServiceDetailPage = ({ data }) => {
                   count={5}
                   size={24}
                   activeColor="#ffd700"
-                  value={data.service_rating}
+                  value={Number(data.service_rating)}
                   isHalf={true}
                   edit={false}
                   emptyIcon={<i className="far fa-star"></i>}
@@ -111,7 +112,7 @@ const ServiceDetailPage = ({ data }) => {
             </div>
             <div className="serviceProviderInformation">
               <div className="d-flex serviceProviderIconAndName">
-                <Avatar alt="serviceAvatar" src={providerInfo.data.avatar} />
+                <Avatar alt="serviceAvatar" src={`/api/images?image_name=${providerInfo.data.avatar}`}/>
                 <p className="serviceProviderName">
                   {providerInfo.data.fname} {providerInfo.data.lname}
                 </p>
@@ -140,7 +141,7 @@ const ServiceDetailPage = ({ data }) => {
           <h1>Facility</h1>
           <div className="d-flex justify-content-around serviceFacility">
             {data.service_facility &&
-              data.service_facility.map((facility, i) => <p>{facility}</p>)}
+              data.service_facility.map((facility, i) => <p key={i}>{facility}</p>)}
           </div>
         </div>
         <div className="col-12 serviceComment">

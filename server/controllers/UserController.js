@@ -62,7 +62,8 @@ UserController.post("/", async (req, res) => {
     lname: lname,
     city: city,
     phone_number: phone_number,
-    avatar: "https://i.imgur.com/QS8iSoig.jpg"
+    //avatar: "https://i.imgur.com/QS8iSoig.jpg"
+    avatar: "avatar1.png"
   });
 
   try {
@@ -76,15 +77,15 @@ UserController.post("/", async (req, res) => {
   }
 });
 // PUT /api/user/:uid
-// Able to change user's password, email, location, or avatar fields. Username cannot be changed.
+// Able to change user's password, email, location, avatar, or is_service_provider fields. Username cannot be changed.
 // At least one of these fields must be in request body. 
 UserController.put("/:uid", async(req, res) => {
   const { uid } = req.params;
-  const { password, email, city, phone_number, avatar } = req.body;
+  const { password, email, city, phone_number, avatar, is_service_provider } = req.body;
 
-  if (!password && !email && !city && !phone_number && !avatar) {
+  if (!password && !email && !city && !phone_number && !avatar && !(is_service_provider != null)) {
     return res.status(400).json({
-      message: "[password, email, city, phone_number, avatar] cannot all be empty in response body. Nothing to edit!",
+      message: "[password, email, city, phone_number, avatar, is_service_provider] cannot all be empty in response body. Nothing to edit!",
     });
   }
 
@@ -114,6 +115,10 @@ UserController.put("/:uid", async(req, res) => {
 
     if (avatar) {
       user.avatar = avatar;
+    }
+
+    if (is_service_provider != null) {
+      user.is_service_provider = is_service_provider;
     }
 
     await user.save();
