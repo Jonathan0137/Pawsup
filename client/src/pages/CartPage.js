@@ -109,41 +109,41 @@ const CartPage = () => {
       });
   };
 
-  const checkout = async () => {
-    await axios
-      .post("/api/payment", {
-        total: total,
-        redirect: window.location.href,
-      })
-      .then(() => {
-        axios
-          .delete("/api/cart")
-          .then(() => {
-            setcError(false);
-            setcSucc(true);
-            window.location = "/cart";
-          })
-          .catch(() => {
-            setcError(true);
-          });
-      })
-      .catch(() => {
-        setcError(true);
-      });
-  };
-
   // const checkout = async () => {
   //   await axios
-  //     .delete("/api/cart")
+  //     .post("/api/payment", {
+  //       total: total,
+  //       redirect: window.location.href,
+  //     })
   //     .then(() => {
-  //       setcError(false);
-  //       setcSucc(true);
-  //       window.location = "/cart";
+  //       axios
+  //         .delete("/api/cart")
+  //         .then(() => {
+  //           setcError(false);
+  //           setcSucc(true);
+  //           window.location = "/cart";
+  //         })
+  //         .catch(() => {
+  //           setcError(true);
+  //         });
   //     })
   //     .catch(() => {
   //       setcError(true);
   //     });
   // };
+
+  const checkout = async () => {
+    await axios
+      .delete("/api/cart")
+      .then(() => {
+        setcError(false);
+        setcSucc(true);
+        window.location = "/cart";
+      })
+      .catch(() => {
+        setcError(true);
+      });
+  };
 
   if (loading) {
     return (
