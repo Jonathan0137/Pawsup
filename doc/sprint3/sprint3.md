@@ -70,8 +70,9 @@
 
 # Spike
 - Understanding how to deal with(process, store, post request) image files. 
+- Figuring out the payment system
  
 # Unfinished Work
-- NODE-89(Create Service): slight blocker due to unsure of how to process image files.
+- NODE-106 Technically unfinished due to difficulty in understanding how to deal with image files, need more time to understand how to correctly process it and store it.
 
 
