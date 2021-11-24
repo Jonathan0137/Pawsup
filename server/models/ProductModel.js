@@ -61,6 +61,8 @@ class ProductModel extends DBModel {
       }
 
       query += ` ORDER BY ${sortBy} ${sortDirection}`;
+    } else {
+      query += ` ORDER BY product_id`;
     }
 
     let data = await db.query(query, params);

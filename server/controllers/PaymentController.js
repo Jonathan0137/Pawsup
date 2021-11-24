@@ -23,7 +23,7 @@ paypal.configure({
 
 // start payment process
 PaymentController.post("/", async (req, res) => {
-  const { total, redirect } = req.body;
+  const { total, redirect, cancelRedirect } = req.body;
 
   if (!total || !redirect) {
     return res.status(400).json({
@@ -42,7 +42,7 @@ PaymentController.post("/", async (req, res) => {
       /*"return_url": "http://127.0.0.1:3000/success",
 		"cancel_url": "http://127.0.0.1:3000/err"*/
       return_url: redirect,
-      cancel_url: redirect,
+      cancel_url: cancelRedirect || redirect,
     },
     transactions: [
       {
@@ -64,7 +64,10 @@ PaymentController.post("/", async (req, res) => {
       while (counter--) {
         if (links[counter].method == "REDIRECT") {
           // redirect to paypal where user approves the transaction
-          return res.redirect(links[counter].href);
+          // return res.redirect(links[counter].href);
+          return res.json({
+            paypal: links[counter].href
+          });
         }
       }
     })

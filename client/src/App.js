@@ -13,6 +13,7 @@ import MediaDetailPage from "./pages/MediaDetailPage";
 import CreateMedia from "./pages/CreateMedia";
 import CreateService from "./pages/CreateService";
 import CartPage from "./pages/CartPage";
+import CheckoutCompletePage from "./pages/CheckoutCompletePage";
 import notFoundPage from "./pages/notFoundPage";
 
 import React, { useState, useEffect } from "react";
@@ -84,6 +85,7 @@ const App = () => {
           <Route exact path="/CreateMedia" component={CreateMedia} />
           <Route exact path="/CreateService" component={CreateService} />
           <Route exact path="/cart" component={CartPage} />
+          <Route exact path="/cart/checkout" component={CheckoutCompletePage} />
 
           {detailProducts.data &&
             detailProducts.data.map((productDetailed) => (

@@ -19,7 +19,7 @@ class MediaPageModel extends DBModel {
   }
 
   static async getMediaPages() {
-    const data = await db.query("SELECT * FROM mediaPages");
+    const data = await db.query("SELECT * FROM mediaPages ORDER BY id");
     return data.map((row) => new MediaPageModel(row));
   }
 
@@ -29,7 +29,7 @@ class MediaPageModel extends DBModel {
   }
 
   static async getMediaPagesByUser(user_id) {
-    const data = await db.query("SELECT * FROM mediaPages WHERE author_id = $1", [user_id]);
+    const data = await db.query("SELECT * FROM mediaPages WHERE author_id = $1 ORDER BY id", [user_id]);
     return data.map((row) => new MediaPageModel(row));
     }
 }
