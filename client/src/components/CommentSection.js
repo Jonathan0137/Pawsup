@@ -63,7 +63,9 @@ const CommentSection = ({ comments, commentData }) => {
       {comments &&
         comments.map((comment, i) => (
           <Comment className="comment_block" key={i}>
-            <Comment.Avatar src={`/api/images?image_name=${comment.author_profile_pic_url}`} />
+            <Comment.Avatar
+              src={`/api/images?image_name=${comment.author_profile_pic_url}`}
+            />
             <Comment.Content>
               <Comment.Author as="a">{comment.author_name}</Comment.Author>
               <Comment.Metadata>
@@ -77,7 +79,9 @@ const CommentSection = ({ comments, commentData }) => {
               comment.comment_replies.map((replies, i) => (
                 <Comment.Group>
                   <Comment>
-                    <Comment.Avatar src={`/api/images?image_name=${replies.reply_avatar_url}`}/>
+                    <Comment.Avatar
+                      src={`/api/images?image_name=${replies.reply_avatar_url}`}
+                    />
                     <Comment.Content>
                       <Comment.Author as="a">
                         {replies.reply_user_name}

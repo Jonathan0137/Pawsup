@@ -19,10 +19,6 @@ const CreateMediaPage = () => {
   const [filled, setfilled] = useState({
     author_id: 1,
     media_picture_url: [""],
-    /* media_picture_url: [
-            "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cow_%28Fleckvieh_breed%29_Oeschinensee_Slaunger_2009-07-07.jpg",
-            "http://leosigh.com/wp-content/uploads/2016/12/rick-astley-never-gonna-give-you-up.jpg"
-        ], */
     media_title: "",
     media_detail: "",
     published_time: "",
@@ -112,7 +108,6 @@ const CreateMediaPage = () => {
     setfilled({ ...filled, media_detail: event.target.value });
   };
 
-  console.log(hasError.missInfo);
   return (
     <>
       <HeaderMenu />

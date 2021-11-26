@@ -116,12 +116,14 @@ const ProductPage = () => {
                   <div>
                     <Nav.Link
                       className="nav_default bold"
-                      style={{ cursor: "default" }}>
+                      style={{ cursor: "default" }}
+                    >
                       Category:
                     </Nav.Link>
                   </div>
                   <Nav.Link
-                    onClick={() => setSelectedC({ toy: !selectedC.toy })}>
+                    onClick={() => setSelectedC({ toy: !selectedC.toy })}
+                  >
                     {selectedC.toy ? (
                       <span className="selected">Toy</span>
                     ) : (
@@ -129,7 +131,8 @@ const ProductPage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedC({ food: !selectedC.food })}>
+                    onClick={() => setSelectedC({ food: !selectedC.food })}
+                  >
                     {selectedC.food ? (
                       <span className="selected">Food</span>
                     ) : (
@@ -144,7 +147,8 @@ const ProductPage = () => {
                     Pet:
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedP({ cat: !selectedP.cat })}>
+                    onClick={() => setSelectedP({ cat: !selectedP.cat })}
+                  >
                     {selectedP.cat ? (
                       <span className="selected">Cat</span>
                     ) : (
@@ -152,7 +156,8 @@ const ProductPage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedP({ dog: !selectedP.dog })}>
+                    onClick={() => setSelectedP({ dog: !selectedP.dog })}
+                  >
                     {selectedP.dog ? (
                       <span className="selected">Dog</span>
                     ) : (
@@ -162,7 +167,8 @@ const ProductPage = () => {
                   <Nav.Link
                     onClick={() =>
                       setSelectedP({ hamster: !selectedP.hamster })
-                    }>
+                    }
+                  >
                     {selectedP.hamster ? (
                       <span className="selected">Hamster</span>
                     ) : (
@@ -170,7 +176,8 @@ const ProductPage = () => {
                     )}
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setSelectedP({ rabbit: !selectedP.rabbit })}>
+                    onClick={() => setSelectedP({ rabbit: !selectedP.rabbit })}
+                  >
                     {selectedP.rabbit ? (
                       <span className="selected">Rabbit</span>
                     ) : (
@@ -199,7 +206,8 @@ const ProductPage = () => {
                             sortBy: "product_rating",
                             sortDirection: "ASC",
                           })
-                        }>
+                        }
+                      >
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -209,7 +217,8 @@ const ProductPage = () => {
                             sortBy: "product_rating",
                             sortDirection: "DESC",
                           })
-                        }>
+                        }
+                      >
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -229,7 +238,8 @@ const ProductPage = () => {
                             sortBy: "product_price",
                             sortDirection: "ASC",
                           })
-                        }>
+                        }
+                      >
                         Ascending
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -239,7 +249,8 @@ const ProductPage = () => {
                             sortBy: "product_price",
                             sortDirection: "DESC",
                           })
-                        }>
+                        }
+                      >
                         Descending
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -268,7 +279,8 @@ const ProductPage = () => {
                     <Form.Group
                       className="mt-1 mb-1"
                       md={1}
-                      controlId="maxPrice">
+                      controlId="maxPrice"
+                    >
                       <Form.Control
                         type="number"
                         placeholder="Max Price"
@@ -300,7 +312,8 @@ const ProductPage = () => {
                   <Button
                     className="findButton"
                     variant="primary"
-                    onClick={conditions}>
+                    onClick={conditions}
+                  >
                     Find
                   </Button>
                 </Col>
@@ -354,7 +367,8 @@ const ProductPage = () => {
                               variant="primary mt-2"
                               onClick={() => {
                                 window.location.href = `/product/p${product.product_id}`;
-                              }}>
+                              }}
+                            >
                               Go to Product
                             </Button>
                           </Card.Body>

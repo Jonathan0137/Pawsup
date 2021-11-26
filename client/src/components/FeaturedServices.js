@@ -68,7 +68,8 @@ const FeaturedServices = () => {
                           variant="primary mt-2"
                           onClick={() => {
                             window.location.href = `/service/s${service.service_id}`;
-                          }}>
+                          }}
+                        >
                           Go to Service
                         </Button>
                       </Card.Body>
