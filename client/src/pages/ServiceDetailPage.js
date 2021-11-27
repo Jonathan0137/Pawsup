@@ -112,7 +112,10 @@ const ServiceDetailPage = ({ data }) => {
             </div>
             <div className="serviceProviderInformation">
               <div className="d-flex serviceProviderIconAndName">
-                <Avatar alt="serviceAvatar" src={`/api/images?image_name=${providerInfo.data.avatar}`}/>
+                <Avatar
+                  alt="serviceAvatar"
+                  src={`/api/images?image_name=${providerInfo.data.avatar}`}
+                />
                 <p className="serviceProviderName">
                   {providerInfo.data.fname} {providerInfo.data.lname}
                 </p>
@@ -141,7 +144,9 @@ const ServiceDetailPage = ({ data }) => {
           <h1>Facility</h1>
           <div className="d-flex justify-content-around serviceFacility">
             {data.service_facility &&
-              data.service_facility.map((facility, i) => <p key={i}>{facility}</p>)}
+              data.service_facility.map((facility, i) => (
+                <p key={i}>{facility}</p>
+              ))}
           </div>
         </div>
         <div className="col-12 serviceComment">

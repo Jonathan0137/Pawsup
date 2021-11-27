@@ -14,8 +14,12 @@ const AddServiceToCart = ({ serviceId }) => {
   const [addedServiceToCart, setAddedServiceToCart] = useState(false);
 
   const addServiceToCart = () => {
-    const startDateString = `${startDate.getFullYear()}-${`${startDate.getMonth() + 1}`.padStart(2, '0')}-${`${startDate.getDate()}`.padStart(2, '0')}`;
-    const endDateString = `${endDate.getFullYear()}-${`${endDate.getMonth() + 1}`.padStart(2, '0')}-${`${endDate.getDate()}`.padStart(2, '0')}`;
+    const startDateString = `${startDate.getFullYear()}-${`${
+      startDate.getMonth() + 1
+    }`.padStart(2, "0")}-${`${startDate.getDate()}`.padStart(2, "0")}`;
+    const endDateString = `${endDate.getFullYear()}-${`${
+      endDate.getMonth() + 1
+    }`.padStart(2, "0")}-${`${endDate.getDate()}`.padStart(2, "0")}`;
     axios
       .post("/api/cart/service", {
         service_id: serviceId,
@@ -31,14 +35,14 @@ const AddServiceToCart = ({ serviceId }) => {
         });
       })
       .catch((error) => console.error(error));
-  }
+  };
 
   return (
     <div className="d-grid gap-2">
       <Form.Group as={Col} controlId="startDate">
         <Form.Label>Start Date</Form.Label>
-        <DatePicker 
-          selected={startDate} 
+        <DatePicker
+          selected={startDate}
           onChange={(date) => {
             setStartDate(date);
             if (date > endDate) {
@@ -51,8 +55,8 @@ const AddServiceToCart = ({ serviceId }) => {
       </Form.Group>
       <Form.Group as={Col} controlId="endDate">
         <Form.Label>End Date</Form.Label>
-        <DatePicker 
-          selected={endDate} 
+        <DatePicker
+          selected={endDate}
           onChange={(date) => setEndDate(date)}
           dateFormat="yyyy-MM-dd"
           minDate={startDate}
@@ -60,19 +64,23 @@ const AddServiceToCart = ({ serviceId }) => {
       </Form.Group>
       <Form.Group as={Col} controlId="numberOfPets">
         <Form.Label>Number of Pets</Form.Label>
-        <Form.Control type="number" value={numberOfPets} onChange={(e) => setNumberOfPets(e.target.value)}/>
+        <Form.Control
+          type="number"
+          value={numberOfPets}
+          onChange={(e) => setNumberOfPets(e.target.value)}
+        />
       </Form.Group>
-      <Button 
-        className="mt-2" 
-        onClick={addServiceToCart} 
+      <Button
+        className="mt-2"
+        onClick={addServiceToCart}
         disabled={!userInfo.isLoggedIn || addedServiceToCart}
         variant="warning"
         size="lg"
       >
-        {!addedServiceToCart ? 'Add to Cart' : 'Added to Cart'}
+        {!addedServiceToCart ? "Add to Cart" : "Added to Cart"}
       </Button>
     </div>
-  )
-}
+  );
+};
 
 export default AddServiceToCart;

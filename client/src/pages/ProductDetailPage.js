@@ -39,7 +39,11 @@ const ProductDetailPage = ({ data }) => {
   const addProductToCart = () => {
     const sizeIndex = data.product_price.indexOf(currentPrice);
     axios
-      .post("/api/cart/product", { product_id: data.product_id, quantity: quant, size: data.product_type[sizeIndex] })
+      .post("/api/cart/product", {
+        product_id: data.product_id,
+        quantity: quant,
+        size: data.product_type[sizeIndex],
+      })
       .then((response) => {
         setAddedProductToCart(true);
         setCartItems({
@@ -48,7 +52,7 @@ const ProductDetailPage = ({ data }) => {
         });
       })
       .catch((error) => console.error(error));
-  }
+  };
 
   useEffect(() => {
     getDetailComments();
@@ -130,8 +134,13 @@ const ProductDetailPage = ({ data }) => {
           </div>
           <div className="col-12 col-sm-2 purchase-details">
             <div className="d-grid gap-2">
-              <Button disabled={!userInfo.isLoggedIn || addedProductToCart} variant="warning" size="lg" onClick={addProductToCart}>
-                {!addedProductToCart ? 'Add to Cart' : 'Added to Cart'}
+              <Button
+                disabled={!userInfo.isLoggedIn || addedProductToCart}
+                variant="warning"
+                size="lg"
+                onClick={addProductToCart}
+              >
+                {!addedProductToCart ? "Add to Cart" : "Added to Cart"}
               </Button>
             </div>
           </div>

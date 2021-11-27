@@ -71,6 +71,8 @@ class ServiceModel extends DBModel {
       }
   
       query += ` ORDER BY ${sortBy} ${sortDirection}`;
+    } else {
+      query += ` ORDER BY service_id`;
     }
 
     const data = await db.query(query, params);
@@ -83,7 +85,7 @@ class ServiceModel extends DBModel {
   }
 
   static async getServicesByUser(user_id) {
-    const data = await db.query("SELECT * FROM services WHERE user_id = $1", [user_id]);
+    const data = await db.query("SELECT * FROM services WHERE user_id = $1 ORDER BY service_id", [user_id]);
     return data.map((row) => new ServiceModel(row));
   }
 }

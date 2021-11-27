@@ -48,7 +48,7 @@ const MediaDetailPage = ({ data }) => {
 
   const addLikes = () => {
     axios.put(`/api/mediapages/${data.id}`);
-  }
+  };
 
   const slideNumberStyle = {
     fontSize: "20px",
@@ -59,7 +59,7 @@ const MediaDetailPage = ({ data }) => {
     const mediaPics = [];
     data.media_picture_url.map((pic, i) =>
       mediaPics.push({
-        image: `/api/images?image_name=${pic}`
+        image: `/api/images?image_name=${pic}`,
       })
     );
     return mediaPics;
@@ -127,7 +127,10 @@ const MediaDetailPage = ({ data }) => {
             </div>
 
             <div className="col-2 authorInfo">
-              <Avatar alt="mediaAvatar" src={`/api/images?image_name=${authorInfo.data.avatar}`}/>
+              <Avatar
+                alt="mediaAvatar"
+                src={`/api/images?image_name=${authorInfo.data.avatar}`}
+              />
               <p className="mediaAuthorName">{authorInfo.data.username}</p>
 
               <button

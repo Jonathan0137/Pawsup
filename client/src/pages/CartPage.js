@@ -4,6 +4,7 @@ import { Button, Container, Row, Spinner, Card, Col } from "react-bootstrap";
 import HeaderMenu from "../components/HeaderMenu";
 import Footer from "../components/Footer";
 import { useCartContext } from "../providers/CartProvider";
+import { useLocation, useHistory } from "react-router-dom"; 
 import axios from "axios";
 import "./CartPage.css";
 
@@ -21,6 +22,8 @@ const CartPage = () => {
     setCartItems,
     refreshUserInfoAndCart,
   } = useCartContext();
+  const location = useLocation();
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [deletingProduct, setDeletingProduct] = useState(null);
   const [deletingService, setDeletingService] = useState(null);
@@ -60,6 +63,13 @@ const CartPage = () => {
     0
   );
   const numServices = cartItems.services.length;
+
+  useEffect(() => {
+    if (location.search.includes("checkout=success")) {
+      setcSucc(true);
+      history.replace({ search: "" });
+    }
+  }, []);
 
   useEffect(() => {
     refreshUserInfoAndCart().then(() => {
@@ -112,16 +122,16 @@ const CartPage = () => {
   // const checkout = async () => {
   //   await axios
   //     .post("/api/payment", {
-  //       paymentID: 1,
-  //       payerID: 1,
-  //       total: productsSubtotal,
-  //       currency: "CAD",
+  //       total: total,
+  //       redirect: window.location.href,
   //     })
   //     .then(() => {
   //       axios
   //         .delete("/api/cart")
   //         .then(() => {
   //           setcError(false);
+  //           setcSucc(true);
+  //           window.location = "/cart";
   //         })
   //         .catch(() => {
   //           setcError(true);
@@ -134,15 +144,17 @@ const CartPage = () => {
 
   const checkout = async () => {
     await axios
-      .delete("/api/cart")
-      .then(() => {
-        setcError(false);
-        setcSucc(true);
-        window.location = "/cart";
-      })
-      .catch(() => {
-        setcError(true);
-      });
+    .post("/api/payment", {
+      total: total,
+      redirect: `${window.location.origin}/cart/checkout`,
+      cancelRedirect: `${window.location.origin}/cart`,
+    })
+    .then((res) => {
+      window.location.href = res.data.paypal;
+    })
+    .catch(() => {
+      setcError(true);
+    });
   };
 
   if (loading) {
@@ -185,6 +197,11 @@ const CartPage = () => {
     <>
       <HeaderMenu />
       <Container className="pt-5 pb-3">
+        {cSucc && (
+          <div className="alert alert-success mb-3 mid mt-3" role="alert">
+            Purchase Success!
+          </div>
+        )}
         <h2>Your Cart</h2>
         <h3>Products {numProducts > 0 && `(${cartItems.products.length})`}</h3>
         <div>
@@ -348,14 +365,9 @@ const CartPage = () => {
                 Checkout
               </Button>
             </div>
-            {cSucc && (
-              <div className="alert alert-success mb-3 mid mt-3" role="alert">
-                Purchase Success!
-              </div>
-            )}
             {cError && (
               <div className="alert alert-warning mb-3 mid mt-3" role="alert">
-                Internal Error with Checkout, please try again later.
+                Unable to checkout right now, please try again later.
               </div>
             )}
           </>

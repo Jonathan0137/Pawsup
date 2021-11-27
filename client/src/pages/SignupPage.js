@@ -3,7 +3,7 @@ import HeaderMenu from "../components/HeaderMenu";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import "./SignupPage.css";
 import axios from "axios";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 const SignupPage = () => {
   // States
   /* const [user, setUser] = useState({
@@ -20,7 +20,7 @@ const SignupPage = () => {
     missInfo: false,
     internal: false,
   });
-
+  const [succ, setSucc] = useState(false);
   /* const submitHandler = (e) => {
     e.preventDefault();
   }; */
@@ -43,6 +43,8 @@ const SignupPage = () => {
         phone_number: data.phone,
       })
       .then(() => {
+        setHasError({ missInfo: false });
+        setSucc(true);
         window.location = "/signin";
       })
       .catch((err) => {
@@ -89,21 +91,20 @@ const SignupPage = () => {
               placeholder="Enter email"
               {...register("email", {
                 pattern: {
-                  value:
-                    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+                  value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
                   message: "This is not a valid email",
                 },
               })}
             />
             {errors.email && (
-                  <Alert variant="warning">{errors.email.message}</Alert>
-                )}
+              <Alert variant="warning">{errors.email.message}</Alert>
+            )}
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Phone number *</Form.Label>
             <Form.Control
-            type="text"
+              type="text"
               placeholder="Phone number"
               {...register("phone", {
                 pattern: {
@@ -121,14 +122,14 @@ const SignupPage = () => {
               })}
             />
             {errors.phone && (
-                  <Alert variant="warning">{errors.phone.message}</Alert>
-                )}
+              <Alert variant="warning">{errors.phone.message}</Alert>
+            )}
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>First Name *</Form.Label>
             <Form.Control
-            type="text"
+              type="text"
               placeholder="First Name"
               {...register("fname")}
             />
@@ -137,7 +138,7 @@ const SignupPage = () => {
           <Form.Group className="mb-3">
             <Form.Label>Last Name *</Form.Label>
             <Form.Control
-            type="text"
+              type="text"
               placeholder="Last Name"
               {...register("lname")}
             />
@@ -146,7 +147,7 @@ const SignupPage = () => {
           <Form.Group className="mb-3">
             <Form.Label>City *</Form.Label>
             <Form.Control
-            type="text"
+              type="text"
               placeholder="City"
               {...register("city")}
             />
@@ -177,6 +178,11 @@ const SignupPage = () => {
               Sign Up
             </Button>
           </div>
+          {succ && (
+            <div className="alert alert-success mb-3 mid mt-3" role="alert">
+              Signup Success!
+            </div>
+          )}
         </Form>
       </div>
     </>

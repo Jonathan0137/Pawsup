@@ -68,7 +68,8 @@ const FeaturedProducts = () => {
                           variant="primary mt-2"
                           onClick={() => {
                             window.location.href = `/product/p${product.product_id}`;
-                          }}>
+                          }}
+                        >
                           Go to Product
                         </Button>
                       </Card.Body>
