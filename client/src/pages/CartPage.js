@@ -69,7 +69,7 @@ const CartPage = () => {
       setcSucc(true);
       history.replace({ search: "" });
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     refreshUserInfoAndCart().then(() => {

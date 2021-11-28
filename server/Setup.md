@@ -31,4 +31,8 @@
    ```
    npm run dev
    ```
-7. The development server will be running at http://localhost:3001
+7. Import images into the database
+   ```
+   npm run imageloader
+   ```
+8. The development server will be running at http://localhost:3001
